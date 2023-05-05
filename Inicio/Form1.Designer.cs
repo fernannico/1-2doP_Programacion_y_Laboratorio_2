@@ -31,9 +31,11 @@
             lblMail = new Label();
             lblContrasenia = new Label();
             btnIngresar = new Button();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
+            txtContrasenia = new TextBox();
             label3 = new Label();
+            txtMail = new TextBox();
+            listBox1 = new ListBox();
+            label1 = new Label();
             SuspendLayout();
             // 
             // lblMail
@@ -45,7 +47,6 @@
             lblMail.Size = new Size(54, 28);
             lblMail.TabIndex = 0;
             lblMail.Text = "Mail";
-            lblMail.Click += label1_Click;
             // 
             // lblContrasenia
             // 
@@ -65,20 +66,15 @@
             btnIngresar.TabIndex = 2;
             btnIngresar.Text = "Ingresar";
             btnIngresar.UseVisualStyleBackColor = true;
+            btnIngresar.Click += btnIngresar_Click;
             // 
-            // textBox1
+            // txtContrasenia
             // 
-            textBox1.Location = new Point(49, 96);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(125, 27);
-            textBox1.TabIndex = 3;
-            // 
-            // textBox2
-            // 
-            textBox2.Location = new Point(49, 173);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(125, 27);
-            textBox2.TabIndex = 4;
+            txtContrasenia.Location = new Point(49, 173);
+            txtContrasenia.Name = "txtContrasenia";
+            txtContrasenia.PasswordChar = '*';
+            txtContrasenia.Size = new Size(125, 27);
+            txtContrasenia.TabIndex = 4;
             // 
             // label3
             // 
@@ -90,14 +86,43 @@
             label3.TabIndex = 5;
             label3.Text = "Bienvenido!";
             // 
+            // txtMail
+            // 
+            txtMail.Location = new Point(49, 96);
+            txtMail.Name = "txtMail";
+            txtMail.Size = new Size(125, 27);
+            txtMail.TabIndex = 6;
+            // 
+            // listBox1
+            // 
+            listBox1.FormattingEnabled = true;
+            listBox1.ItemHeight = 20;
+            listBox1.Location = new Point(212, 96);
+            listBox1.Name = "listBox1";
+            listBox1.Size = new Size(242, 124);
+            listBox1.TabIndex = 7;
+            listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.Location = new Point(287, 68);
+            label1.Name = "label1";
+            label1.Size = new Size(77, 23);
+            label1.TabIndex = 8;
+            label1.Text = "Usuarios";
+            // 
             // frmLogin
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(215, 320);
+            ClientSize = new Size(469, 283);
+            Controls.Add(label1);
+            Controls.Add(listBox1);
+            Controls.Add(txtMail);
             Controls.Add(label3);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
+            Controls.Add(txtContrasenia);
             Controls.Add(btnIngresar);
             Controls.Add(lblContrasenia);
             Controls.Add(lblMail);
@@ -106,6 +131,7 @@
             MinimizeBox = false;
             Name = "frmLogin";
             Text = "Login";
+            Load += frmLogin_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -115,8 +141,10 @@
         private Label lblMail;
         private Label lblContrasenia;
         private Button btnIngresar;
-        private TextBox textBox1;
-        private TextBox textBox2;
+        private TextBox txtContrasenia;
         private Label label3;
+        private TextBox txtMail;
+        private ListBox listBox1;
+        private Label label1;
     }
 }

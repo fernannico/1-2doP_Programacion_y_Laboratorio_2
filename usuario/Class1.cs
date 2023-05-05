@@ -1,52 +1,60 @@
 ﻿namespace usuarios
 {
-    public abstract class usuario
+    public abstract class Usuario
     {
         protected string mail;
-        protected string contraseña;
+        protected string contrasena;
 
-        public usuario()
+        public Usuario(string mail, string contrasena)
         {
-            this.mail = "";
-            this.contraseña = "";
+            this.mail = mail;
+            this.contrasena = contrasena;
         }
-
-        public abstract string mailPropiedad
-        {
-            get;
-        }
-
+        public abstract string MailPropiedad { get; }
+        public abstract string PwdPropiedad { get; }
     }
 
-    public class vendedor : usuario
+    public class Vendedor : Usuario
     {
-        public vendedor()
+        public Vendedor(string mail, string contrasena) : base(mail, contrasena)
         {
 
         }
 
-        public override string mailPropiedad
+        public override string MailPropiedad
         {
-            get
-            {
-                return mail;
-            }
-        } 
+            get { return mail; }
+        }
+
+        public override string PwdPropiedad
+        {
+            get { return contrasena; }
+        }
+
+        public override string ToString()
+        {
+            return mail;
+        }
     }
 
-    public class cliente : usuario
+    public class Cliente : Usuario
     {
-        public cliente()
+        public Cliente(string mail, string contrasena) : base(mail, contrasena)
         {
 
         }
-        public override string mailPropiedad
+        public override string MailPropiedad
         {
-            get
-            {
-                return mail;
-            }
+            get { return mail; }
+        }
+        public override string PwdPropiedad
+        {
+            get { return contrasena; }
         }
 
+        public override string ToString()
+        {
+            return mail;
+        }
     }
 }
