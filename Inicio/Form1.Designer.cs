@@ -65,7 +65,7 @@
             btnIngresar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
             btnIngresar.Location = new Point(29, 242);
             btnIngresar.Name = "btnIngresar";
-            btnIngresar.Size = new Size(388, 29);
+            btnIngresar.Size = new Size(470, 29);
             btnIngresar.TabIndex = 2;
             btnIngresar.Text = "Ingresar";
             btnIngresar.UseVisualStyleBackColor = true;
@@ -76,7 +76,7 @@
             txtContrasenia.Location = new Point(29, 147);
             txtContrasenia.Name = "txtContrasenia";
             txtContrasenia.PasswordChar = '*';
-            txtContrasenia.Size = new Size(125, 27);
+            txtContrasenia.Size = new Size(200, 27);
             txtContrasenia.TabIndex = 4;
             // 
             // label3
@@ -93,14 +93,14 @@
             // 
             txtMail.Location = new Point(29, 77);
             txtMail.Name = "txtMail";
-            txtMail.Size = new Size(125, 27);
+            txtMail.Size = new Size(200, 27);
             txtMail.TabIndex = 6;
             // 
             // listBox1
             // 
             listBox1.FormattingEnabled = true;
             listBox1.ItemHeight = 20;
-            listBox1.Location = new Point(175, 77);
+            listBox1.Location = new Point(257, 77);
             listBox1.Name = "listBox1";
             listBox1.Size = new Size(242, 144);
             listBox1.TabIndex = 7;
@@ -110,7 +110,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(250, 49);
+            label1.Location = new Point(288, 51);
             label1.Name = "label1";
             label1.Size = new Size(77, 23);
             label1.TabIndex = 8;
@@ -121,14 +121,14 @@
             nudMontoCiente.Enabled = false;
             nudMontoCiente.Location = new Point(29, 194);
             nudMontoCiente.Name = "nudMontoCiente";
-            nudMontoCiente.Size = new Size(125, 27);
+            nudMontoCiente.Size = new Size(200, 27);
             nudMontoCiente.TabIndex = 9;
             // 
             // frmLogin
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(428, 283);
+            ClientSize = new Size(508, 283);
             Controls.Add(nudMontoCiente);
             Controls.Add(label1);
             Controls.Add(listBox1);

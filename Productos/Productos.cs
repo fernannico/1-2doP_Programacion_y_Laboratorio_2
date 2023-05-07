@@ -30,6 +30,7 @@ namespace ProductosNs
         public string AnimalPropiedad
         {
             get { return animal; }
+            set { animal = value; }
         }
 
         public override float PrecioPropiedad
@@ -37,18 +38,17 @@ namespace ProductosNs
             get { return precioPorKg; }
             set { precioPorKg = value; }
         }
-
+        public string CortePropiedad
+        {
+            get { return corte; }
+            set { corte = value; }
+        }
         public override int KgEnStockPropiedad 
         {
             get { return kgEnStock; }
             set { kgEnStock = value; }
         }
 
-        public string CortePropiedad
-        {
-            get { return corte; }
-            set { corte = value; }
-        }
         public override string MostrarDetalle()
         {
             StringBuilder sbDetalles = new StringBuilder();
@@ -64,6 +64,11 @@ namespace ProductosNs
         {
             return $"{CortePropiedad} de {AnimalPropiedad} - {kgEnStock} Kilos";
         }
+
+        public static explicit operator decimal (Carne item)
+        {
+            return (decimal)item.precioPorKg;
+        }
     }
 
     public class Embutido : Productos
@@ -77,6 +82,7 @@ namespace ProductosNs
         public string TipoEmbutidoPropiedad
         {
             get { return tipoEmbutido; }
+            set {  tipoEmbutido = value; }
         }
         public override int KgEnStockPropiedad
         {

@@ -62,13 +62,14 @@ namespace Inicio
             // 
             // btnModificar
             // 
+            btnModificar.Enabled = false;
             btnModificar.Location = new Point(18, 311);
             btnModificar.Name = "btnModificar";
             btnModificar.Size = new Size(230, 29);
             btnModificar.TabIndex = 2;
             btnModificar.Text = "Modificar";
             btnModificar.UseVisualStyleBackColor = true;
-            btnModificar.Click += button1_Click;
+            btnModificar.Click += button2_Click;
             // 
             // dataGridView1
             // 
@@ -109,16 +110,20 @@ namespace Inicio
             // nudModifStock
             // 
             nudModifStock.Location = new Point(18, 164);
+            nudModifStock.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             nudModifStock.Name = "nudModifStock";
             nudModifStock.Size = new Size(230, 27);
             nudModifStock.TabIndex = 7;
+            nudModifStock.Tag = "$";
             // 
             // nudModifPrecio
             // 
             nudModifPrecio.Location = new Point(18, 223);
+            nudModifPrecio.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             nudModifPrecio.Name = "nudModifPrecio";
             nudModifPrecio.Size = new Size(230, 27);
             nudModifPrecio.TabIndex = 8;
+            nudModifPrecio.Tag = "";
             nudModifPrecio.ValueChanged += numericUpDown2_ValueChanged;
             // 
             // lblModifPrecio
@@ -135,9 +140,9 @@ namespace Inicio
             lblModifStock.AutoSize = true;
             lblModifStock.Location = new Point(18, 141);
             lblModifStock.Name = "lblModifStock";
-            lblModifStock.Size = new Size(103, 20);
+            lblModifStock.Size = new Size(198, 20);
             lblModifStock.TabIndex = 10;
-            lblModifStock.Text = "Reponer stock";
+            lblModifStock.Text = "Reponer stock (agregar kg's)";
             // 
             // lblModifCorte
             // 

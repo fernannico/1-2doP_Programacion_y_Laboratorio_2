@@ -13,12 +13,12 @@ namespace usuarios
             this.contrasena = contrasena;
         }
 
-        protected virtual string MailPropiedad
+        public virtual string MailPropiedad
         {
             get { return mail; }
         }
 
-        protected virtual string PwdPropiedad
+        public virtual string PwdPropiedad
         {
             get { return contrasena; }
         }
@@ -41,10 +41,12 @@ namespace usuarios
             return $"Vendedor - {mail}";
         }
 
-        public void FijarPrecioKg(Productos producto, float nuevoPrecio)
+        public void FijarAnimal(Carne carneItem, string animal)
         {
-            if (producto is not null && nuevoPrecio > 0) 
-                producto.PrecioPropiedad = nuevoPrecio;
+            if (carneItem is not null && animal is not null)
+            {
+                carneItem.AnimalPropiedad = animal;
+            }
         }
         public void FijarCorteDeCarne(Carne carneItem, string corte)
         {
@@ -52,6 +54,18 @@ namespace usuarios
             {
                 carneItem.CortePropiedad = corte;
             }
+        }
+        public void FijarTipoEmbutido(Embutido embutidoItem, string tipoEmbutido)
+        {
+            if( embutidoItem is not null && tipoEmbutido is not null)
+            {
+                embutidoItem.TipoEmbutidoPropiedad = tipoEmbutido;
+            }
+        }
+        public void FijarPrecioKg(Productos producto, float nuevoPrecio)
+        {
+            if (producto is not null && nuevoPrecio > 0) 
+                producto.PrecioPropiedad = nuevoPrecio;
         }
         public void ReponerProductos(Productos producto, int kgAReponer)
         {

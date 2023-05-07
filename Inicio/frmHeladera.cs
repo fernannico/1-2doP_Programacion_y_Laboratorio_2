@@ -57,6 +57,12 @@ namespace Inicio
             dataTable.Columns.Add("kg en stock", typeof(int));
             dataTable.Columns.Add("precio/Kg", typeof(float));
 
+            foreach (DataGridViewColumn columna in dataGridView1.Columns)
+            {
+                columna.SortMode = DataGridViewColumnSortMode.NotSortable;
+                columna.ReadOnly = true;
+            }
+
             int posicionFila = 0;
 
             foreach (var item in productosStockList)
@@ -86,10 +92,28 @@ namespace Inicio
         {
             if (e.RowIndex >= 0)
             {
+                btnDetalles.Enabled = true;
+                btnModificar.Enabled = true;
+
                 indiceFilaSeleccionada = e.RowIndex;
+
                 Productos productoSeleccionado = diccionarioProductos[e.RowIndex];
-                btnDetalles.Enabled = true; 
-            }else { btnDetalles.Enabled = false; }
+
+                //nudModifStock.Value = productoSeleccionado.KgEnStockPropiedad;
+                nudModifPrecio.Value = (decimal)productoSeleccionado.PrecioPropiedad;
+
+                if (productoSeleccionado is Carne)
+                {
+                    txtModDescripcion.Text = ((Carne)productoSeleccionado).AnimalPropiedad;
+                    txtModifCorte.Text = ((Carne)productoSeleccionado).CortePropiedad;
+                }
+                else if (productoSeleccionado is Embutido)
+                {
+                    txtModDescripcion.Text = ((Embutido)productoSeleccionado).TipoEmbutidoPropiedad;
+                    txtModifCorte.Text = "";
+                }
+            }
+            else { btnDetalles.Enabled = false; btnModificar.Enabled = false; }
             //ELIGIENDO CADA CELDA
             //if (e.RowIndex >= 0 && e.ColumnIndex == 1)
             //{
@@ -106,6 +130,7 @@ namespace Inicio
 
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
+            //cambiar precio
 
         }
         private void button1_Click(object sender, EventArgs e)
@@ -117,6 +142,52 @@ namespace Inicio
                 frmDetalles frmDetalles = new frmDetalles(vendedorElegido.VerDetallesProducto(productoSeleccionado));
                 frmDetalles.ShowDialog();
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Productos productoSeleccionado = diccionarioProductos[indiceFilaSeleccionada];
+            string nuevaDescripcion;
+            string nuevoCorte;
+            float nuevoPrecio;
+            int nuevoKgStock;
+
+            if (btnModificar.Enabled == true)
+            {
+                nuevoPrecio = (float)nudModifPrecio.Value;
+                if (nuevoPrecio != productoSeleccionado.PrecioPropiedad && nuevoPrecio > 0)
+                {
+                    vendedorElegido.FijarPrecioKg(productoSeleccionado, (float)nudModifPrecio.Value);
+                    dataGridView1.Rows[indiceFilaSeleccionada].Cells["precio/Kg"].Value = nuevoPrecio;
+                    MessageBox.Show("precio modificado", "error", MessageBoxButtons.OK);
+                }
+
+                nuevoKgStock = (int)nudModifStock.Value;
+                if (nuevoKgStock > 0 )
+                {
+                    vendedorElegido.ReponerProductos(productoSeleccionado, (int)nudModifStock.Value);
+                    dataGridView1.Rows[indiceFilaSeleccionada].Cells["kg en stock"].Value = productoSeleccionado.KgEnStockPropiedad;
+                    MessageBox.Show("stock repuesto", "error", MessageBoxButtons.OK);
+                }
+
+                nuevaDescripcion = txtModDescripcion.Text;
+                if (productoSeleccionado is Carne && nuevaDescripcion != ((Carne)productoSeleccionado).AnimalPropiedad)
+                {
+                    vendedorElegido.FijarAnimal((Carne)productoSeleccionado, txtModDescripcion.Text);
+                    dataGridView1.Rows[indiceFilaSeleccionada].Cells["Descripcion"].Value = nuevaDescripcion;
+                    MessageBox.Show("descripcion modificada", "error", MessageBoxButtons.OK);
+                }
+                else if (productoSeleccionado is Embutido && nuevaDescripcion != ((Embutido)productoSeleccionado).TipoEmbutidoPropiedad)
+                {
+                    vendedorElegido.FijarTipoEmbutido((Embutido)productoSeleccionado, txtModDescripcion.Text);
+                    dataGridView1.Rows[indiceFilaSeleccionada].Cells["Descripcion"].Value = nuevaDescripcion;
+                    MessageBox.Show("descripcion modificada", "error", MessageBoxButtons.OK);
+                }
+
+            }
+
+
+            //MessageBox.Show("nuevo precio " + nuevoPrecio);
         }
     }
 }

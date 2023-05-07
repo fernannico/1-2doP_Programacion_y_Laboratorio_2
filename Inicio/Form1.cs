@@ -11,12 +11,12 @@ namespace Inicio
         private void frmLogin_Load(object sender, EventArgs e)
         {
             List<Usuario> usuarios = new List<Usuario>();
-            usuarios.Add(new Vendedor("vendedor1@gmail.com", "12345"));
-            usuarios.Add(new Vendedor("vendedor2@gmail.com", "12345"));
-            usuarios.Add(new Vendedor("vendedor3@gmail.com", "12345"));
-            usuarios.Add(new Cliente("cliente1@gmail.com", "12345"));
-            usuarios.Add(new Cliente("cliente2@gmail.com", "12345"));
-            usuarios.Add(new Cliente("cliente3@gmail.com", "12345"));
+            usuarios.Add(new Vendedor("vendedor1@gmail.com", "123456"));
+            usuarios.Add(new Vendedor("vendedor2@gmail.com", "2583"));
+            usuarios.Add(new Vendedor("vendedor3@gmail.com", "1475asasa"));
+            usuarios.Add(new Cliente("cliente1@gmail.com", "36955"));
+            usuarios.Add(new Cliente("cliente2@gmail.com", "789456"));
+            usuarios.Add(new Cliente("cliente3@gmail.com", "1597543"));
 
             foreach (Usuario usuario in usuarios)
             {
@@ -26,14 +26,16 @@ namespace Inicio
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-            if (listBox1.SelectedItem != null)
+            if (listBox1.SelectedItem is not null)
             {
                 Usuario usuarioSeleccionado = (Usuario)listBox1.SelectedItem;
+
                 if (listBox1.SelectedItem is Cliente && nudMontoCiente.Enabled && nudMontoCiente.Value > 0)
                 {
                     frmVenta frmVenta = new frmVenta();
                     frmVenta.ShowDialog();
-                }else if (listBox1.SelectedItem is Cliente && nudMontoCiente.Value == 0)
+                }
+                else if (listBox1.SelectedItem is Cliente && nudMontoCiente.Value == 0)
                 {
                     MessageBox.Show("Si usted es cliente, debe ingresar el monto maximo a gastar antes de comprar", "Error", MessageBoxButtons.OK);
                 }
@@ -49,6 +51,10 @@ namespace Inicio
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Usuario usuarioSeleccionado = (Usuario)listBox1.SelectedItem;
+            txtMail.Text = usuarioSeleccionado.MailPropiedad;
+            txtContrasenia.Text = usuarioSeleccionado.PwdPropiedad;
+
             if (listBox1.SelectedItem is not null)
             {
                 if (listBox1.SelectedItem is Cliente)
@@ -61,15 +67,5 @@ namespace Inicio
                 }
             }
         }
-
-        //private void label1_Click(object sender, EventArgs e)
-        //{
-
-        //}
-
-        //private void textBox1_TextChanged(object sender, EventArgs e)
-        //{
-
-        //}
     }
 }
