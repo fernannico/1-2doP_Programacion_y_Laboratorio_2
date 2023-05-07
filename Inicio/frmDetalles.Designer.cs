@@ -1,6 +1,6 @@
 ﻿namespace Inicio
 {
-    partial class frmVenta
+    partial class frmDetalles
     {
         /// <summary>
         /// Required designer variable.
@@ -28,19 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
+            lblDetalles = new Label();
             SuspendLayout();
             // 
-            // frmVenta
+            // lblDetalles
+            // 
+            lblDetalles.AutoSize = true;
+            lblDetalles.Location = new Point(23, 25);
+            lblDetalles.Name = "lblDetalles";
+            lblDetalles.Size = new Size(50, 20);
+            lblDetalles.TabIndex = 0;
+            lblDetalles.Text = "label1";
+            // 
+            // frmDetalles
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Name = "frmVenta";
-            Text = "frmVenta";
-            Load += frmVenta_Load;
+            ClientSize = new Size(238, 192);
+            Controls.Add(lblDetalles);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "frmDetalles";
+            Text = "frmDetalles";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private Label lblDetalles;
     }
 }

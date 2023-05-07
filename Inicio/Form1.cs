@@ -10,36 +10,38 @@ namespace Inicio
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
+            List<Usuario> usuarios = new List<Usuario>();
+            usuarios.Add(new Vendedor("vendedor1@gmail.com", "12345"));
+            usuarios.Add(new Vendedor("vendedor2@gmail.com", "12345"));
+            usuarios.Add(new Vendedor("vendedor3@gmail.com", "12345"));
+            usuarios.Add(new Cliente("cliente1@gmail.com", "12345"));
+            usuarios.Add(new Cliente("cliente2@gmail.com", "12345"));
+            usuarios.Add(new Cliente("cliente3@gmail.com", "12345"));
 
-            listBox1.Items.Add(new Vendedor("vendedor1@gmail.com", "12345"));
-            listBox1.Items.Add(new Vendedor("vendedor2@gmail.com", "12345"));
-            listBox1.Items.Add(new Vendedor("vendedor3@gmail.com", "12345"));
-            listBox1.Items.Add(new Cliente("cliente1@gmail.com", "12345"));
-            listBox1.Items.Add(new Cliente("cliente2@gmail.com", "12345"));
-            listBox1.Items.Add(new Cliente("cliente3@gmail.com", "12345"));
-
-
+            foreach (Usuario usuario in usuarios)
+            {
+                listBox1.Items.Add(usuario);
+            }
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-            //if(listBox1.SelectedItems.Count > 0 && listBox1.SelectedItems ) { }
             if (listBox1.SelectedItem != null)
             {
-                Usuario selectedItem = (Usuario)listBox1.SelectedItem;
-                Type selectedType = selectedItem.GetType();
-
-                if (selectedType == typeof(Cliente))
+                Usuario usuarioSeleccionado = (Usuario)listBox1.SelectedItem;
+                if (listBox1.SelectedItem is Cliente && nudMontoCiente.Enabled && nudMontoCiente.Value > 0)
                 {
-                    //MessageBox.Show($"{selectedType} seleccionado");
                     frmVenta frmVenta = new frmVenta();
                     frmVenta.ShowDialog();
+                }else if (listBox1.SelectedItem is Cliente && nudMontoCiente.Value == 0)
+                {
+                    MessageBox.Show("Si usted es cliente, debe ingresar el monto maximo a gastar antes de comprar", "Error", MessageBoxButtons.OK);
                 }
 
-                if (selectedType == typeof(Vendedor))
+                if (listBox1.SelectedItem is Vendedor)
                 {
-                    //MessageBox.Show("Vendedor seleccionado");
-                    frmHeladera frmHeladera = new frmHeladera();
+                    Vendedor vendedorSeleccionado = (Vendedor)usuarioSeleccionado;
+                    frmHeladera frmHeladera = new frmHeladera(vendedorSeleccionado);
                     frmHeladera.ShowDialog();
                 }
             }
@@ -47,7 +49,17 @@ namespace Inicio
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if (listBox1.SelectedItem is not null)
+            {
+                if (listBox1.SelectedItem is Cliente)
+                {
+                    nudMontoCiente.Enabled = true;
+                }
+                else if (listBox1.SelectedItem is Vendedor)
+                {
+                    nudMontoCiente.Enabled = false;
+                }
+            }
         }
 
         //private void label1_Click(object sender, EventArgs e)

@@ -10,16 +10,12 @@ using System.Windows.Forms;
 
 namespace Inicio
 {
-    public partial class frmVenta : Form
+    public partial class frmDetalles : Form
     {
-        public frmVenta()
+        public frmDetalles(string detalles)
         {
             InitializeComponent();
-        }
-
-        private void frmVenta_Load(object sender, EventArgs e)
-        {
-
+            lblDetalles.Text = detalles;
         }
     }
 }
