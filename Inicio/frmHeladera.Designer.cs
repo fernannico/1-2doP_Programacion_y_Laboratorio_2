@@ -73,13 +73,18 @@ namespace Inicio
             // 
             // dataGridView1
             // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AllowUserToResizeColumns = false;
+            dataGridView1.AllowUserToResizeRows = false;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(12, 44);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 29;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(587, 352);
+            dataGridView1.Size = new Size(465, 352);
             dataGridView1.TabIndex = 3;
             dataGridView1.CellClick += dataGridView1_CellClick;
             // 
@@ -87,7 +92,7 @@ namespace Inicio
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
-            label1.Location = new Point(630, 13);
+            label1.Location = new Point(502, 13);
             label1.Name = "label1";
             label1.Size = new Size(196, 28);
             label1.TabIndex = 4;
@@ -174,7 +179,7 @@ namespace Inicio
             groupBox1.Controls.Add(lblModifPrecio);
             groupBox1.Controls.Add(nudModifStock);
             groupBox1.Controls.Add(nudModifPrecio);
-            groupBox1.Location = new Point(630, 44);
+            groupBox1.Location = new Point(502, 44);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(265, 352);
             groupBox1.TabIndex = 13;
@@ -205,7 +210,7 @@ namespace Inicio
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(916, 419);
+            ClientSize = new Size(783, 419);
             Controls.Add(lblVendedorElegido);
             Controls.Add(groupBox1);
             Controls.Add(label1);

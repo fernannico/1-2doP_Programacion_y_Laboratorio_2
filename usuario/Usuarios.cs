@@ -79,12 +79,12 @@ namespace usuarios
 
     public class Cliente : Usuario
     {
-        int gastoMaximo;
+        decimal gastoMaximo;
         public Cliente(string mail, string contrasena) : base(mail, contrasena)
         {
 
         }
-        public int GastoMaximoPropiedad
+        public decimal GastoMaximoPropiedad
         {
             get { return gastoMaximo; }
             set { gastoMaximo = value; }
@@ -93,6 +93,5 @@ namespace usuarios
         {
             return $"Cliente - {mail}";
         }
-         
     }
 }

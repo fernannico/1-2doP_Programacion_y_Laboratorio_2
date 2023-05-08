@@ -120,6 +120,7 @@
             // 
             nudMontoCiente.Enabled = false;
             nudMontoCiente.Location = new Point(29, 194);
+            nudMontoCiente.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             nudMontoCiente.Name = "nudMontoCiente";
             nudMontoCiente.Size = new Size(200, 27);
             nudMontoCiente.TabIndex = 9;

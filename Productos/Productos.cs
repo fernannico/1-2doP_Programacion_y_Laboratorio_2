@@ -62,7 +62,7 @@ namespace ProductosNs
 
         public override string ToString()
         {
-            return $"{CortePropiedad} de {AnimalPropiedad} - {kgEnStock} Kilos";
+            return $"{CortePropiedad} de {AnimalPropiedad} - ${precioPorKg}/Kg";
         }
 
         public static explicit operator decimal (Carne item)
@@ -106,7 +106,7 @@ namespace ProductosNs
         }
         public override string ToString()
         {
-            return $"{TipoEmbutidoPropiedad} - {KgEnStockPropiedad} Kilos";
+            return $"{TipoEmbutidoPropiedad} - ${precioPorKg}/Kg";
         }
     }
 

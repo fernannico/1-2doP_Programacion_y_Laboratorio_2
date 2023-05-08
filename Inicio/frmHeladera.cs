@@ -17,37 +17,24 @@ namespace Inicio
     public partial class frmHeladera : Form
     {
         private Vendedor? vendedorElegido;
+        private List<Productos> productosStockList;
+        private int indiceFilaSeleccionada = -1;
 
         Dictionary<int, Productos> diccionarioProductos = new Dictionary<int, Productos>();
-
-        private int indiceFilaSeleccionada = -1;
 
         public frmHeladera()
         {
             InitializeComponent();
         }
-        public frmHeladera(Vendedor vendedor) : this()
+        public frmHeladera(Vendedor vendedor, List<Productos> listaProductos) : this()
         {
             this.vendedorElegido = vendedor;
+            this.productosStockList = listaProductos;
         }
 
         private void frmHeladera_Load(object sender, EventArgs e)
         {
             lblVendedorElegido.Text = vendedorElegido?.ToString();
-
-            List<Productos> productosStockList = new List<Productos>();
-            productosStockList.Add(new Carne(1830f, 10, "res", "asado"));
-            productosStockList.Add(new Carne(1900f, 10, "res", "bife"));
-            productosStockList.Add(new Carne(2389f, 10, "res", "milanesa"));
-            productosStockList.Add(new Carne(2299f, 10, "res", "vacio"));
-            productosStockList.Add(new Carne(600f, 10, "pollo", "entero"));
-            productosStockList.Add(new Carne(960f, 10, "pollo", "1/4 trasero"));
-            productosStockList.Add(new Carne(1865f, 10, "pollo", "suprema"));
-            productosStockList.Add(new Embutido(1900f, 10, "chori"));
-            productosStockList.Add(new Embutido(1120f, 10, "morcilla"));
-            productosStockList.Add(new Embutido(500f, 10, "salchicha"));
-            productosStockList.Add(new Embutido(550f, 10, "salchicha parrillera"));
-            productosStockList.Add(new Embutido(1600f, 10, "longaniza"));
 
             DataTable dataTable = new DataTable();
             dataGridView1.DataSource = dataTable;
@@ -114,18 +101,6 @@ namespace Inicio
                 }
             }
             else { btnDetalles.Enabled = false; btnModificar.Enabled = false; }
-            //ELIGIENDO CADA CELDA
-            //if (e.RowIndex >= 0 && e.ColumnIndex == 1)
-            //{
-            //    Productos producto = dataGridView1.SelectedRows[0].DataBoundItem as Carne;
-
-            //    if (producto is Carne)
-            //    {
-            //        txtModifCorte.Enabled = true;
-            //        txtModifCorte.Text = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-
-            //    }
-            //} else { txtModifCorte.Enabled = false; }
         }
 
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
@@ -163,7 +138,7 @@ namespace Inicio
                 }
 
                 nuevoKgStock = (int)nudModifStock.Value;
-                if (nuevoKgStock > 0 )
+                if (nuevoKgStock > 0)
                 {
                     vendedorElegido.ReponerProductos(productoSeleccionado, (int)nudModifStock.Value);
                     dataGridView1.Rows[indiceFilaSeleccionada].Cells["kg en stock"].Value = productoSeleccionado.KgEnStockPropiedad;
