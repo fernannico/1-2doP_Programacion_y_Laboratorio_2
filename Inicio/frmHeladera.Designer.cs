@@ -44,6 +44,9 @@ namespace Inicio
             groupBox1 = new GroupBox();
             btnDetalles = new Button();
             lblVendedorElegido = new Label();
+            btnVender = new Button();
+            comboBoxClientes = new ComboBox();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudModifStock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudModifPrecio).BeginInit();
@@ -205,11 +208,43 @@ namespace Inicio
             lblVendedorElegido.TabIndex = 14;
             lblVendedorElegido.Text = "label2";
             // 
+            // btnVender
+            // 
+            btnVender.Enabled = false;
+            btnVender.Location = new Point(325, 402);
+            btnVender.Name = "btnVender";
+            btnVender.Size = new Size(152, 29);
+            btnVender.TabIndex = 15;
+            btnVender.Text = "Vender";
+            btnVender.UseVisualStyleBackColor = true;
+            btnVender.Click += btnVender_Click;
+            // 
+            // comboBoxClientes
+            // 
+            comboBoxClientes.FormattingEnabled = true;
+            comboBoxClientes.Location = new Point(113, 402);
+            comboBoxClientes.Name = "comboBoxClientes";
+            comboBoxClientes.Size = new Size(206, 28);
+            comboBoxClientes.TabIndex = 16;
+            comboBoxClientes.SelectedIndexChanged += comboBoxClientes_SelectedIndexChanged;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(12, 406);
+            label2.Name = "label2";
+            label2.Size = new Size(95, 20);
+            label2.TabIndex = 17;
+            label2.Text = "Elegir cliente";
+            // 
             // frmHeladera
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(783, 419);
+            ClientSize = new Size(783, 441);
+            Controls.Add(label2);
+            Controls.Add(comboBoxClientes);
+            Controls.Add(btnVender);
             Controls.Add(lblVendedorElegido);
             Controls.Add(groupBox1);
             Controls.Add(label1);
@@ -244,5 +279,8 @@ namespace Inicio
         private GroupBox groupBox1;
         private Label lblVendedorElegido;
         private Button btnDetalles;
+        private Button btnVender;
+        private ComboBox comboBoxClientes;
+        private Label label2;
     }
 }

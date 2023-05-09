@@ -31,6 +31,7 @@ namespace Inicio
             this.productosStockList = listaProductos;
             this.usuariosList = listaUsuarios;
         }
+
         private void CalcularCostoTotal()
         {
             decimal total = 0;
@@ -44,7 +45,7 @@ namespace Inicio
         {
             foreach (Usuario usuarios in usuariosList)
             {
-                if(usuarios is Vendedor)
+                if (usuarios is Vendedor)
                 {
                     comboBoxVendedores.Items.Add(usuarios);
                 }
@@ -57,7 +58,7 @@ namespace Inicio
 
             lblCliente.Text = "Cliente: " + clienteElegido.MailPropiedad;
             lblMontoCliente.Text = "Monto maximo a gastar: $" + (clienteElegido.GastoMaximoPropiedad).ToString();
-            
+
             DataTable dataTable = new DataTable();
             dataGridView1.DataSource = dataTable;
 
@@ -178,13 +179,13 @@ namespace Inicio
             if (btnComprar.Enabled && costoTotal < clienteElegido.GastoMaximoPropiedad)
             {
                 DialogResult = MessageBox.Show("Pagaras con credito?", "EFECTIVO O CREDITO", MessageBoxButtons.YesNo);
-                if(DialogResult == DialogResult.Yes) 
+                if (DialogResult == DialogResult.Yes)
                 {
                     costoTotal = costoTotal * (decimal)1.05;
                 }
                 DialogResult = MessageBox.Show($"Efectuar la compra? el monto total es de {costoTotal}", "COBRO", MessageBoxButtons.OKCancel);
-                
-                if(DialogResult == DialogResult.OK)
+
+                if (DialogResult == DialogResult.OK)
                 {
                     foreach (DataGridViewRow row in dataGridView1.Rows)
                     {
@@ -194,7 +195,7 @@ namespace Inicio
                             listaProductosComprados.Add(producto);
                         }
                     }
-                                
+
                     clienteElegido.EfectuarCompraventa(costoTotal);
                     vendedorElegido.EfectuarCompraventa(costoTotal);
                     Factura factura;
@@ -212,9 +213,35 @@ namespace Inicio
             else { MessageBox.Show("se quedó sin dinero para comprar estos items"); }
         }
 
-        private void comboBoxVendedores_SelectedIndexChanged(object sender, EventArgs e)
+        private void txtBuscador_TextChanged(object sender, EventArgs e)
         {
-
+            string producto = txtBuscador.Text;
+            string corte;
+            string tipoEmbutido;
+            int index = -1;
+            foreach (object item in listBoxProductos.Items)
+            {
+                if (item is Carne)
+                {
+                    corte = ((Carne)item).CortePropiedad;
+                    if (producto == corte)
+                    {
+                        //MessageBox.Show("/*match*/");
+                        index = listBoxProductos.Items.IndexOf(item);
+                        break;
+                    }
+                }
+                if (item is Embutido)
+                {
+                    tipoEmbutido = ((Embutido)item).TipoEmbutidoPropiedad;
+                    if (producto == tipoEmbutido)
+                    {
+                        index = listBoxProductos.Items.IndexOf(item);
+                        break;
+                    }
+                }
+            }
+            listBoxProductos.SelectedIndex = index;
         }
     }
 }

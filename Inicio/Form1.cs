@@ -61,7 +61,7 @@ namespace Inicio
                 if (listBox1.SelectedItem is Vendedor)
                 {
                     Vendedor vendedorSeleccionado = (Vendedor)usuarioSeleccionado;
-                    frmHeladera frmHeladera = new frmHeladera(vendedorSeleccionado, productosStockList);
+                    frmHeladera frmHeladera = new frmHeladera(vendedorSeleccionado, productosStockList, usuarios);
                     frmHeladera.ShowDialog();
                 }
             }

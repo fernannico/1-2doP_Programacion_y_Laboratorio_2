@@ -6,6 +6,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,7 +18,9 @@ namespace Inicio
     public partial class frmHeladera : Form
     {
         private Vendedor? vendedorElegido;
+        private Cliente? clienteElegido;
         private List<Productos> productosStockList;
+        private List<Usuario> usuariosList;
         private int indiceFilaSeleccionada = -1;
 
         Dictionary<int, Productos> diccionarioProductos = new Dictionary<int, Productos>();
@@ -26,11 +29,25 @@ namespace Inicio
         {
             InitializeComponent();
         }
-        public frmHeladera(Vendedor vendedor, List<Productos> listaProductos) : this()
+        public frmHeladera(Vendedor vendedor, List<Productos> listaProductos, List<Usuario> listaUsuarios) : this()
         {
             this.vendedorElegido = vendedor;
             this.productosStockList = listaProductos;
+            this.usuariosList = listaUsuarios;
         }
+
+        public Cliente ClienteElegidoPropiedad
+        {
+            get
+            {
+                return clienteElegido;
+            }
+            set
+            {
+                clienteElegido = value;
+            }
+        }
+
 
         private void frmHeladera_Load(object sender, EventArgs e)
         {
@@ -73,6 +90,15 @@ namespace Inicio
                 diccionarioProductos.Add(posicionFila, item);
                 posicionFila++;
             }
+
+            foreach (Usuario usuarios in usuariosList)
+            {
+                if (usuarios is Cliente)
+                {
+                    comboBoxClientes.Items.Add(usuarios);
+                }
+            }
+
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -155,9 +181,27 @@ namespace Inicio
                 }
 
             }
+        }
+        private void comboBoxClientes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxClientes.SelectedIndex >= 0)
+            {
+                btnVender.Enabled = true;
+            }
+        }
 
+        private void btnVender_Click(object sender, EventArgs e)
+        {
+            Cliente cliente;
+            int indiceComboboxCliente = comboBoxClientes.SelectedIndex;
 
-            //MessageBox.Show("nuevo precio " + nuevoPrecio);
+            if(btnVender.Enabled == true)
+            {
+                cliente = (Cliente)comboBoxClientes.SelectedItem;
+                
+                frmVenta frmVenta = new frmVenta(cliente, productosStockList, usuariosList);
+                frmVenta.ShowDialog();
+            }
         }
     }
 }
