@@ -50,7 +50,7 @@ namespace Inicio
                 {
                     Cliente clienteSeleccionado = (Cliente)usuarioSeleccionado;
                     clienteSeleccionado.GastoMaximoPropiedad = nudMontoCiente.Value;
-                    frmVenta frmVenta = new frmVenta(clienteSeleccionado, productosStockList);
+                    frmVenta frmVenta = new frmVenta(clienteSeleccionado, productosStockList, usuarios);
                     frmVenta.ShowDialog();
                 }
                 else if (listBox1.SelectedItem is Cliente && nudMontoCiente.Value == 0)

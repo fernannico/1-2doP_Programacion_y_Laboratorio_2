@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Facturas\Facturas.csproj" />
     <ProjectReference Include="..\Productos\Productos.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
-﻿using ProductosNs;
+﻿using Facturas;
+using ProductosNs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +16,7 @@ namespace Inicio
     public partial class frmVenta : Form
     {
         private Cliente? clienteElegido;
+        List<Usuario> usuariosList;
         private List<Productos> productosStockList;
         decimal costoTotal;
 
@@ -23,10 +25,11 @@ namespace Inicio
             InitializeComponent();
         }
 
-        public frmVenta(Cliente cliente, List<Productos> listaProductos) : this()
+        public frmVenta(Cliente cliente, List<Productos> listaProductos, List<Usuario> listaUsuarios) : this()
         {
             this.clienteElegido = cliente;
             this.productosStockList = listaProductos;
+            this.usuariosList = listaUsuarios;
         }
         private void CalcularCostoTotal()
         {
@@ -39,14 +42,22 @@ namespace Inicio
         }
         private void frmVenta_Load(object sender, EventArgs e)
         {
-            lblCliente.Text = "Cliente: " + clienteElegido.MailPropiedad;
-            lblMontoCliente.Text = "Monto maximo a gastar: $" + (clienteElegido.GastoMaximoPropiedad).ToString();
+            foreach (Usuario usuarios in usuariosList)
+            {
+                if(usuarios is Vendedor)
+                {
+                    comboBoxVendedores.Items.Add(usuarios);
+                }
+            }
 
             foreach (Productos productos in productosStockList)
             {
                 listBoxProductos.Items.Add(productos);
             }
 
+            lblCliente.Text = "Cliente: " + clienteElegido.MailPropiedad;
+            lblMontoCliente.Text = "Monto maximo a gastar: $" + (clienteElegido.GastoMaximoPropiedad).ToString();
+            
             DataTable dataTable = new DataTable();
             dataGridView1.DataSource = dataTable;
 
@@ -56,7 +67,7 @@ namespace Inicio
         }
         private void listBoxProductos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBoxProductos.SelectedItem is not null && nudKgs.Value > 0)
+            if (comboBoxVendedores.SelectedIndex is > 0 && listBoxProductos.SelectedItem is not null && nudKgs.Value > 0)
             {
                 btnAgregar.Enabled = true;
             }
@@ -109,7 +120,7 @@ namespace Inicio
         }
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedRows is not null)
+            if (dataGridView1.SelectedRows is not null && dataGridView1.Rows.Count > 0)
             {
                 btnEliminar.Enabled = true;
             }
@@ -119,17 +130,18 @@ namespace Inicio
         {
             Productos productoEliminado;
             decimal kgStockRecuperados;
-            if (btnEliminar.Enabled)
+            if (btnEliminar.Enabled && dataGridView1.SelectedRows is not null)
             {
                 productoEliminado = (Productos)dataGridView1.SelectedRows[0].Cells[0].Value;
                 kgStockRecuperados = Convert.ToDecimal(dataGridView1.SelectedRows[0].Cells[1].Value);
                 //MessageBox.Show(productoEliminado.ToString());
                 productoEliminado.KgEnStockPropiedad = (int)((decimal)productoEliminado.KgEnStockPropiedad + kgStockRecuperados);
+
                 dataGridView1.Rows.Remove(dataGridView1.SelectedRows[0]);
                 CalcularCostoTotal();
                 txtTotal.Text = "Total: $" + costoTotal.ToString();
             }
-            txtTotal.Refresh();            
+            txtTotal.Refresh();
         }
 
         private void frmVenta_FormClosing(object sender, FormClosingEventArgs e)
@@ -137,9 +149,72 @@ namespace Inicio
             if (dataGridView1.Rows.Count > 0)
             {
                 e.Cancel = true;
-                MessageBox.Show("No puede cerrar el formulario con elementos en el carrito.\n " +
-                    "Si quiere cancelar la venta, primero eliminar los productos del carrito");
+                MessageBox.Show("Si quiere cancelar la venta, primero elimine los productos del carrito");
             }
+        }
+
+        private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            if (dataGridView1.Rows.Count > 0)
+            {
+                btnComprar.Enabled = true;
+            }
+        }
+
+        private void dataGridView1_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            if (dataGridView1.Rows.Count <= 0)
+            {
+                btnComprar.Enabled = false;
+                btnEliminar.Enabled = false;
+            }
+        }
+
+        private void btnComprar_Click(object sender, EventArgs e)
+        {
+            Vendedor? vendedorElegido = comboBoxVendedores.SelectedItem as Vendedor;
+            List<Productos> listaProductosComprados = new List<Productos>();
+
+            if (btnComprar.Enabled && costoTotal < clienteElegido.GastoMaximoPropiedad)
+            {
+                DialogResult = MessageBox.Show("Pagaras con credito?", "EFECTIVO O CREDITO", MessageBoxButtons.YesNo);
+                if(DialogResult == DialogResult.Yes) 
+                {
+                    costoTotal = costoTotal * (decimal)1.05;
+                }
+                DialogResult = MessageBox.Show($"Efectuar la compra? el monto total es de {costoTotal}", "COBRO", MessageBoxButtons.OKCancel);
+                
+                if(DialogResult == DialogResult.OK)
+                {
+                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    {
+                        Productos? producto = row.Cells[0].Value as Productos;
+                        if (producto != null)
+                        {
+                            listaProductosComprados.Add(producto);
+                        }
+                    }
+                                
+                    clienteElegido.EfectuarCompraventa(costoTotal);
+                    vendedorElegido.EfectuarCompraventa(costoTotal);
+                    Factura factura;
+                    factura = vendedorElegido.HacerFactura(vendedorElegido.MailPropiedad, clienteElegido.MailPropiedad, costoTotal, listaProductosComprados);
+
+                    MessageBox.Show(factura.MostrarFactura());
+
+                    while (dataGridView1.Rows.Count > 0)
+                    {
+                        dataGridView1.Rows.RemoveAt(0);
+                    }
+                    lblMontoCliente.Text = "Monto maximo a gastar: $" + (clienteElegido.GastoMaximoPropiedad).ToString();
+                }
+            }
+            else { MessageBox.Show("se quedó sin dinero para comprar estos items"); }
+        }
+
+        private void comboBoxVendedores_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

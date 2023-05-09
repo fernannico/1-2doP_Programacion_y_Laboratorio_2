@@ -129,7 +129,6 @@ namespace Inicio
             nudModifPrecio.Size = new Size(230, 27);
             nudModifPrecio.TabIndex = 8;
             nudModifPrecio.Tag = "";
-            nudModifPrecio.ValueChanged += numericUpDown2_ValueChanged;
             // 
             // lblModifPrecio
             // 

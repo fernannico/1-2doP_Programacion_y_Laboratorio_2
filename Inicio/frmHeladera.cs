@@ -103,11 +103,6 @@ namespace Inicio
             else { btnDetalles.Enabled = false; btnModificar.Enabled = false; }
         }
 
-        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
-        {
-            //cambiar precio
-
-        }
         private void button1_Click(object sender, EventArgs e)
         {
             Productos productoSeleccionado = diccionarioProductos[indiceFilaSeleccionada];

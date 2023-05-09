@@ -40,7 +40,8 @@
             btnEliminar = new Button();
             txtTotal = new TextBox();
             btnComprar = new Button();
-            backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            comboBoxVendedores = new ComboBox();
+            label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)nudKgs).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -59,7 +60,7 @@
             // 
             lblCliente.AutoSize = true;
             lblCliente.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lblCliente.Location = new Point(18, 16);
+            lblCliente.Location = new Point(447, 18);
             lblCliente.Name = "lblCliente";
             lblCliente.Size = new Size(65, 28);
             lblCliente.TabIndex = 1;
@@ -69,7 +70,7 @@
             // 
             lblMontoCliente.AutoSize = true;
             lblMontoCliente.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            lblMontoCliente.Location = new Point(18, 52);
+            lblMontoCliente.Location = new Point(447, 54);
             lblMontoCliente.Name = "lblMontoCliente";
             lblMontoCliente.Size = new Size(70, 28);
             lblMontoCliente.TabIndex = 2;
@@ -142,6 +143,8 @@
             dataGridView1.Size = new Size(507, 244);
             dataGridView1.TabIndex = 9;
             dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
+            dataGridView1.RowsAdded += dataGridView1_RowsAdded;
+            dataGridView1.RowsRemoved += dataGridView1_RowsRemoved;
             dataGridView1.SelectionChanged += dataGridView1_SelectionChanged;
             // 
             // btnEliminar
@@ -165,18 +168,41 @@
             // 
             // btnComprar
             // 
+            btnComprar.Enabled = false;
             btnComprar.Location = new Point(748, 372);
             btnComprar.Name = "btnComprar";
             btnComprar.Size = new Size(117, 29);
             btnComprar.TabIndex = 12;
             btnComprar.Text = "Comprar";
             btnComprar.UseVisualStyleBackColor = true;
+            btnComprar.Click += btnComprar_Click;
+            // 
+            // comboBoxVendedores
+            // 
+            comboBoxVendedores.FormattingEnabled = true;
+            comboBoxVendedores.Location = new Point(114, 49);
+            comboBoxVendedores.Name = "comboBoxVendedores";
+            comboBoxVendedores.Size = new Size(226, 28);
+            comboBoxVendedores.TabIndex = 13;
+            comboBoxVendedores.SelectedIndexChanged += comboBoxVendedores_SelectedIndexChanged;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.Location = new Point(149, 18);
+            label4.Name = "label4";
+            label4.Size = new Size(155, 28);
+            label4.TabIndex = 14;
+            label4.Text = "Elegir vendedor ";
             // 
             // frmVenta
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(877, 417);
+            Controls.Add(label4);
+            Controls.Add(comboBoxVendedores);
             Controls.Add(btnComprar);
             Controls.Add(txtTotal);
             Controls.Add(btnEliminar);
@@ -215,6 +241,7 @@
         private Button btnEliminar;
         private TextBox txtTotal;
         private Button btnComprar;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private ComboBox comboBoxVendedores;
+        private Label label4;
     }
 }

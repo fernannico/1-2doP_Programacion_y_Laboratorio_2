@@ -1,9 +1,11 @@
-﻿using ProductosNs;
+﻿using Facturas;
+using ProductosNs;
 
 namespace usuarios
 {
     public abstract class Usuario
     {
+        protected decimal dinero;
         protected string mail;
         protected string contrasena;
 
@@ -22,6 +24,8 @@ namespace usuarios
         {
             get { return contrasena; }
         }
+
+        public virtual void EfectuarCompraventa(decimal importe){ }
     }
 
     public class Vendedor : Usuario
@@ -31,6 +35,7 @@ namespace usuarios
         //● Puede reponer los productos de la heladera principal
         //● Fijar precios por kilo
         //● Fijar tipos de cortes de carnes
+
         public Vendedor(string mail, string contrasena) : base(mail, contrasena)
         {
 
@@ -39,6 +44,11 @@ namespace usuarios
         public override string ToString()
         {
             return $"Vendedor - {mail}";
+        }
+        public decimal DineroPropiedad
+        {
+            get { return dinero; }
+            set { dinero = value; }
         }
 
         public void FijarAnimal(Carne carneItem, string animal)
@@ -75,23 +85,41 @@ namespace usuarios
         {
             return producto.MostrarDetalle();
         }
+
+        public override void EfectuarCompraventa(decimal importe)
+        {
+            base.EfectuarCompraventa(importe);
+            DineroPropiedad = DineroPropiedad - importe;
+        }
+
+        public Factura HacerFactura(string nombreVendedor, string nombreCliente, decimal monto, List<Productos> productosList)
+        {
+            Factura factura = new Factura(nombreVendedor, nombreCliente, monto, productosList, DateTime.Now); 
+            return factura;
+        }
+
     }
 
     public class Cliente : Usuario
     {
-        decimal gastoMaximo;
         public Cliente(string mail, string contrasena) : base(mail, contrasena)
         {
 
         }
         public decimal GastoMaximoPropiedad
         {
-            get { return gastoMaximo; }
-            set { gastoMaximo = value; }
+            get { return dinero; }
+            set { dinero = value; }
         }
         public override string ToString()
         {
             return $"Cliente - {mail}";
+        }
+
+        public override void EfectuarCompraventa(decimal importe)
+        {
+            base.EfectuarCompraventa(importe);
+            GastoMaximoPropiedad = GastoMaximoPropiedad - importe;
         }
     }
 }
