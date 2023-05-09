@@ -44,7 +44,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(238, 192);
+            ClientSize = new Size(204, 156);
             Controls.Add(lblDetalles);
             MaximizeBox = false;
             MinimizeBox = false;
