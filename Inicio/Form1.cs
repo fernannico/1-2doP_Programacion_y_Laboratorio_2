@@ -17,9 +17,9 @@ namespace Inicio
             usuarios.Add(new Vendedor("vendedor1@gmail.com", "123456"));
             usuarios.Add(new Vendedor("vendedor2@gmail.com", "2583"));
             usuarios.Add(new Vendedor("vendedor3@gmail.com", "1475asasa"));
-            usuarios.Add(new Cliente("cliente1@gmail.com", "36955"));
-            usuarios.Add(new Cliente("cliente2@gmail.com", "789456"));
-            usuarios.Add(new Cliente("cliente3@gmail.com", "1597543"));
+            usuarios.Add(new Cliente("cliente1@gmail.com", "36955",100000));
+            usuarios.Add(new Cliente("cliente2@gmail.com", "789456",50000));
+            usuarios.Add(new Cliente("cliente3@gmail.com", "1597543",10000));
 
             foreach (Usuario usuario in usuarios)
             {

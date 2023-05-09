@@ -202,6 +202,7 @@
             txtBuscador.Name = "txtBuscador";
             txtBuscador.Size = new Size(173, 27);
             txtBuscador.TabIndex = 15;
+            txtBuscador.Text = "buscador";
             txtBuscador.TextChanged += txtBuscador_TextChanged;
             // 
             // frmVenta
