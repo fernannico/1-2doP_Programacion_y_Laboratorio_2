@@ -43,6 +43,7 @@ namespace Inicio
         }
         private void frmVenta_Load(object sender, EventArgs e)
         {
+            this.Text = "Bienvenido a la seccion de compraventa";
             foreach (Usuario usuarios in usuariosList)
             {
                 if (usuarios is Vendedor)

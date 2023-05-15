@@ -43,7 +43,6 @@ namespace Inicio
             lblModifDescripcion = new Label();
             groupBox1 = new GroupBox();
             btnDetalles = new Button();
-            lblVendedorElegido = new Label();
             btnVender = new Button();
             comboBoxClientes = new ComboBox();
             label2 = new Label();
@@ -57,7 +56,7 @@ namespace Inicio
             // 
             lblHeladera.AutoSize = true;
             lblHeladera.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
-            lblHeladera.Location = new Point(387, 13);
+            lblHeladera.Location = new Point(59, 9);
             lblHeladera.Name = "lblHeladera";
             lblHeladera.Size = new Size(74, 28);
             lblHeladera.TabIndex = 0;
@@ -199,15 +198,6 @@ namespace Inicio
             btnDetalles.UseVisualStyleBackColor = true;
             btnDetalles.Click += button1_Click;
             // 
-            // lblVendedorElegido
-            // 
-            lblVendedorElegido.AutoSize = true;
-            lblVendedorElegido.Location = new Point(90, 10);
-            lblVendedorElegido.Name = "lblVendedorElegido";
-            lblVendedorElegido.Size = new Size(50, 20);
-            lblVendedorElegido.TabIndex = 14;
-            lblVendedorElegido.Text = "label2";
-            // 
             // btnVender
             // 
             btnVender.Enabled = false;
@@ -245,13 +235,12 @@ namespace Inicio
             Controls.Add(label2);
             Controls.Add(comboBoxClientes);
             Controls.Add(btnVender);
-            Controls.Add(lblVendedorElegido);
             Controls.Add(groupBox1);
             Controls.Add(label1);
             Controls.Add(dataGridView1);
             Controls.Add(lblHeladera);
             Name = "frmHeladera";
-            Text = "frmHeladera";
+            Text = "Bienvenido ";
             Load += frmHeladera_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudModifStock).EndInit();
@@ -277,7 +266,6 @@ namespace Inicio
         private Label lblModifCorte;
         private Label lblModifDescripcion;
         private GroupBox groupBox1;
-        private Label lblVendedorElegido;
         private Button btnDetalles;
         private Button btnVender;
         private ComboBox comboBoxClientes;
