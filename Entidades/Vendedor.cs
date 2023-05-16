@@ -19,11 +19,6 @@ namespace usuarios
         {
             return $"Vendedor - {mail}";
         }
-        public decimal DineroPropiedad
-        {
-            get { return dinero; }
-            set { dinero = value; }
-        }
 
         public void FijarAnimal(Carne carneItem, string animal)
         {
@@ -60,10 +55,9 @@ namespace usuarios
             return producto.MostrarDetalle();
         }
 
-        public override void EfectuarCompraventa(decimal importe)
+        public void Cobrar(Cliente clienteAPagar, decimal importe)
         {
-            base.EfectuarCompraventa(importe);
-            DineroPropiedad = DineroPropiedad - importe;
+            clienteAPagar.EfectuarCompraventa(importe);
         }
 
         public Factura HacerFactura(string nombreVendedor, string nombreCliente, decimal monto, List<Productos> productosList)

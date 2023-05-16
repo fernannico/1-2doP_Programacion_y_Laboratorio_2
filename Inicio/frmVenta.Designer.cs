@@ -43,6 +43,8 @@
             comboBoxVendedores = new ComboBox();
             label4 = new Label();
             txtBuscador = new TextBox();
+            listBoxHistorial = new ListBox();
+            label6 = new Label();
             ((System.ComponentModel.ISupportInitialize)nudKgs).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -163,6 +165,7 @@
             // 
             txtTotal.Location = new Point(592, 346);
             txtTotal.Name = "txtTotal";
+            txtTotal.ReadOnly = true;
             txtTotal.Size = new Size(125, 27);
             txtTotal.TabIndex = 11;
             txtTotal.Text = "Total:";
@@ -202,14 +205,34 @@
             txtBuscador.Name = "txtBuscador";
             txtBuscador.Size = new Size(173, 27);
             txtBuscador.TabIndex = 15;
-            txtBuscador.Text = "buscador";
             txtBuscador.TextChanged += txtBuscador_TextChanged;
+            // 
+            // listBoxHistorial
+            // 
+            listBoxHistorial.FormattingEnabled = true;
+            listBoxHistorial.ItemHeight = 20;
+            listBoxHistorial.Location = new Point(856, 96);
+            listBoxHistorial.Name = "listBoxHistorial";
+            listBoxHistorial.Size = new Size(210, 244);
+            listBoxHistorial.TabIndex = 16;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
+            label6.Location = new Point(856, 50);
+            label6.Name = "label6";
+            label6.Size = new Size(179, 28);
+            label6.TabIndex = 18;
+            label6.Text = "Historial compras";
             // 
             // frmVenta
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(852, 386);
+            ClientSize = new Size(1076, 386);
+            Controls.Add(label6);
+            Controls.Add(listBoxHistorial);
             Controls.Add(txtBuscador);
             Controls.Add(label4);
             Controls.Add(comboBoxVendedores);
@@ -254,5 +277,7 @@
         private ComboBox comboBoxVendedores;
         private Label label4;
         private TextBox txtBuscador;
+        private ListBox listBoxHistorial;
+        private Label label6;
     }
 }

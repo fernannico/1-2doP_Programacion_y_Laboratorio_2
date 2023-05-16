@@ -46,6 +46,7 @@ namespace Inicio
             btnVender = new Button();
             comboBoxClientes = new ComboBox();
             label2 = new Label();
+            btcFacturasHistorial = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudModifStock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudModifPrecio).BeginInit();
@@ -227,11 +228,23 @@ namespace Inicio
             label2.TabIndex = 17;
             label2.Text = "Elegir cliente";
             // 
+            // btcFacturasHistorial
+            // 
+            btcFacturasHistorial.Enabled = false;
+            btcFacturasHistorial.Location = new Point(520, 405);
+            btcFacturasHistorial.Name = "btcFacturasHistorial";
+            btcFacturasHistorial.Size = new Size(230, 29);
+            btcFacturasHistorial.TabIndex = 18;
+            btcFacturasHistorial.Text = "Ver historial de facturas";
+            btcFacturasHistorial.UseVisualStyleBackColor = true;
+            btcFacturasHistorial.Click += btcFacturasHistorial_Click;
+            // 
             // frmHeladera
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(783, 441);
+            Controls.Add(btcFacturasHistorial);
             Controls.Add(label2);
             Controls.Add(comboBoxClientes);
             Controls.Add(btnVender);
@@ -270,5 +283,6 @@ namespace Inicio
         private Button btnVender;
         private ComboBox comboBoxClientes;
         private Label label2;
+        private Button btcFacturasHistorial;
     }
 }

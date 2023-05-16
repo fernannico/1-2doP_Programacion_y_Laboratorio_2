@@ -5,7 +5,6 @@ namespace usuarios
 {
     public abstract class Usuario
     {
-        protected decimal dinero;
         protected string mail;
         protected string contrasena;
 
@@ -24,8 +23,6 @@ namespace usuarios
         {
             get { return contrasena; }
         }
-
-        public virtual void EfectuarCompraventa(decimal importe){ }
     }
 
 }

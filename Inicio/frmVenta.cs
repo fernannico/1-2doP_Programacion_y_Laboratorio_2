@@ -16,20 +16,22 @@ namespace Inicio
     public partial class frmVenta : Form
     {
         private Cliente? clienteElegido;
-        List<Usuario> usuariosList;
+        private List<Usuario> usuariosList;
         private List<Productos> productosStockList;
-        decimal costoTotal;
+        private decimal costoTotal;
+        public List<Factura> listaFacturasHistorial;
 
         public frmVenta()
         {
             InitializeComponent();
         }
 
-        public frmVenta(Cliente cliente, List<Productos> listaProductos, List<Usuario> listaUsuarios) : this()
+        public frmVenta(Cliente cliente, List<Productos> listaProductos, List<Usuario> listaUsuarios, List<Factura> facturasHistorial) : this()
         {
             this.clienteElegido = cliente;
             this.productosStockList = listaProductos;
             this.usuariosList = listaUsuarios;
+            this.listaFacturasHistorial = facturasHistorial;
         }
 
         private void CalcularCostoTotal()
@@ -59,6 +61,7 @@ namespace Inicio
 
             lblCliente.Text = "Cliente: " + clienteElegido.MailPropiedad;
             lblMontoCliente.Text = "Monto maximo a gastar: $" + (clienteElegido.GastoMaximoPropiedad).ToString();
+            txtBuscador.PlaceholderText = "Buscar corte:";
 
             DataTable dataTable = new DataTable();
             dataGridView1.DataSource = dataTable;
@@ -102,12 +105,13 @@ namespace Inicio
                         txtTotal.Text = "Total: $" + costoTotal.ToString();
                         txtTotal.Refresh();
                     }
-                    else { MessageBox.Show("No tenemos stock"); }
+                    else { MessageBox.Show("No tenemos stock", "Error de stock"); }
                 }
-                else { MessageBox.Show("comprar esta cantidad de producto supera su presupuesto "); }
+                else { MessageBox.Show("comprar esta cantidad de producto supera su presupuesto ", "Error de presupuesto", MessageBoxButtons.OK); }
             }
-            else { MessageBox.Show("la cantidad que intenta comprar ya supera su presupuesto"); }
+            else { MessageBox.Show("la cantidad que intenta comprar ya supera su presupuesto", "Error de presupuesto", MessageBoxButtons.OK); }
         }
+
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             int rowIndex = e.RowIndex;
@@ -134,9 +138,12 @@ namespace Inicio
             decimal kgStockRecuperados;
             if (btnEliminar.Enabled && dataGridView1.SelectedRows is not null)
             {
+                if (dataGridView1.SelectedRows.Count == 0)
+                {
+                    dataGridView1.Rows[0].Selected = true;
+                }
                 productoEliminado = (Productos)dataGridView1.SelectedRows[0].Cells[0].Value;
                 kgStockRecuperados = Convert.ToDecimal(dataGridView1.SelectedRows[0].Cells[1].Value);
-                //MessageBox.Show(productoEliminado.ToString());
                 productoEliminado.KgEnStockPropiedad = (int)((decimal)productoEliminado.KgEnStockPropiedad + kgStockRecuperados);
 
                 dataGridView1.Rows.Remove(dataGridView1.SelectedRows[0]);
@@ -148,10 +155,19 @@ namespace Inicio
 
         private void frmVenta_FormClosing(object sender, FormClosingEventArgs e)
         {
+            DialogResult seguir = MessageBox.Show("Desea seguir comprando?", "Compraventa", MessageBoxButtons.YesNo);
+            if (seguir == DialogResult.No)
+            {
+                e.Cancel = false;
+            }
+            else
+            {
+                e.Cancel = true;
+            }
             if (dataGridView1.Rows.Count > 0)
             {
                 e.Cancel = true;
-                MessageBox.Show("Si quiere cancelar la venta, primero elimine los productos del carrito");
+                MessageBox.Show("Si quiere cancelar la venta, primero elimine los productos del carrito", "Cancelar venta");
             }
         }
 
@@ -188,21 +204,39 @@ namespace Inicio
 
                 if (DialogResult == DialogResult.OK)
                 {
+                    Factura factura;
+                    vendedorElegido.Cobrar(clienteElegido, costoTotal);
+
                     foreach (DataGridViewRow row in dataGridView1.Rows)
                     {
                         Productos? producto = row.Cells[0].Value as Productos;
+                        decimal montoIndividual = (decimal)row.Cells[2].Value;
                         if (producto != null)
                         {
                             listaProductosComprados.Add(producto);
                         }
+
+                        StringBuilder sb = new StringBuilder();
+                        if (producto is Carne)
+                        {
+                            sb.AppendLine($"{((Carne)producto).CortePropiedad} de {((Carne)producto).AnimalPropiedad} - ${montoIndividual}");
+                        }
+                        else if (producto is Embutido)
+                        {
+                            sb.AppendLine($"{((Embutido)producto).TipoEmbutidoPropiedad} - ${montoIndividual}");
+                        }
+                        listBoxHistorial.Items.Add(sb.ToString());
                     }
 
-                    clienteElegido.EfectuarCompraventa(costoTotal);
-                    vendedorElegido.EfectuarCompraventa(costoTotal);
-                    Factura factura;
                     factura = vendedorElegido.HacerFactura(vendedorElegido.MailPropiedad, clienteElegido.MailPropiedad, costoTotal, listaProductosComprados);
+                    
+                    listaFacturasHistorial.Add(factura);
 
-                    MessageBox.Show(factura.MostrarFactura());
+                    MessageBox.Show(factura.MostrarFactura(), "Factura B");
+
+                    ////ESTO PASARIA A HELADERA PORQUE EDITAMOS EL HISTORIAL DE LOGIN desde aca
+                    //frmHistorialFacturas frmHistorialFacturas = new frmHistorialFacturas(listaFacturasHistorial);
+                    //frmHistorialFacturas.Show();
 
                     while (dataGridView1.Rows.Count > 0)
                     {
@@ -211,7 +245,7 @@ namespace Inicio
                     lblMontoCliente.Text = "Monto maximo a gastar: $" + (clienteElegido.GastoMaximoPropiedad).ToString();
                 }
             }
-            else { MessageBox.Show("se quedó sin dinero para comprar estos items"); }
+            else { MessageBox.Show("se quedó sin dinero para comprar estos items", "Falta de fondos"); }
         }
 
         private void txtBuscador_TextChanged(object sender, EventArgs e)
@@ -227,7 +261,6 @@ namespace Inicio
                     corte = ((Carne)item).CortePropiedad;
                     if (producto == corte)
                     {
-                        //MessageBox.Show("/*match*/");
                         index = listBoxProductos.Items.IndexOf(item);
                         break;
                     }

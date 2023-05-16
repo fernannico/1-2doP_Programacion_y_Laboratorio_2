@@ -20,10 +20,28 @@ namespace Facturas
             this.fecha = fecha;
         }
 
+        private DateTime FechaPropiedad
+        {
+            get { return fecha; }
+        }
+
+        public decimal MontoPropiedad
+        {
+            get { return monto; }
+        }
+
+        public string VendedorPropiedad
+        {
+            get { return nombreVendedor;}
+        }
+        public string ClientePropiedad
+        {
+            get { return nombreCliente; }
+        }
+
         public string MostrarFactura()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"                    FACTURA B");
             sb.AppendLine($"fecha: {fecha}");
             sb.AppendLine($"nombre del vendedor: {nombreVendedor}");
             sb.AppendLine($"nombre del cliente: {nombreCliente}");
@@ -42,6 +60,11 @@ namespace Facturas
             }
 
             return sb.ToString();
+        }
+
+        public override string ToString()
+        {
+            return $"Factura del {FechaPropiedad}";
         }
     }
 }

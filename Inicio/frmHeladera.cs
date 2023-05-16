@@ -1,4 +1,5 @@
-﻿using ProductosNs;
+﻿using Facturas;
+using ProductosNs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +21,7 @@ namespace Inicio
         private Vendedor? vendedorElegido;
         private Cliente? clienteElegido;
         private List<Productos> productosStockList;
+        private List<Factura> listaFacturasHistorial;
         private List<Usuario> usuariosList;
         private int indiceFilaSeleccionada = -1;
 
@@ -29,11 +31,12 @@ namespace Inicio
         {
             InitializeComponent();
         }
-        public frmHeladera(Vendedor vendedor, List<Productos> listaProductos, List<Usuario> listaUsuarios) : this()
+        public frmHeladera(Vendedor vendedor, List<Productos> listaProductos, List<Usuario> listaUsuarios, List<Factura> listaFacturasHistorial) : this()
         {
             this.vendedorElegido = vendedor;
             this.productosStockList = listaProductos;
             this.usuariosList = listaUsuarios;
+            this.listaFacturasHistorial = listaFacturasHistorial;
         }
 
         public Cliente ClienteElegidoPropiedad
@@ -51,7 +54,6 @@ namespace Inicio
 
         private void frmHeladera_Load(object sender, EventArgs e)
         {
-            //lblVendedorElegido.Text = vendedorElegido?.ToString();
 
             this.Text = "Bienvenido " + vendedorElegido.MailPropiedad;
 
@@ -73,7 +75,7 @@ namespace Inicio
 
             foreach (var item in productosStockList)
             {
-                DataRow dr = dataTable.NewRow();        
+                DataRow dr = dataTable.NewRow();
                 if (item is Carne)
                 {
                     Carne newItem = (Carne)item;
@@ -85,16 +87,16 @@ namespace Inicio
                     Embutido newItem = (Embutido)item;
                     dr["Descripcion"] = newItem.TipoEmbutidoPropiedad;
                 }
-                dr["kg en stock"] = item.KgEnStockPropiedad; 
+                dr["kg en stock"] = item.KgEnStockPropiedad;
                 dr["precio/Kg"] = item.PrecioPropiedad;
-                dataTable.Rows.Add(dr);                 
+                dataTable.Rows.Add(dr);
 
                 diccionarioProductos.Add(posicionFila, item);
                 posicionFila++;
             }
 
             dataGridView1.ClearSelection();
-            if(dataGridView1.SelectedRows.Count == 0) 
+            if (dataGridView1.SelectedRows.Count == 0)
             {
                 txtModDescripcion.Enabled = false;
                 txtModifCorte.Enabled = false;
@@ -108,6 +110,10 @@ namespace Inicio
                 {
                     comboBoxClientes.Items.Add(usuarios);
                 }
+            }
+            if (listaFacturasHistorial.Count > 0)
+            {
+                btcFacturasHistorial.Enabled = true;
             }
 
         }
@@ -169,7 +175,7 @@ namespace Inicio
                 float nuevoPrecio;
                 int nuevoKgStock;
                 bool huboModificacion = false;
-                
+
                 StringBuilder sb = new StringBuilder();
 
                 nuevaDescripcion = txtModDescripcion.Text;
@@ -183,12 +189,12 @@ namespace Inicio
                 else if (productoSeleccionado is Embutido && nuevaDescripcion != ((Embutido)productoSeleccionado).TipoEmbutidoPropiedad)
                 {
                     huboModificacion = true;
-                    sb.AppendLine($"- Nombre del embutido: de '{((Embutido)productoSeleccionado).TipoEmbutidoPropiedad}' a '{nuevaDescripcion}'");                    vendedorElegido.FijarTipoEmbutido((Embutido)productoSeleccionado, txtModDescripcion.Text);
+                    sb.AppendLine($"- Nombre del embutido: de '{((Embutido)productoSeleccionado).TipoEmbutidoPropiedad}' a '{nuevaDescripcion}'"); vendedorElegido.FijarTipoEmbutido((Embutido)productoSeleccionado, txtModDescripcion.Text);
                     dataGridView1.Rows[indiceFilaSeleccionada].Cells["Descripcion"].Value = nuevaDescripcion;
                 }
 
                 nuevoCorte = txtModifCorte.Text;
-                if(productoSeleccionado is Carne)
+                if (productoSeleccionado is Carne)
                 {
                     corteOriginal = ((Carne)productoSeleccionado).CortePropiedad;
                     if (nuevoCorte != corteOriginal)
@@ -218,11 +224,12 @@ namespace Inicio
                     dataGridView1.Rows[indiceFilaSeleccionada].Cells["precio/Kg"].Value = nuevoPrecio;
                 }
 
-                if(huboModificacion == true)
+                if (huboModificacion == true)
                 {
                     MessageBox.Show("Se modificaron:\n" + sb.ToString(), "Modificacion realizada", MessageBoxButtons.OK);
                     nudModifStock.Value = 0;
-                }else { MessageBox.Show("No se efectuó una modificacion", "Sin modificacion", MessageBoxButtons.OK); }
+                }
+                else { MessageBox.Show("No se efectuó una modificacion", "Sin modificacion", MessageBoxButtons.OK); }
             }
         }
         private void comboBoxClientes_SelectedIndexChanged(object sender, EventArgs e)
@@ -242,8 +249,17 @@ namespace Inicio
             {
                 cliente = (Cliente)comboBoxClientes.SelectedItem;
 
-                frmVenta frmVenta = new frmVenta(cliente, productosStockList, usuariosList);
+                frmVenta frmVenta = new frmVenta(cliente, productosStockList, usuariosList, listaFacturasHistorial);
                 frmVenta.ShowDialog();
+            }
+        }
+
+        private void btcFacturasHistorial_Click(object sender, EventArgs e)
+        {
+            if (btcFacturasHistorial.Enabled)
+            {
+                frmHistorialFacturas frmHistorialFacturas = new frmHistorialFacturas(listaFacturasHistorial);
+                frmHistorialFacturas.Show();
             }
         }
     }

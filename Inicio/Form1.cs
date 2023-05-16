@@ -1,3 +1,4 @@
+using Facturas;
 using ProductosNs;
 using usuarios;
 namespace Inicio
@@ -6,6 +7,7 @@ namespace Inicio
     {
         private List<Usuario> usuarios = new List<Usuario>();
         private List<Productos> productosStockList = new List<Productos>();
+        private List<Factura> listaFacturasHistorial = new List<Factura>();
 
         public frmLogin()
         {
@@ -17,9 +19,9 @@ namespace Inicio
             usuarios.Add(new Vendedor("vendedor1@gmail.com", "123456"));
             usuarios.Add(new Vendedor("vendedor2@gmail.com", "2583"));
             usuarios.Add(new Vendedor("vendedor3@gmail.com", "1475asasa"));
-            usuarios.Add(new Cliente("cliente1@gmail.com", "36955",100000));
-            usuarios.Add(new Cliente("cliente2@gmail.com", "789456",50000));
-            usuarios.Add(new Cliente("cliente3@gmail.com", "1597543",10000));
+            usuarios.Add(new Cliente("cliente1@gmail.com", "36955", 100000));
+            usuarios.Add(new Cliente("cliente2@gmail.com", "789456", 50000));
+            usuarios.Add(new Cliente("cliente3@gmail.com", "1597543", 10000));
 
             foreach (Usuario usuario in usuarios)
             {
@@ -46,24 +48,30 @@ namespace Inicio
             {
                 Usuario usuarioSeleccionado = (Usuario)listBox1.SelectedItem;
 
-                if (listBox1.SelectedItem is Cliente && nudMontoCiente.Enabled && nudMontoCiente.Value > 0)
+                if (listBox1.SelectedItem is Cliente /*&& nudMontoCiente.Enabled && nudMontoCiente.Value > 0*/)
                 {
+                    decimal gastoMaximo;
                     Cliente clienteSeleccionado = (Cliente)usuarioSeleccionado;
-                    clienteSeleccionado.GastoMaximoPropiedad = nudMontoCiente.Value;
-                    frmVenta frmVenta = new frmVenta(clienteSeleccionado, productosStockList, usuarios);
-                    frmVenta.ShowDialog();
-                }
-                else if (listBox1.SelectedItem is Cliente && nudMontoCiente.Value == 0)
-                {
-                    MessageBox.Show("Si usted es cliente, debe ingresar el monto maximo a gastar antes de comprar", "Error", MessageBoxButtons.OK);
+
+                    frmMontoCliente frmMontoCliente = new frmMontoCliente();
+                    frmMontoCliente.ShowDialog();
+
+                    gastoMaximo = frmMontoCliente.nudMontoCiente.Value;
+                    if (gastoMaximo > 0)
+                    {
+                        clienteSeleccionado.GastoMaximoPropiedad = gastoMaximo;
+                        frmVenta frmVenta = new frmVenta(clienteSeleccionado, productosStockList, usuarios, listaFacturasHistorial);
+                        frmVenta.ShowDialog();
+                    }
                 }
 
                 if (listBox1.SelectedItem is Vendedor)
                 {
                     Vendedor vendedorSeleccionado = (Vendedor)usuarioSeleccionado;
-                    frmHeladera frmHeladera = new frmHeladera(vendedorSeleccionado, productosStockList, usuarios);
+                    frmHeladera frmHeladera = new frmHeladera(vendedorSeleccionado, productosStockList, usuarios, listaFacturasHistorial);
                     frmHeladera.ShowDialog();
                 }
+
             }
         }
 
@@ -73,17 +81,17 @@ namespace Inicio
             txtMail.Text = usuarioSeleccionado.MailPropiedad;
             txtContrasenia.Text = usuarioSeleccionado.PwdPropiedad;
 
-            if (listBox1.SelectedItem is not null)
-            {
-                if (listBox1.SelectedItem is Cliente)
-                {
-                    nudMontoCiente.Enabled = true;
-                }
-                else if (listBox1.SelectedItem is Vendedor)
-                {
-                    nudMontoCiente.Enabled = false;
-                }
-            }
+            //if (listBox1.SelectedItem is not null)
+            //{
+            //    if (listBox1.SelectedItem is Cliente)
+            //    {
+            //        nudMontoCiente.Enabled = true;
+            //    }
+            //    else if (listBox1.SelectedItem is Vendedor)
+            //    {
+            //        nudMontoCiente.Enabled = false;
+            //    }
+            //}
         }
     }
 }

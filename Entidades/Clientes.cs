@@ -8,6 +8,7 @@ namespace usuarios
 {
     public class Cliente : Usuario
     {
+        private decimal dinero;
         public Cliente(string mail, string contrasena) : base(mail, contrasena)
         {
 
@@ -26,10 +27,9 @@ namespace usuarios
             return $"Cliente - {mail}";
         }
 
-        public override void EfectuarCompraventa(decimal importe)
+        public void EfectuarCompraventa(decimal importe)
         {
-            base.EfectuarCompraventa(importe);
-            GastoMaximoPropiedad = GastoMaximoPropiedad - importe;
+            GastoMaximoPropiedad -= importe;
         }
     }
 }
