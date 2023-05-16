@@ -19,7 +19,7 @@ namespace Inicio
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-            if(nudMontoCiente.Value > 0)
+            if (nudMontoCiente.Value > 0)
             {
                 this.Close();
             }

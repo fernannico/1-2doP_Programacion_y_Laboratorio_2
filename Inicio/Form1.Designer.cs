@@ -96,11 +96,13 @@
             // 
             // listBox1
             // 
+            listBox1.BackColor = Color.LightGray;
+            listBox1.BorderStyle = BorderStyle.FixedSingle;
             listBox1.FormattingEnabled = true;
             listBox1.ItemHeight = 20;
             listBox1.Location = new Point(257, 77);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(242, 124);
+            listBox1.Size = new Size(242, 122);
             listBox1.TabIndex = 7;
             listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
             // 
@@ -118,6 +120,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.NavajoWhite;
             ClientSize = new Size(508, 256);
             Controls.Add(label1);
             Controls.Add(listBox1);
@@ -127,7 +130,7 @@
             Controls.Add(btnIngresar);
             Controls.Add(lblContrasenia);
             Controls.Add(lblMail);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "frmLogin";

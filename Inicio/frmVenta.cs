@@ -60,7 +60,7 @@ namespace Inicio
                 }
             }
 
-            if(vendedorElegido is not null)
+            if (vendedorElegido is not null)
             {
                 indiceObjeto = usuariosList.IndexOf(vendedorElegido);
                 //MessageBox.Show($"{indiceObjeto}");
@@ -246,7 +246,7 @@ namespace Inicio
                     }
 
                     factura = vendedorElegido.HacerFactura(vendedorElegido.MailPropiedad, clienteElegido.MailPropiedad, costoTotal, listaProductosComprados);
-                    
+
                     listaFacturasHistorial.Add(factura);
 
                     MessageBox.Show(factura.MostrarFactura(), "Factura B");

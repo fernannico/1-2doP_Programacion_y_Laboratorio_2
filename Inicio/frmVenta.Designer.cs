@@ -51,6 +51,7 @@
             // 
             // listBoxProductos
             // 
+            listBoxProductos.BackColor = Color.Salmon;
             listBoxProductos.FormattingEnabled = true;
             listBoxProductos.ItemHeight = 20;
             listBoxProductos.Location = new Point(18, 96);
@@ -92,12 +93,13 @@
             // btnAgregar
             // 
             btnAgregar.Enabled = false;
+            btnAgregar.ForeColor = Color.Black;
             btnAgregar.Location = new Point(160, 345);
             btnAgregar.Name = "btnAgregar";
             btnAgregar.Size = new Size(149, 29);
             btnAgregar.TabIndex = 4;
             btnAgregar.Text = "Agregar al carrito";
-            btnAgregar.UseVisualStyleBackColor = true;
+            btnAgregar.UseVisualStyleBackColor = false;
             btnAgregar.Click += button1_Click;
             // 
             // label2
@@ -135,7 +137,7 @@
             dataGridView1.AllowUserToResizeColumns = false;
             dataGridView1.AllowUserToResizeRows = false;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            dataGridView1.BackgroundColor = SystemColors.Window;
+            dataGridView1.BackgroundColor = Color.MistyRose;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(333, 96);
             dataGridView1.Name = "dataGridView1";
@@ -183,6 +185,7 @@
             // 
             // comboBoxVendedores
             // 
+            comboBoxVendedores.BackColor = Color.Silver;
             comboBoxVendedores.FormattingEnabled = true;
             comboBoxVendedores.Location = new Point(178, 18);
             comboBoxVendedores.Name = "comboBoxVendedores";
@@ -209,6 +212,7 @@
             // 
             // listBoxHistorial
             // 
+            listBoxHistorial.BackColor = Color.MistyRose;
             listBoxHistorial.FormattingEnabled = true;
             listBoxHistorial.ItemHeight = 20;
             listBoxHistorial.Location = new Point(856, 96);
@@ -230,6 +234,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.LavenderBlush;
             ClientSize = new Size(1076, 386);
             Controls.Add(label6);
             Controls.Add(listBoxHistorial);
@@ -248,6 +253,7 @@
             Controls.Add(lblMontoCliente);
             Controls.Add(lblCliente);
             Controls.Add(listBoxProductos);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "frmVenta";

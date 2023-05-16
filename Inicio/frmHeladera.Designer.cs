@@ -81,6 +81,7 @@ namespace Inicio
             dataGridView1.AllowUserToResizeColumns = false;
             dataGridView1.AllowUserToResizeRows = false;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dataGridView1.BackgroundColor = SystemColors.Desktop;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(12, 44);
             dataGridView1.Name = "dataGridView1";
@@ -202,6 +203,7 @@ namespace Inicio
             // btnVender
             // 
             btnVender.Enabled = false;
+            btnVender.ForeColor = Color.FromArgb(0, 64, 0);
             btnVender.Location = new Point(325, 402);
             btnVender.Name = "btnVender";
             btnVender.Size = new Size(152, 29);
@@ -212,6 +214,7 @@ namespace Inicio
             // 
             // comboBoxClientes
             // 
+            comboBoxClientes.BackColor = Color.Aquamarine;
             comboBoxClientes.FormattingEnabled = true;
             comboBoxClientes.Location = new Point(113, 402);
             comboBoxClientes.Name = "comboBoxClientes";
@@ -243,6 +246,7 @@ namespace Inicio
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.GradientActiveCaption;
             ClientSize = new Size(783, 441);
             Controls.Add(btcFacturasHistorial);
             Controls.Add(label2);
@@ -252,6 +256,7 @@ namespace Inicio
             Controls.Add(label1);
             Controls.Add(dataGridView1);
             Controls.Add(lblHeladera);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "frmHeladera";
             Text = "Bienvenido ";
             Load += frmHeladera_Load;

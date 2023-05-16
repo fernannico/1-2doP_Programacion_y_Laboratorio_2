@@ -44,12 +44,14 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Salmon;
             ClientSize = new Size(204, 156);
             Controls.Add(lblDetalles);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "frmDetalles";
-            Text = "frmDetalles";
+            Text = "Producto";
             ResumeLayout(false);
             PerformLayout();
         }

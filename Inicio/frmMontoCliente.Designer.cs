@@ -36,10 +36,11 @@
             // 
             // nudMontoCiente
             // 
-            nudMontoCiente.Location = new Point(80, 55);
+            nudMontoCiente.BackColor = Color.YellowGreen;
+            nudMontoCiente.Location = new Point(57, 55);
             nudMontoCiente.Maximum = new decimal(new int[] { 500000, 0, 0, 0 });
             nudMontoCiente.Name = "nudMontoCiente";
-            nudMontoCiente.Size = new Size(150, 27);
+            nudMontoCiente.Size = new Size(200, 27);
             nudMontoCiente.TabIndex = 0;
             // 
             // label1
@@ -66,10 +67,12 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.DarkSeaGreen;
             ClientSize = new Size(317, 144);
             Controls.Add(btnIngresar);
             Controls.Add(label1);
             Controls.Add(nudMontoCiente);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "frmMontoCliente";

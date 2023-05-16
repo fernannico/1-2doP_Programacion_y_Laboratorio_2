@@ -70,7 +70,7 @@ namespace Inicio
                     }
                     if (factura is Factura && factura is not null)
                     {
-                        MessageBox.Show(factura.MostrarFactura(), "Factura B");
+                        MessageBox.Show(factura.MostrarFactura(), "Factura A");
                     }
                 }
             }
