@@ -10,11 +10,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using usuarios;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Inicio
 {
     public partial class frmVenta : Form
     {
+        private Vendedor vendedorElegido;
         private Cliente? clienteElegido;
         private List<Usuario> usuariosList;
         private List<Productos> productosStockList;
@@ -26,8 +28,9 @@ namespace Inicio
             InitializeComponent();
         }
 
-        public frmVenta(Cliente cliente, List<Productos> listaProductos, List<Usuario> listaUsuarios, List<Factura> facturasHistorial) : this()
+        public frmVenta(Vendedor vendedor, Cliente cliente, List<Productos> listaProductos, List<Usuario> listaUsuarios, List<Factura> facturasHistorial) : this()
         {
+            this.vendedorElegido = vendedor;
             this.clienteElegido = cliente;
             this.productosStockList = listaProductos;
             this.usuariosList = listaUsuarios;
@@ -45,13 +48,27 @@ namespace Inicio
         }
         private void frmVenta_Load(object sender, EventArgs e)
         {
+            int indiceObjeto;
+
             this.Text = "Bienvenido a la seccion de compraventa";
+
             foreach (Usuario usuarios in usuariosList)
             {
                 if (usuarios is Vendedor)
                 {
                     comboBoxVendedores.Items.Add(usuarios);
                 }
+            }
+
+            if(vendedorElegido is not null)
+            {
+                indiceObjeto = usuariosList.IndexOf(vendedorElegido);
+                //MessageBox.Show($"{indiceObjeto}");
+                comboBoxVendedores.SelectedIndex = indiceObjeto;
+            }
+            else if (vendedorElegido is null)
+            {
+                comboBoxVendedores.SelectedIndex = 0;
             }
 
             foreach (Productos productos in productosStockList)
@@ -72,7 +89,7 @@ namespace Inicio
         }
         private void listBoxProductos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxVendedores.SelectedIndex is > 0 && listBoxProductos.SelectedItem is not null && nudKgs.Value > 0)
+            if (comboBoxVendedores.SelectedIndex is >= 0 && listBoxProductos.SelectedItem is not null && nudKgs.Value > 0)
             {
                 btnAgregar.Enabled = true;
             }
@@ -233,10 +250,6 @@ namespace Inicio
                     listaFacturasHistorial.Add(factura);
 
                     MessageBox.Show(factura.MostrarFactura(), "Factura B");
-
-                    ////ESTO PASARIA A HELADERA PORQUE EDITAMOS EL HISTORIAL DE LOGIN desde aca
-                    //frmHistorialFacturas frmHistorialFacturas = new frmHistorialFacturas(listaFacturasHistorial);
-                    //frmHistorialFacturas.Show();
 
                     while (dataGridView1.Rows.Count > 0)
                     {

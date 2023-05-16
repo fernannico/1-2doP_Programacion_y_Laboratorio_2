@@ -60,7 +60,7 @@ namespace Inicio
                     if (gastoMaximo > 0)
                     {
                         clienteSeleccionado.GastoMaximoPropiedad = gastoMaximo;
-                        frmVenta frmVenta = new frmVenta(clienteSeleccionado, productosStockList, usuarios, listaFacturasHistorial);
+                        frmVenta frmVenta = new frmVenta(null, clienteSeleccionado, productosStockList, usuarios, listaFacturasHistorial);
                         frmVenta.ShowDialog();
                     }
                 }

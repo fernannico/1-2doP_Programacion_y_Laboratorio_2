@@ -249,7 +249,7 @@ namespace Inicio
             {
                 cliente = (Cliente)comboBoxClientes.SelectedItem;
 
-                frmVenta frmVenta = new frmVenta(cliente, productosStockList, usuariosList, listaFacturasHistorial);
+                frmVenta frmVenta = new frmVenta(vendedorElegido, cliente, productosStockList, usuariosList, listaFacturasHistorial);
                 frmVenta.ShowDialog();
             }
         }
