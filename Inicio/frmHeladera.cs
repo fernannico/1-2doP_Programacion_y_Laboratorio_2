@@ -251,6 +251,7 @@ namespace Inicio
 
                 frmVenta frmVenta = new frmVenta(vendedorElegido, cliente, productosStockList, usuariosList, listaFacturasHistorial);
                 frmVenta.ShowDialog();
+                this.Close();
             }
         }
 

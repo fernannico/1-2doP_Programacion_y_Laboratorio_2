@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             listBoxProductos = new ListBox();
             lblCliente = new Label();
             lblMontoCliente = new Label();
@@ -64,7 +66,7 @@
             // 
             lblCliente.AutoSize = true;
             lblCliente.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lblCliente.Location = new Point(447, 18);
+            lblCliente.Location = new Point(479, 18);
             lblCliente.Name = "lblCliente";
             lblCliente.Size = new Size(65, 28);
             lblCliente.TabIndex = 1;
@@ -137,15 +139,27 @@
             dataGridView1.AllowUserToResizeColumns = false;
             dataGridView1.AllowUserToResizeRows = false;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            dataGridView1.BackgroundColor = Color.MistyRose;
+            dataGridView1.BackgroundColor = Color.RosyBrown;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.MistyRose;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.GridColor = Color.MistyRose;
             dataGridView1.Location = new Point(333, 96);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersWidth = 51;
+            dataGridViewCellStyle2.BackColor = Color.MistyRose;
+            dataGridViewCellStyle2.ForeColor = Color.Black;
+            dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle2;
             dataGridView1.RowTemplate.Height = 29;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(507, 244);
+            dataGridView1.Size = new Size(527, 244);
             dataGridView1.TabIndex = 9;
             dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
             dataGridView1.RowsAdded += dataGridView1_RowsAdded;
@@ -175,9 +189,9 @@
             // btnComprar
             // 
             btnComprar.Enabled = false;
-            btnComprar.Location = new Point(723, 346);
+            btnComprar.Location = new Point(723, 345);
             btnComprar.Name = "btnComprar";
-            btnComprar.Size = new Size(117, 29);
+            btnComprar.Size = new Size(137, 29);
             btnComprar.TabIndex = 12;
             btnComprar.Text = "Comprar";
             btnComprar.UseVisualStyleBackColor = true;
@@ -189,7 +203,7 @@
             comboBoxVendedores.FormattingEnabled = true;
             comboBoxVendedores.Location = new Point(178, 18);
             comboBoxVendedores.Name = "comboBoxVendedores";
-            comboBoxVendedores.Size = new Size(233, 28);
+            comboBoxVendedores.Size = new Size(263, 28);
             comboBoxVendedores.TabIndex = 13;
             // 
             // label4
@@ -215,7 +229,7 @@
             listBoxHistorial.BackColor = Color.MistyRose;
             listBoxHistorial.FormattingEnabled = true;
             listBoxHistorial.ItemHeight = 20;
-            listBoxHistorial.Location = new Point(856, 96);
+            listBoxHistorial.Location = new Point(879, 96);
             listBoxHistorial.Name = "listBoxHistorial";
             listBoxHistorial.Size = new Size(210, 244);
             listBoxHistorial.TabIndex = 16;
@@ -224,7 +238,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
-            label6.Location = new Point(856, 50);
+            label6.Location = new Point(879, 50);
             label6.Name = "label6";
             label6.Size = new Size(179, 28);
             label6.TabIndex = 18;
@@ -235,7 +249,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LavenderBlush;
-            ClientSize = new Size(1076, 386);
+            ClientSize = new Size(1101, 386);
             Controls.Add(label6);
             Controls.Add(listBoxHistorial);
             Controls.Add(txtBuscador);
