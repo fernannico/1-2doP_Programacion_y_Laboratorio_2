@@ -48,7 +48,7 @@ namespace Inicio
             {
                 Usuario usuarioSeleccionado = (Usuario)listBox1.SelectedItem;
 
-                if (listBox1.SelectedItem is Cliente /*&& nudMontoCiente.Enabled && nudMontoCiente.Value > 0*/)
+                if (listBox1.SelectedItem is Cliente)
                 {
                     decimal gastoMaximo;
                     Cliente clienteSeleccionado = (Cliente)usuarioSeleccionado;
@@ -80,18 +80,6 @@ namespace Inicio
             Usuario usuarioSeleccionado = (Usuario)listBox1.SelectedItem;
             txtMail.Text = usuarioSeleccionado.MailPropiedad;
             txtContrasenia.Text = usuarioSeleccionado.PwdPropiedad;
-
-            //if (listBox1.SelectedItem is not null)
-            //{
-            //    if (listBox1.SelectedItem is Cliente)
-            //    {
-            //        nudMontoCiente.Enabled = true;
-            //    }
-            //    else if (listBox1.SelectedItem is Vendedor)
-            //    {
-            //        nudMontoCiente.Enabled = false;
-            //    }
-            //}
         }
     }
 }

@@ -20,25 +20,42 @@ namespace Facturas
             this.fecha = fecha;
         }
 
+        /// <summary>
+        /// para recibir la fecha que se realiza la factura
+        /// </summary>
         private DateTime FechaPropiedad
         {
             get { return fecha; }
         }
 
+        /// <summary>
+        /// para recibir el monto total de la factura
+        /// </summary>
         public decimal MontoPropiedad
         {
             get { return monto; }
         }
 
+        /// <summary>
+        /// para recibir quien efectuó la venta
+        /// </summary>
         public string VendedorPropiedad
         {
             get { return nombreVendedor;}
         }
+
+        /// <summary>
+        /// para recibir quien efectuó las compras
+        /// </summary>
         public string ClientePropiedad
         {
             get { return nombreCliente; }
         }
 
+        /// <summary>
+        /// para realizar una descripcion detallada de la factura
+        /// </summary>
+        /// <returns></returns>
         public string MostrarFactura()
         {
             StringBuilder sb = new StringBuilder();
@@ -51,6 +68,11 @@ namespace Facturas
             return sb.ToString();
         }
 
+        /// <summary>
+        /// para mostrar los productos comprados 
+        /// </summary>
+        /// <param name="listaProductosComprados"></param>
+        /// <returns></returns>
         private string MostrarDetallesProductos(List<Productos> listaProductosComprados)
         {
             StringBuilder sb = new StringBuilder();
@@ -62,6 +84,10 @@ namespace Facturas
             return sb.ToString();
         }
 
+        /// <summary>
+        /// para mostrar una descripcion mas sencilla de la factura, con menos detalles
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return $"Factura del {FechaPropiedad}";

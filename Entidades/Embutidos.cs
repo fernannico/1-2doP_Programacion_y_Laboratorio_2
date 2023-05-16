@@ -14,22 +14,37 @@ namespace ProductosNs
             this.tipoEmbutido = tipoEmbutido;
         }
 
+        /// <summary>
+        /// para recibir y asignar el tipo de embutido
+        /// </summary>
         public string TipoEmbutidoPropiedad
         {
             get { return tipoEmbutido; }
             set { tipoEmbutido = value; }
         }
+
+        /// <summary>
+        /// para recibir y asignar el stock 
+        /// </summary>
         public override int KgEnStockPropiedad
         {
             get { return kgEnStock; }
             set { kgEnStock = value; }
         }
+
+        /// <summary>
+        /// para recibir y asignar el precio del embutido
+        /// </summary>
         public override float PrecioPropiedad
         {
             get { return precioPorKg; }
             set { precioPorKg = value; }
         }
 
+        /// <summary>
+        /// para mostrar los detalles del embutido
+        /// </summary>
+        /// <returns></returns>
         public override string MostrarDetalle()
         {
             StringBuilder sbDetalles = new StringBuilder();

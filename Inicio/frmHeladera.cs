@@ -119,7 +119,6 @@ namespace Inicio
 
                 Productos productoSeleccionado = diccionarioProductos[e.RowIndex];
 
-                //nudModifStock.Value = productoSeleccionado.KgEnStockPropiedad;
                 nudModifPrecio.Value = (decimal)productoSeleccionado.PrecioPropiedad;
 
                 if (productoSeleccionado is Carne)
