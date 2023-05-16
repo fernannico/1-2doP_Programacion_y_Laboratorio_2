@@ -1,4 +1,5 @@
-﻿using Facturas;
+﻿using eModificacion;
+using Facturas;
 using ProductosNs;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,6 @@ namespace Inicio
     public partial class frmHeladera : Form
     {
         private Vendedor? vendedorElegido;
-        private Cliente? clienteElegido;
         private List<Productos> productosStockList;
         private List<Factura> listaFacturasHistorial;
         private List<Usuario> usuariosList;
@@ -38,19 +38,6 @@ namespace Inicio
             this.usuariosList = listaUsuarios;
             this.listaFacturasHistorial = listaFacturasHistorial;
         }
-
-        public Cliente ClienteElegidoPropiedad
-        {
-            get
-            {
-                return clienteElegido;
-            }
-            set
-            {
-                clienteElegido = value;
-            }
-        }
-
 
         private void frmHeladera_Load(object sender, EventArgs e)
         {
@@ -174,21 +161,21 @@ namespace Inicio
                 string nuevoCorte;
                 float nuevoPrecio;
                 int nuevoKgStock;
-                bool huboModificacion = false;
+                EstadoModificacion huboModificacion = EstadoModificacion.noModificado;
 
                 StringBuilder sb = new StringBuilder();
 
                 nuevaDescripcion = txtModDescripcion.Text;
                 if (productoSeleccionado is Carne && nuevaDescripcion != ((Carne)productoSeleccionado).AnimalPropiedad)
                 {
-                    huboModificacion = true;
+                    huboModificacion = EstadoModificacion.modificado;
                     sb.AppendLine($"- Animal: de '{((Carne)productoSeleccionado).AnimalPropiedad}' a '{nuevaDescripcion}'");
                     vendedorElegido.FijarAnimal((Carne)productoSeleccionado, txtModDescripcion.Text);
                     dataGridView1.Rows[indiceFilaSeleccionada].Cells["Descripcion"].Value = nuevaDescripcion;
                 }
                 else if (productoSeleccionado is Embutido && nuevaDescripcion != ((Embutido)productoSeleccionado).TipoEmbutidoPropiedad)
                 {
-                    huboModificacion = true;
+                    huboModificacion = EstadoModificacion.modificado;
                     sb.AppendLine($"- Nombre del embutido: de '{((Embutido)productoSeleccionado).TipoEmbutidoPropiedad}' a '{nuevaDescripcion}'"); vendedorElegido.FijarTipoEmbutido((Embutido)productoSeleccionado, txtModDescripcion.Text);
                     dataGridView1.Rows[indiceFilaSeleccionada].Cells["Descripcion"].Value = nuevaDescripcion;
                 }
@@ -199,7 +186,7 @@ namespace Inicio
                     corteOriginal = ((Carne)productoSeleccionado).CortePropiedad;
                     if (nuevoCorte != corteOriginal)
                     {
-                        huboModificacion = true;
+                        huboModificacion = EstadoModificacion.modificado;
                         sb.AppendLine($"- Corte: de '{corteOriginal}' a '{nuevoCorte}'");
                         vendedorElegido.FijarCorteDeCarne((Carne)productoSeleccionado, nuevoCorte);
                         dataGridView1.Rows[indiceFilaSeleccionada].Cells["Corte"].Value = nuevoCorte;
@@ -209,7 +196,7 @@ namespace Inicio
                 nuevoKgStock = (int)nudModifStock.Value;
                 if (nuevoKgStock > 0)
                 {
-                    huboModificacion = true;
+                    huboModificacion = EstadoModificacion.modificado;
                     sb.AppendLine($"- Se repuso {nuevoKgStock}kg de stock");
                     vendedorElegido.ReponerProductos(productoSeleccionado, (int)nudModifStock.Value);
                     dataGridView1.Rows[indiceFilaSeleccionada].Cells["kg en stock"].Value = productoSeleccionado.KgEnStockPropiedad;
@@ -218,13 +205,13 @@ namespace Inicio
                 nuevoPrecio = (float)nudModifPrecio.Value;
                 if (nuevoPrecio != precioOriginal && nuevoPrecio > 0)
                 {
-                    huboModificacion = true;
+                    huboModificacion = EstadoModificacion.modificado;
                     sb.AppendLine($"- Precio: de ${precioOriginal} a ${nuevoPrecio}");
                     vendedorElegido.FijarPrecioKg(productoSeleccionado, (float)nudModifPrecio.Value);
                     dataGridView1.Rows[indiceFilaSeleccionada].Cells["precio/Kg"].Value = nuevoPrecio;
                 }
 
-                if (huboModificacion == true)
+                if (huboModificacion == EstadoModificacion.modificado)
                 {
                     MessageBox.Show("Se modificaron:\n" + sb.ToString(), "Modificacion realizada", MessageBoxButtons.OK);
                     nudModifStock.Value = 0;
