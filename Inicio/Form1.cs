@@ -1,3 +1,4 @@
+using Entidades;
 using Facturas;
 using ProductosNs;
 using usuarios;
@@ -7,7 +8,10 @@ namespace Inicio
     {
         private List<Usuario> usuarios = new List<Usuario>();
         private List<Productos> productosStockList = new List<Productos>();
+        //private List<Carne> carnesStockList = new List<Carne>();
+        //private List<Embutido> embutidosStockList = new List<Embutido>();
         private List<Factura> listaFacturasHistorial = new List<Factura>();
+        //private VendedorBDD vendedor;
 
         public frmLogin()
         {
@@ -16,32 +20,21 @@ namespace Inicio
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
-            usuarios.Add(new Vendedor("vendedor1@gmail.com", "123456"));
-            usuarios.Add(new Vendedor("vendedor2@gmail.com", "2583"));
-            usuarios.Add(new Vendedor("vendedor3@gmail.com", "1475asasa"));
-            usuarios.Add(new Cliente("cliente1@gmail.com", "36955", 100000));
-            usuarios.Add(new Cliente("cliente2@gmail.com", "789456", 50000));
-            usuarios.Add(new Cliente("cliente3@gmail.com", "1597543", 10000));
-            usuarios.Add(new Cliente("cliente5@gmail.com", "1597543", 10000));
-
+            usuarios.Add(new Vendedor(1,"vendedor1@gmail.com", "123456"));
+            usuarios.Add(new Vendedor(2,"vendedor2@gmail.com", "2583"));
+            usuarios.Add(new Vendedor(3,"vendedor3@gmail.com", "1475asasa"));
+            usuarios.Add(new Cliente(1,"cliente1@gmail.com", "36955", 100000));
+            usuarios.Add(new Cliente(2,"cliente2@gmail.com", "789456", 50000));
+            usuarios.Add(new Cliente(3,"cliente3@gmail.com", "1597543", 10000));
+            usuarios.Add(new Cliente(4,"cliente5@gmail.com", "1597543", 10000));
 
             foreach (Usuario usuario in usuarios)
             {
                 listBox1.Items.Add(usuario);
             }
 
-            productosStockList.Add(new Carne(1830f, 10, "res", "asado"));
-            productosStockList.Add(new Carne(1900f, 10, "res", "bife"));
-            productosStockList.Add(new Carne(2389f, 10, "res", "milanesa"));
-            productosStockList.Add(new Carne(2299f, 10, "res", "vacio"));
-            productosStockList.Add(new Carne(600f, 10, "pollo", "entero"));
-            productosStockList.Add(new Carne(960f, 10, "pollo", "1/4 trasero"));
-            productosStockList.Add(new Carne(1865f, 10, "pollo", "suprema"));
-            productosStockList.Add(new Embutido(1900f, 10, "chori"));
-            productosStockList.Add(new Embutido(1120f, 10, "morcilla"));
-            productosStockList.Add(new Embutido(500f, 10, "salchicha"));
-            productosStockList.Add(new Embutido(550f, 10, "salchicha parrillera"));
-            productosStockList.Add(new Embutido(1600f, 10, "longaniza"));
+            productosStockList = ProductosBDD.Leer();
+
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)

@@ -11,16 +11,19 @@ namespace ProductosNs
         private string animal;
         private string corte;
 
-        public Carne(float precioPorKg, int kgEnStock, string animal, string corte) : base(precioPorKg, kgEnStock)
+        public Carne(int id, float precioPorKg, int kgEnStock, string animal, string corte) : base(id, precioPorKg, kgEnStock)
         {
+            this.id = id;
             this.animal = animal;
             this.corte = corte;
         }
 
+        public override int Id{ get { return id; } }
+
         /// <summary>
         /// para obtener o asignar el tipo de animal de la carne
         /// </summary>
-        public string AnimalPropiedad
+        public string Animal
         {
             get { return animal; }
             set { animal = value; }
@@ -29,7 +32,7 @@ namespace ProductosNs
         /// <summary>
         /// para obtener o asignar el precio de la carne
         /// </summary>
-        public override float PrecioPropiedad
+        public override float Precio
         {
             get { return precioPorKg; }
             set { precioPorKg = value; }
@@ -38,7 +41,7 @@ namespace ProductosNs
         /// <summary>
         /// para obtener o asignar el corte de la carne
         /// </summary>
-        public string CortePropiedad
+        public string Corte
         {
             get { return corte; }
             set { corte = value; }
@@ -47,7 +50,7 @@ namespace ProductosNs
         /// <summary>
         /// para obtener o asignar el stock
         /// </summary>
-        public override int KgEnStockPropiedad
+        public override int KgEnStock
         {
             get { return kgEnStock; }
             set { kgEnStock = value; }
@@ -60,10 +63,10 @@ namespace ProductosNs
         public override string MostrarDetalle()
         {
             StringBuilder sbDetalles = new StringBuilder();
-            sbDetalles.AppendLine($"Carne de {AnimalPropiedad}");
-            sbDetalles.AppendLine($"Corte: {CortePropiedad}");
-            sbDetalles.AppendLine($"Kg en stock: {KgEnStockPropiedad}");
-            sbDetalles.AppendLine($"Precio por kg: {PrecioPropiedad}");
+            sbDetalles.AppendLine($"Carne de {Animal}");
+            sbDetalles.AppendLine($"Corte: {Corte}");
+            sbDetalles.AppendLine($"Kg en stock: {KgEnStock}");
+            sbDetalles.AppendLine($"Precio por kg: {Precio}");
 
             return sbDetalles.ToString();
         }
@@ -74,7 +77,7 @@ namespace ProductosNs
         /// <returns></returns>
         public override string ToString()
         {
-            return $"{CortePropiedad} de {AnimalPropiedad} - ${precioPorKg}/Kg";
+            return $"{Corte} de {Animal} - ${precioPorKg}/Kg";
         }
 
         /// <summary>

@@ -94,11 +94,11 @@ namespace Inicio
                 btnAgregar.Enabled = true;
             }
         }
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)  
         {
             decimal cantidadProducto = nudKgs.Value;
-            decimal precioPorKg = (decimal)((Productos)(listBoxProductos.SelectedItem)).PrecioPropiedad;
-            int stockDisponible = (int)((Productos)(listBoxProductos.SelectedItem)).KgEnStockPropiedad;
+            decimal precioPorKg = (decimal)((Productos)(listBoxProductos.SelectedItem)).Precio;
+            int stockDisponible = (int)((Productos)(listBoxProductos.SelectedItem)).KgEnStock;
             decimal totalIndividual = cantidadProducto * precioPorKg;
             Productos productoSeleccionado = (Productos)listBoxProductos.SelectedItem;
 
@@ -110,7 +110,7 @@ namespace Inicio
                 {
                     if (cantidadProducto <= stockDisponible)
                     {
-                        productoSeleccionado.KgEnStockPropiedad -= (int)cantidadProducto;
+                        productoSeleccionado.KgEnStock -= (int)cantidadProducto;
                         DataTable dataTable = (DataTable)dataGridView1.DataSource;
                         DataRow newRow = dataTable.NewRow();
                         newRow[0] = listBoxProductos.SelectedItem;
@@ -134,7 +134,7 @@ namespace Inicio
             int rowIndex = e.RowIndex;
             DataGridViewRow row = dataGridView1.Rows[rowIndex];
 
-            decimal costoPorKg = (decimal)((Productos)row.Cells[0].Value).PrecioPropiedad;
+            decimal costoPorKg = (decimal)((Productos)row.Cells[0].Value).Precio;
             decimal kgsComprados = Convert.ToDecimal(row.Cells[1].Value);
 
             costoTotal = costoPorKg * kgsComprados;
@@ -161,7 +161,7 @@ namespace Inicio
                 }
                 productoEliminado = (Productos)dataGridView1.SelectedRows[0].Cells[0].Value;
                 kgStockRecuperados = Convert.ToDecimal(dataGridView1.SelectedRows[0].Cells[1].Value);
-                productoEliminado.KgEnStockPropiedad = (int)((decimal)productoEliminado.KgEnStockPropiedad + kgStockRecuperados);
+                productoEliminado.KgEnStock = (int)((decimal)productoEliminado.KgEnStock + kgStockRecuperados);
 
                 dataGridView1.Rows.Remove(dataGridView1.SelectedRows[0]);
                 CalcularCostoTotal();
@@ -236,11 +236,11 @@ namespace Inicio
                         StringBuilder sb = new StringBuilder();
                         if (producto is Carne)
                         {
-                            sb.AppendLine($"{((Carne)producto).CortePropiedad} de {((Carne)producto).AnimalPropiedad} - ${montoIndividual}");
+                            sb.AppendLine($"{((Carne)producto).Corte    } de {((Carne)producto).Animal  } - ${montoIndividual}");
                         }
                         else if (producto is Embutido)
                         {
-                            sb.AppendLine($"{((Embutido)producto).TipoEmbutidoPropiedad} - ${montoIndividual}");
+                            sb.AppendLine($"{((Embutido)producto).TipoEmbutido  } - ${montoIndividual}");
                         }
                         listBoxHistorial.Items.Add(sb.ToString());
                     }
@@ -271,7 +271,7 @@ namespace Inicio
             {
                 if (item is Carne)
                 {
-                    corte = ((Carne)item).CortePropiedad;
+                    corte = ((Carne)item).Corte;
                     if (producto == corte)
                     {
                         index = listBoxProductos.Items.IndexOf(item);
@@ -280,7 +280,7 @@ namespace Inicio
                 }
                 if (item is Embutido)
                 {
-                    tipoEmbutido = ((Embutido)item).TipoEmbutidoPropiedad;
+                    tipoEmbutido = ((Embutido)item).TipoEmbutido;
                     if (producto == tipoEmbutido)
                     {
                         index = listBoxProductos.Items.IndexOf(item);

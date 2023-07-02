@@ -10,7 +10,7 @@ namespace usuarios
 {
     public class Vendedor : Usuario
     {
-        public Vendedor(string mail, string contrasena) : base(mail, contrasena)
+        public Vendedor(int id, string mail, string contrasena) : base(id, mail, contrasena)
         {
 
         }
@@ -33,7 +33,7 @@ namespace usuarios
         {
             if (carneItem is not null && animal is not null)
             {
-                carneItem.AnimalPropiedad = animal;
+                carneItem.Animal = animal;
             }
         }
 
@@ -46,7 +46,7 @@ namespace usuarios
         {
             if (carneItem is not null && corte is not null)
             {
-                carneItem.CortePropiedad = corte;
+                carneItem.Corte = corte;
             }
         }
 
@@ -59,7 +59,7 @@ namespace usuarios
         {
             if (embutidoItem is not null && tipoEmbutido is not null)
             {
-                embutidoItem.TipoEmbutidoPropiedad = tipoEmbutido;
+                embutidoItem.TipoEmbutido = tipoEmbutido;
             }
         }
         /// <summary>
@@ -70,7 +70,7 @@ namespace usuarios
         public void FijarPrecioKg(Productos producto, float nuevoPrecio)
         {
             if (producto is not null && nuevoPrecio > 0)
-                producto.PrecioPropiedad = nuevoPrecio;
+                producto.Precio = nuevoPrecio;
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace usuarios
         /// <param name="kgAReponer"></param>
         public void ReponerProductos(Productos producto, int kgAReponer)
         {
-            producto.KgEnStockPropiedad = producto.KgEnStockPropiedad + kgAReponer;
+            producto.KgEnStock   = producto.KgEnStock + kgAReponer;
         }
 
         /// <summary>
