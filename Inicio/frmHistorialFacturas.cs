@@ -79,15 +79,11 @@ namespace Inicio
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex >= 0 && dataGridView1.RowCount > 1)
             {
                 btnDetalle.Enabled = true;
                 btnSaveFact.Enabled = true;
             }
-            if (dataGridView1.RowCount > 0)
-            {
-                button1.Enabled = true; 
-            }else { button1.Enabled = false; }
         }
 
         private void btnSaveFact_Click(object sender, EventArgs e)
@@ -122,19 +118,17 @@ namespace Inicio
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (button1.Enabled == true)
+            try
             {
-                try
-                {
-                    string historialfacturas = ArchivarTexto.AbrirFacturaTexto("HistorialFacturas.txt");
-                    MessageBox.Show(historialfacturas);
+                string historialfacturas = ArchivarTexto.AbrirFacturaTexto("HistorialFacturas.txt");
+                MessageBox.Show(historialfacturas);
 
-                }
-                catch
-                {
-                    MessageBox.Show("no se registran ventas");
-                }
             }
+            catch
+            {
+                MessageBox.Show("no se registran ventas");
+            }
+
         }
     }
 }

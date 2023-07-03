@@ -11,6 +11,10 @@ namespace ProductosNs
         private string animal;
         private string corte;
 
+        public Carne()
+        {
+
+        }
         public Carne(int id, float precioPorKg, int kgEnStock, string animal, string corte) : base(id, precioPorKg, kgEnStock)
         {
             this.id = id;

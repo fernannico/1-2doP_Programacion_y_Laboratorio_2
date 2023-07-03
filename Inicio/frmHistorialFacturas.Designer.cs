@@ -78,13 +78,12 @@
             // 
             // button1
             // 
-            button1.Enabled = false;
             button1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
             button1.Location = new Point(505, 364);
             button1.Name = "button1";
             button1.Size = new Size(219, 55);
             button1.TabIndex = 2;
-            button1.Text = "Mostrar historial de facturas";
+            button1.Text = "Ver historial de facturas guardadas";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
@@ -102,7 +101,7 @@
             MaximizeBox = false;
             Name = "frmHistorialFacturas";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Historial de facturas";
+            Text = "Historial de facturas actuales";
             Load += frmHistorialFacturas_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);

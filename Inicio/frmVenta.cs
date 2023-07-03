@@ -95,7 +95,7 @@ namespace Inicio
                 btnAgregar.Enabled = true;
             }
         }
-        private void button1_Click(object sender, EventArgs e)  
+        private void button1_Click(object sender, EventArgs e)
         {
             decimal cantidadProducto = nudKgs.Value;
             decimal precioPorKg = (decimal)((Productos)(listBoxProductos.SelectedItem)).Precio;
@@ -237,11 +237,11 @@ namespace Inicio
                         StringBuilder sb = new StringBuilder();
                         if (producto is Carne)
                         {
-                            sb.AppendLine($"{((Carne)producto).Corte    } de {((Carne)producto).Animal  } - ${montoIndividual}");
+                            sb.AppendLine($"{((Carne)producto).Corte} de {((Carne)producto).Animal} - ${montoIndividual}");
                         }
                         else if (producto is Embutido)
                         {
-                            sb.AppendLine($"{((Embutido)producto).TipoEmbutido  } - ${montoIndividual}");
+                            sb.AppendLine($"{((Embutido)producto).TipoEmbutido} - ${montoIndividual}");
                         }
                         listBoxHistorial.Items.Add(sb.ToString());
                     }
@@ -292,6 +292,33 @@ namespace Inicio
                 }
             }
             listBoxProductos.SelectedIndex = index;
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            List<Carne> carnes = new List<Carne>();
+            List<Embutido> embutidos = new List<Embutido>();
+            try
+            {
+                foreach (object item in productosStockList)
+                {
+                    if (item is Carne)
+                    {
+                        carnes.Add((Carne)item);
+                    }
+                    else if (item is Embutido)
+                    {
+                        embutidos.Add((Embutido)item);
+                    }
+                }
+                Serializacion.SerializarAJson(carnes, "CarnesJson.json");
+                Serializacion.SerializarAJson(embutidos, "EmbutidosJson.json");
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

@@ -9,6 +9,11 @@ namespace ProductosNs
     public class Embutido : Productos
     {
         private string tipoEmbutido;
+
+        public Embutido()
+        {
+
+        }
         public Embutido(int id, float precioPorKg, int kgEnStock, string tipoEmbutido) : base(id, precioPorKg, kgEnStock)
         {
             this.tipoEmbutido = tipoEmbutido;

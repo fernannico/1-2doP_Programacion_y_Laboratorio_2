@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
-using System.Data.SqlTypes;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,14 +9,14 @@ using usuarios;
 
 namespace Entidades
 {
-    public static class VendedorBDD
+    public static class UsuariosBDD
     {
         static string connectionString;
         static SqlCommand command;
         static SqlConnection connection;
         //static SqlDataReader dataReader;
 
-        static VendedorBDD()
+        static UsuariosBDD()
         {
             connectionString = @"Data Source = DESKTOP-KSE67HS;
                                 Database = UTN_D2;
@@ -29,28 +28,40 @@ namespace Entidades
             command.CommandType = CommandType.Text;
         }
 
-        public static List<Vendedor> Leer()
+        public static List<T> Leer<T>() where T : Usuario
         {
-            List<Vendedor> vendedores = new List<Vendedor>();
+            List<T> usuarios = new List<T>();
 
             try
             {
                 connection.Open();
-                command.CommandText = "SELECT ID, MAIL, CONSTRASENA FROM VENDEDORES";
+                command.CommandText = "SELECT ID, MAIL, CONTRASENA FROM USUARIOS WHERE TIPO_USUARIO = 'Vendedor'";
 
-                SqlDataReader dataReader = command.ExecuteReader();
+                SqlDataReader dataReader;
 
                 using (dataReader = command.ExecuteReader())
                 {
                     while (dataReader.Read())
                     {
-                        vendedores.Add(new Vendedor(Convert.ToInt32(dataReader["id"]), 
-                                                    dataReader["mail"].ToString(), 
+                        usuarios.Add((T)(Usuario)new Vendedor(Convert.ToInt32(dataReader["id"]),
+                                                    dataReader["mail"].ToString(),
                                                     dataReader["contrasena"].ToString()));
                     }
                 }
 
-                return vendedores;
+                command.CommandText = "SELECT ID, MAIL, DINERO, CONTRASENA FROM USUARIOS WHERE TIPO_USUARIO = 'Cliente'";
+                using (dataReader = command.ExecuteReader())
+                {
+                    while (dataReader.Read())
+                    {
+                        usuarios.Add((T)(Usuario)new Cliente(Convert.ToInt32(dataReader["id"]),
+                                                    dataReader["mail"].ToString(),
+                                                    dataReader["contrasena"].ToString(),
+                                                    dataReader.GetDecimal(dataReader.GetOrdinal("dinero"))));
+                    }
+                }
+
+                return usuarios;
 
             }
             catch (Exception)

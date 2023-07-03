@@ -11,7 +11,7 @@ namespace Inicio
         //private List<Carne> carnesStockList = new List<Carne>();                      BORRAR AMBAS CLASES? o poner en la class de productosBdd que los lea
         //private List<Embutido> embutidosStockList = new List<Embutido>();
         private List<Factura> listaFacturasHistorial = new List<Factura>();
-        //private VendedorBDD vendedor;
+        //private VendedorBDD vendedor;                                                 BORRAR AMBAS CLASES cliente-vendedor? 
 
         public frmLogin()
         {
@@ -20,14 +20,7 @@ namespace Inicio
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
-            usuarios.Add(new Vendedor(1,"vendedor1@gmail.com", "123456"));
-            usuarios.Add(new Vendedor(2,"vendedor2@gmail.com", "2583"));
-            usuarios.Add(new Vendedor(3,"vendedor3@gmail.com", "1475asasa"));
-            usuarios.Add(new Cliente(1,"cliente1@gmail.com", "36955", 100000));
-            usuarios.Add(new Cliente(2,"cliente2@gmail.com", "789456", 50000));
-            usuarios.Add(new Cliente(3,"cliente3@gmail.com", "1597543", 10000));
-            usuarios.Add(new Cliente(4,"cliente5@gmail.com", "1597543", 10000));
-
+            usuarios = UsuariosBDD.Leer<Usuario>();
             foreach (Usuario usuario in usuarios)
             {
                 listBox1.Items.Add(usuario);

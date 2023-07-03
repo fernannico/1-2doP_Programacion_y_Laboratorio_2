@@ -263,7 +263,7 @@ namespace Inicio
             btnSerializar.Name = "btnSerializar";
             btnSerializar.Size = new Size(136, 48);
             btnSerializar.TabIndex = 19;
-            btnSerializar.Text = "Guardar estado stock";
+            btnSerializar.Text = "Guardar estado stock (xml)";
             btnSerializar.UseVisualStyleBackColor = true;
             btnSerializar.Click += btnSerializar_Click;
             // 

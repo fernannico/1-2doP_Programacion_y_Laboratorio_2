@@ -47,6 +47,7 @@
             txtBuscador = new TextBox();
             listBoxHistorial = new ListBox();
             label6 = new Label();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)nudKgs).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -179,7 +180,7 @@
             // 
             // txtTotal
             // 
-            txtTotal.Location = new Point(592, 346);
+            txtTotal.Location = new Point(602, 346);
             txtTotal.Name = "txtTotal";
             txtTotal.ReadOnly = true;
             txtTotal.Size = new Size(125, 27);
@@ -189,9 +190,9 @@
             // btnComprar
             // 
             btnComprar.Enabled = false;
-            btnComprar.Location = new Point(723, 345);
+            btnComprar.Location = new Point(733, 345);
             btnComprar.Name = "btnComprar";
-            btnComprar.Size = new Size(137, 29);
+            btnComprar.Size = new Size(127, 29);
             btnComprar.TabIndex = 12;
             btnComprar.Text = "Comprar";
             btnComprar.UseVisualStyleBackColor = true;
@@ -244,12 +245,24 @@
             label6.TabIndex = 18;
             label6.Text = "Historial compras";
             // 
+            // button1
+            // 
+            button1.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
+            button1.Location = new Point(160, 379);
+            button1.Name = "button1";
+            button1.Size = new Size(167, 29);
+            button1.TabIndex = 19;
+            button1.Text = "Guardar estado stock (J)";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click_1;
+            // 
             // frmVenta
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LavenderBlush;
-            ClientSize = new Size(1101, 386);
+            ClientSize = new Size(1101, 417);
+            Controls.Add(button1);
             Controls.Add(label6);
             Controls.Add(listBoxHistorial);
             Controls.Add(txtBuscador);
@@ -299,5 +312,6 @@
         private TextBox txtBuscador;
         private ListBox listBoxHistorial;
         private Label label6;
+        private Button button1;
     }
 }

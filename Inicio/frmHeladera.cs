@@ -298,7 +298,13 @@ namespace Inicio
 
         private void btnSerializar_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                Serializacion.SerializarAXml(productosStockList);
+            }catch (Exception)
+            {
+                throw;
+            }
 
         }
     }
