@@ -8,7 +8,7 @@ namespace Inicio
     {
         private List<Usuario> usuarios = new List<Usuario>();
         private List<Productos> productosStockList = new List<Productos>();
-        //private List<Carne> carnesStockList = new List<Carne>();
+        //private List<Carne> carnesStockList = new List<Carne>();                      BORRAR AMBAS CLASES? o poner en la class de productosBdd que los lea
         //private List<Embutido> embutidosStockList = new List<Embutido>();
         private List<Factura> listaFacturasHistorial = new List<Factura>();
         //private VendedorBDD vendedor;

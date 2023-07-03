@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using usuarios;
+using Entidades;
 
 namespace Inicio
 {
@@ -81,6 +82,58 @@ namespace Inicio
             if (e.RowIndex >= 0)
             {
                 btnDetalle.Enabled = true;
+                btnSaveFact.Enabled = true;
+            }
+            if (dataGridView1.RowCount > 0)
+            {
+                button1.Enabled = true; 
+            }else { button1.Enabled = false; }
+        }
+
+        private void btnSaveFact_Click(object sender, EventArgs e)
+        {
+
+            if (btnDetalle.Enabled)
+            {
+                if (dataGridView1.CurrentRow != null)
+                {
+                    DataGridViewCell cell = dataGridView1.CurrentRow.Cells[2];
+                    Factura factura = (Factura)cell.Value;
+
+                    if (dataGridView1.SelectedRows.Count == 0)
+                    {
+                        dataGridView1.Rows[0].Selected = true;
+                    }
+                    if (factura is Factura && factura is not null)
+                    {
+                        try
+                        {
+                            ArchivarTexto.GuardarFacturaTexto(factura.MostrarFactura(), "FacturasElegidas.txt");
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Error al guardar la factura", "Factura A");
+                        }
+                    }
+                }
+            }
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (button1.Enabled == true)
+            {
+                try
+                {
+                    string historialfacturas = ArchivarTexto.AbrirFacturaTexto("HistorialFacturas.txt");
+                    MessageBox.Show(historialfacturas);
+
+                }
+                catch
+                {
+                    MessageBox.Show("no se registran ventas");
+                }
             }
         }
     }

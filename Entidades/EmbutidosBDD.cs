@@ -60,5 +60,25 @@ namespace Entidades
         //    }
         //    finally { connection.Close(); }
         //}
+
+        public static void ModificarEmbutido(Embutido embutido)
+        {
+            try
+            {
+                command.Parameters.Clear();
+                connection.Open();
+                command.CommandText = $"UPDATE PRODUCTOS SET DESCRIPCION = @DESCRIPCION WHERE PRODUCTOS.ID = {embutido.Id}";
+                command.Parameters.AddWithValue("@DESCRIPCION", embutido.TipoEmbutido);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
 }

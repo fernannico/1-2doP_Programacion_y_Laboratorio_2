@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlTypes;
 
 namespace Entidades
 {
@@ -38,15 +39,13 @@ namespace Entidades
                 connection.Open();
                 command.CommandText = "SELECT ID, DESCRIPCION, CORTE, KG_EN_STOCK, PRECIO_POR_KG FROM PRODUCTOS WHERE TIPO_PROD = 'Carne'";
 
-                SqlDataReader dataReader /*= command.ExecuteReader()*/;
+                SqlDataReader dataReader;
 
                 using (dataReader = command.ExecuteReader())
                 {
                     while (dataReader.Read())
                     {
-                        //if (typeof() == typeof(Carne) && dataReader["Tipo"].ToString() == "Carne")
-                        //{
-                        productos.Add(/*(T)(object)*/new Carne(Convert.ToInt32(dataReader["id"]),
+                        productos.Add(new Carne(Convert.ToInt32(dataReader["id"]),
                                              (float)dataReader.GetDouble(dataReader.GetOrdinal("PRECIO_POR_KG")),
                                              Convert.ToInt32(dataReader["KG_EN_STOCK"]),
                                              dataReader["DESCRIPCION"].ToString(),
@@ -55,18 +54,14 @@ namespace Entidades
                 }
                 command.CommandText = "SELECT ID, DESCRIPCION, KG_EN_STOCK, PRECIO_POR_KG FROM PRODUCTOS WHERE TIPO_PROD = 'Embutido'";
 
-                //}else if (typeof(T) == typeof(Embutido) && dataReader["Tipo"].ToString() == "Embutido")
-                //{
                 using (dataReader = command.ExecuteReader())
                 {
                     while (dataReader.Read())
                     {
-                        productos.Add(/*(T)(object)*/new Embutido(Convert.ToInt32(dataReader["ID"]),
+                        productos.Add(new Embutido(Convert.ToInt32(dataReader["ID"]),
                                                                  (float)dataReader.GetDouble(dataReader.GetOrdinal("PRECIO_POR_KG")),
                                                                  Convert.ToInt32(dataReader["KG_EN_STOCK"]),
                                                                  dataReader["DESCRIPCION"].ToString()));
-                        //}
-
                     }
                 }
 
@@ -79,5 +74,48 @@ namespace Entidades
             }
             finally { connection.Close(); }
         }
+
+
+        public static void ModificarProducto(Productos producto)
+        {
+            try
+            {
+                command.Parameters.Clear();
+                connection.Open();
+                command.CommandText = $"UPDATE PRODUCTOS SET KG_EN_STOCK = @KG_EN_STOCK, PRECIO_POR_KG = @PRECIO_POR_KG WHERE PRODUCTOS.ID = {producto.Id}";
+                command.Parameters.AddWithValue("@KG_EN_STOCK", producto.KgEnStock);
+                command.Parameters.AddWithValue("@PRECIO_POR_KG", producto.Precio);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public static void Eliminar(int Id)
+        {
+            try
+            {
+                command.Parameters.Clear();
+                connection.Open();
+                command.CommandText = $"DELETE FROM Productos WHERE Productos.ID = @Id";
+                command.Parameters.AddWithValue("@Id", Id);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;                
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
     }
 }

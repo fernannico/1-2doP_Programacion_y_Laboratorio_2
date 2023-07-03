@@ -60,5 +60,26 @@ namespace Entidades
             }
             finally { connection.Close(); }
         }
+
+        public static void ModificarCarne(Carne carne)
+        {
+            try
+            {
+                command.Parameters.Clear();
+                connection.Open();
+                command.CommandText = $"UPDATE PRODUCTOS SET DESCRIPCION = @DESCRIPCION, CORTE = @CORTE WHERE PRODUCTOS.ID = {carne.Id}";
+                command.Parameters.AddWithValue("@DESCRIPCION", carne.Animal);
+                command.Parameters.AddWithValue("@CORTE", carne.Corte);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
 }

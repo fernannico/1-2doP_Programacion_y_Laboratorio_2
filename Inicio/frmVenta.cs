@@ -1,4 +1,5 @@
-﻿using Facturas;
+﻿using Entidades;
+using Facturas;
 using ProductosNs;
 using System;
 using System.Collections.Generic;
@@ -250,6 +251,8 @@ namespace Inicio
                     listaFacturasHistorial.Add(factura);
 
                     MessageBox.Show(factura.MostrarFactura(), "Factura B");
+
+                    ArchivarTexto.GuardarFacturaTexto(factura.MostrarFactura(), "HistorialFacturas.txt");
 
                     while (dataGridView1.Rows.Count > 0)
                     {

@@ -59,11 +59,13 @@ namespace Facturas
         public string MostrarFactura()
         {
             StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"-----------");
             sb.AppendLine($"fecha: {fecha}");
             sb.AppendLine($"nombre del vendedor: {nombreVendedor}");
             sb.AppendLine($"nombre del cliente: {nombreCliente}");
             sb.AppendLine(MostrarDetallesProductos(productosList));
             sb.AppendLine($"monto: ${monto}");
+            sb.AppendLine($"-----------");
 
             return sb.ToString();
         }

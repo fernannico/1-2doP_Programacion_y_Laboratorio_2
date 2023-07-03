@@ -42,11 +42,13 @@ namespace Inicio
             lblModifCorte = new Label();
             lblModifDescripcion = new Label();
             groupBox1 = new GroupBox();
+            btnEliminar = new Button();
             btnDetalles = new Button();
             btnVender = new Button();
             comboBoxClientes = new ComboBox();
             label2 = new Label();
             btcFacturasHistorial = new Button();
+            btnSerializar = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudModifStock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudModifPrecio).BeginInit();
@@ -57,7 +59,7 @@ namespace Inicio
             // 
             lblHeladera.AutoSize = true;
             lblHeladera.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
-            lblHeladera.Location = new Point(59, 9);
+            lblHeladera.Location = new Point(12, 19);
             lblHeladera.Name = "lblHeladera";
             lblHeladera.Size = new Size(74, 28);
             lblHeladera.TabIndex = 0;
@@ -66,7 +68,7 @@ namespace Inicio
             // btnModificar
             // 
             btnModificar.Enabled = false;
-            btnModificar.Location = new Point(18, 311);
+            btnModificar.Location = new Point(18, 292);
             btnModificar.Name = "btnModificar";
             btnModificar.Size = new Size(230, 29);
             btnModificar.TabIndex = 2;
@@ -83,7 +85,7 @@ namespace Inicio
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dataGridView1.BackgroundColor = SystemColors.Desktop;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(12, 44);
+            dataGridView1.Location = new Point(12, 58);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 29;
@@ -96,7 +98,7 @@ namespace Inicio
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
-            label1.Location = new Point(502, 13);
+            label1.Location = new Point(528, -1);
             label1.Name = "label1";
             label1.Size = new Size(196, 28);
             label1.TabIndex = 4;
@@ -104,21 +106,21 @@ namespace Inicio
             // 
             // txtModifCorte
             // 
-            txtModifCorte.Location = new Point(18, 102);
+            txtModifCorte.Location = new Point(18, 104);
             txtModifCorte.Name = "txtModifCorte";
             txtModifCorte.Size = new Size(230, 27);
             txtModifCorte.TabIndex = 5;
             // 
             // txtModDescripcion
             // 
-            txtModDescripcion.Location = new Point(18, 46);
+            txtModDescripcion.Location = new Point(18, 51);
             txtModDescripcion.Name = "txtModDescripcion";
             txtModDescripcion.Size = new Size(230, 27);
             txtModDescripcion.TabIndex = 6;
             // 
             // nudModifStock
             // 
-            nudModifStock.Location = new Point(18, 164);
+            nudModifStock.Location = new Point(18, 157);
             nudModifStock.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             nudModifStock.Name = "nudModifStock";
             nudModifStock.Size = new Size(230, 27);
@@ -127,7 +129,7 @@ namespace Inicio
             // 
             // nudModifPrecio
             // 
-            nudModifPrecio.Location = new Point(18, 223);
+            nudModifPrecio.Location = new Point(18, 210);
             nudModifPrecio.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             nudModifPrecio.Name = "nudModifPrecio";
             nudModifPrecio.Size = new Size(230, 27);
@@ -137,7 +139,7 @@ namespace Inicio
             // lblModifPrecio
             // 
             lblModifPrecio.AutoSize = true;
-            lblModifPrecio.Location = new Point(18, 200);
+            lblModifPrecio.Location = new Point(18, 187);
             lblModifPrecio.Name = "lblModifPrecio";
             lblModifPrecio.Size = new Size(119, 20);
             lblModifPrecio.TabIndex = 9;
@@ -146,7 +148,7 @@ namespace Inicio
             // lblModifStock
             // 
             lblModifStock.AutoSize = true;
-            lblModifStock.Location = new Point(18, 141);
+            lblModifStock.Location = new Point(18, 134);
             lblModifStock.Name = "lblModifStock";
             lblModifStock.Size = new Size(198, 20);
             lblModifStock.TabIndex = 10;
@@ -155,7 +157,7 @@ namespace Inicio
             // lblModifCorte
             // 
             lblModifCorte.AutoSize = true;
-            lblModifCorte.Location = new Point(18, 79);
+            lblModifCorte.Location = new Point(18, 81);
             lblModifCorte.Name = "lblModifCorte";
             lblModifCorte.Size = new Size(188, 20);
             lblModifCorte.TabIndex = 11;
@@ -164,7 +166,7 @@ namespace Inicio
             // lblModifDescripcion
             // 
             lblModifDescripcion.AutoSize = true;
-            lblModifDescripcion.Location = new Point(18, 23);
+            lblModifDescripcion.Location = new Point(18, 28);
             lblModifDescripcion.Name = "lblModifDescripcion";
             lblModifDescripcion.Size = new Size(204, 20);
             lblModifDescripcion.TabIndex = 12;
@@ -172,6 +174,7 @@ namespace Inicio
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(btnEliminar);
             groupBox1.Controls.Add(btnDetalles);
             groupBox1.Controls.Add(lblModifDescripcion);
             groupBox1.Controls.Add(btnModificar);
@@ -182,17 +185,28 @@ namespace Inicio
             groupBox1.Controls.Add(lblModifPrecio);
             groupBox1.Controls.Add(nudModifStock);
             groupBox1.Controls.Add(nudModifPrecio);
-            groupBox1.Location = new Point(502, 44);
+            groupBox1.Location = new Point(502, 30);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(265, 352);
+            groupBox1.Size = new Size(265, 366);
             groupBox1.TabIndex = 13;
             groupBox1.TabStop = false;
             groupBox1.Text = "----------------------------------------";
             // 
+            // btnEliminar
+            // 
+            btnEliminar.Enabled = false;
+            btnEliminar.Location = new Point(18, 327);
+            btnEliminar.Name = "btnEliminar";
+            btnEliminar.Size = new Size(230, 29);
+            btnEliminar.TabIndex = 14;
+            btnEliminar.Text = "Eliminar";
+            btnEliminar.UseVisualStyleBackColor = true;
+            btnEliminar.Click += btnEliminar_Click;
+            // 
             // btnDetalles
             // 
             btnDetalles.Enabled = false;
-            btnDetalles.Location = new Point(18, 266);
+            btnDetalles.Location = new Point(18, 257);
             btnDetalles.Name = "btnDetalles";
             btnDetalles.Size = new Size(230, 29);
             btnDetalles.TabIndex = 13;
@@ -204,7 +218,7 @@ namespace Inicio
             // 
             btnVender.Enabled = false;
             btnVender.ForeColor = Color.FromArgb(0, 64, 0);
-            btnVender.Location = new Point(325, 402);
+            btnVender.Location = new Point(325, 416);
             btnVender.Name = "btnVender";
             btnVender.Size = new Size(152, 29);
             btnVender.TabIndex = 15;
@@ -216,7 +230,7 @@ namespace Inicio
             // 
             comboBoxClientes.BackColor = Color.Aquamarine;
             comboBoxClientes.FormattingEnabled = true;
-            comboBoxClientes.Location = new Point(113, 402);
+            comboBoxClientes.Location = new Point(113, 416);
             comboBoxClientes.Name = "comboBoxClientes";
             comboBoxClientes.Size = new Size(206, 28);
             comboBoxClientes.TabIndex = 16;
@@ -225,7 +239,7 @@ namespace Inicio
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(12, 406);
+            label2.Location = new Point(12, 420);
             label2.Name = "label2";
             label2.Size = new Size(95, 20);
             label2.TabIndex = 17;
@@ -242,12 +256,24 @@ namespace Inicio
             btcFacturasHistorial.UseVisualStyleBackColor = true;
             btcFacturasHistorial.Click += btcFacturasHistorial_Click;
             // 
+            // btnSerializar
+            // 
+            btnSerializar.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point);
+            btnSerializar.Location = new Point(113, -1);
+            btnSerializar.Name = "btnSerializar";
+            btnSerializar.Size = new Size(136, 48);
+            btnSerializar.TabIndex = 19;
+            btnSerializar.Text = "Guardar estado stock";
+            btnSerializar.UseVisualStyleBackColor = true;
+            btnSerializar.Click += btnSerializar_Click;
+            // 
             // frmHeladera
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
-            ClientSize = new Size(783, 441);
+            ClientSize = new Size(783, 447);
+            Controls.Add(btnSerializar);
             Controls.Add(btcFacturasHistorial);
             Controls.Add(label2);
             Controls.Add(comboBoxClientes);
@@ -289,5 +315,7 @@ namespace Inicio
         private ComboBox comboBoxClientes;
         private Label label2;
         private Button btcFacturasHistorial;
+        private Button btnEliminar;
+        private Button btnSerializar;
     }
 }
