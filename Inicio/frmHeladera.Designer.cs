@@ -49,6 +49,7 @@ namespace Inicio
             label2 = new Label();
             btcFacturasHistorial = new Button();
             btnSerializar = new Button();
+            btnCrearProd = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudModifStock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudModifPrecio).BeginInit();
@@ -267,12 +268,24 @@ namespace Inicio
             btnSerializar.UseVisualStyleBackColor = true;
             btnSerializar.Click += btnSerializar_Click;
             // 
+            // btnCrearProd
+            // 
+            btnCrearProd.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            btnCrearProd.Location = new Point(383, -1);
+            btnCrearProd.Name = "btnCrearProd";
+            btnCrearProd.Size = new Size(94, 48);
+            btnCrearProd.TabIndex = 20;
+            btnCrearProd.Text = "Crear producto";
+            btnCrearProd.UseVisualStyleBackColor = true;
+            btnCrearProd.Click += btnCrearProd_Click;
+            // 
             // frmHeladera
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
             ClientSize = new Size(783, 447);
+            Controls.Add(btnCrearProd);
             Controls.Add(btnSerializar);
             Controls.Add(btcFacturasHistorial);
             Controls.Add(label2);
@@ -317,5 +330,6 @@ namespace Inicio
         private Button btcFacturasHistorial;
         private Button btnEliminar;
         private Button btnSerializar;
+        private Button btnCrearProd;
     }
 }

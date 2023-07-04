@@ -291,7 +291,14 @@ namespace Inicio
                 dr["precio/Kg"] = item.Precio;
                 dataTable.Rows.Add(dr);
 
-                diccionarioProductos.Add(posicionFila, item);
+                if (diccionarioProductos.ContainsKey(item.Id))
+                {
+                    diccionarioProductos[item.Id] = item; // Actualizar el valor del producto existente en el diccionario
+                }
+                else
+                {
+                    diccionarioProductos.Add(item.Id, item); // Agregar el nuevo producto al diccionario
+                }
                 posicionFila++;
             }
         }
@@ -301,11 +308,21 @@ namespace Inicio
             try
             {
                 Serializacion.SerializarAXml(productosStockList);
-            }catch (Exception)
+            }
+            catch (Exception)
             {
                 throw;
             }
 
+        }
+
+        private void btnCrearProd_Click(object sender, EventArgs e)
+        {
+            frmProductoNuevo frmProductoNuevo = new frmProductoNuevo(productosStockList);
+            frmProductoNuevo.ShowDialog();
+
+            productosStockList = ProductosBDD.Leer();
+            CargarDataGrid();
         }
     }
 }

@@ -32,6 +32,9 @@ namespace Inicio
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
+            string mail = txtMail.Text;
+            string contrasena = txtContrasenia.Text;
+
             if (listBox1.SelectedItem is not null)
             {
                 Usuario usuarioSeleccionado = (Usuario)listBox1.SelectedItem;
@@ -63,6 +66,11 @@ namespace Inicio
             }
         }
 
+        /// <summary>
+        /// evento de cuando selecciono un usuario del listbox para que se autocomplete sus datos en los textbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             Usuario usuarioSeleccionado = (Usuario)listBox1.SelectedItem;

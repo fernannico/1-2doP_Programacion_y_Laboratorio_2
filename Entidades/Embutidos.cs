@@ -18,6 +18,12 @@ namespace ProductosNs
         {
             this.tipoEmbutido = tipoEmbutido;
         }
+        public Embutido(float precioPorKg, int kgEnStock, string tipoEmbutido) : base()
+        {
+            this.precioPorKg = precioPorKg;
+            this.kgEnStock = kgEnStock;
+            this.tipoEmbutido = tipoEmbutido;
+        }
 
         public override int Id { get { return id; } }
 

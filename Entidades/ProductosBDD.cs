@@ -37,7 +37,7 @@ namespace Entidades
             try
             {
                 connection.Open();
-                command.CommandText = "SELECT ID, DESCRIPCION, CORTE, KG_EN_STOCK, PRECIO_POR_KG FROM PRODUCTOS WHERE TIPO_PROD = 'Carne'";
+                command.CommandText = "SELECT ID, DESCRIPCION, CORTE, KG_EN_STOCK, PRECIO_POR_KG FROM PRODUCTOS WHERE TIPO_PROD = 'Carne' ORDER BY ID ASC";
 
                 SqlDataReader dataReader;
 
@@ -52,7 +52,7 @@ namespace Entidades
                                              dataReader["CORTE"].ToString()));
                     }
                 }
-                command.CommandText = "SELECT ID, DESCRIPCION, KG_EN_STOCK, PRECIO_POR_KG FROM PRODUCTOS WHERE TIPO_PROD = 'Embutido'";
+                command.CommandText = "SELECT ID, DESCRIPCION, KG_EN_STOCK, PRECIO_POR_KG FROM PRODUCTOS WHERE TIPO_PROD = 'Embutido' ORDER BY ID ASC";
 
                 using (dataReader = command.ExecuteReader())
                 {
@@ -115,6 +115,36 @@ namespace Entidades
             {
                 connection.Close();
             }
+        }
+
+        public static void CrearProducto(Productos producto)
+        {
+            try
+            {
+                command.Parameters.Clear();
+                connection.Open();
+                command.CommandText = $"INSERT INTO PRODUCTOS (DESCRIPCION, CORTE, KG_EN_STOCK, PRECIO_POR_KG, TIPO_PROD) VALUES(@DESCRIPCION, @CORTE, @KG_EN_STOCK, @PRECIO_POR_KG, @TIPO_PROD)";
+                command.Parameters.AddWithValue("@KG_EN_STOCK", producto.KgEnStock);
+                command.Parameters.AddWithValue("@PRECIO_POR_KG", producto.Precio);
+
+                if(producto is Carne)
+                {
+                    command.Parameters.AddWithValue("@DESCRIPCION", ((Carne)producto).Animal);
+                    command.Parameters.AddWithValue("@CORTE", ((Carne)producto).Corte);
+                    command.Parameters.AddWithValue("@TIPO_PROD", "Carne");
+                }else if(producto is Embutido)
+                {
+                    command.Parameters.AddWithValue("@DESCRIPCION", ((Embutido)producto).TipoEmbutido);
+                    command.Parameters.AddWithValue("@CORTE", DBNull.Value);
+                    command.Parameters.AddWithValue("@TIPO_PROD", "Embutido");
+                }
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }finally { connection.Close(); }
         }
 
     }

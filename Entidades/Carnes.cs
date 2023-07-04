@@ -21,6 +21,13 @@ namespace ProductosNs
             this.animal = animal;
             this.corte = corte;
         }
+        public Carne(float precioPorKg, int kgEnStock, string animal, string corte) : base()
+        {
+            this.precioPorKg = precioPorKg;
+            this.kgEnStock = kgEnStock;
+            this.animal = animal;
+            this.corte = corte;
+        }
 
         public override int Id{ get { return id; } }
 
