@@ -36,6 +36,7 @@
             txtMail = new TextBox();
             listBox1 = new ListBox();
             label1 = new Label();
+            btnReiniciar = new Button();
             SuspendLayout();
             // 
             // lblMail
@@ -52,7 +53,7 @@
             // 
             lblContrasenia.AutoSize = true;
             lblContrasenia.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            lblContrasenia.Location = new Point(29, 116);
+            lblContrasenia.Location = new Point(29, 107);
             lblContrasenia.Name = "lblContrasenia";
             lblContrasenia.Size = new Size(118, 28);
             lblContrasenia.TabIndex = 1;
@@ -61,9 +62,9 @@
             // btnIngresar
             // 
             btnIngresar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnIngresar.Location = new Point(29, 207);
+            btnIngresar.Location = new Point(126, 172);
             btnIngresar.Name = "btnIngresar";
-            btnIngresar.Size = new Size(470, 29);
+            btnIngresar.Size = new Size(103, 29);
             btnIngresar.TabIndex = 2;
             btnIngresar.Text = "Ingresar";
             btnIngresar.UseVisualStyleBackColor = true;
@@ -71,7 +72,7 @@
             // 
             // txtContrasenia
             // 
-            txtContrasenia.Location = new Point(29, 147);
+            txtContrasenia.Location = new Point(29, 138);
             txtContrasenia.Name = "txtContrasenia";
             txtContrasenia.PasswordChar = '*';
             txtContrasenia.Size = new Size(200, 27);
@@ -100,7 +101,7 @@
             listBox1.BorderStyle = BorderStyle.FixedSingle;
             listBox1.FormattingEnabled = true;
             listBox1.ItemHeight = 20;
-            listBox1.Location = new Point(257, 77);
+            listBox1.Location = new Point(244, 77);
             listBox1.Name = "listBox1";
             listBox1.Size = new Size(242, 122);
             listBox1.TabIndex = 7;
@@ -110,18 +111,29 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(288, 51);
+            label1.Location = new Point(244, 51);
             label1.Name = "label1";
             label1.Size = new Size(77, 23);
             label1.TabIndex = 8;
             label1.Text = "Usuarios";
+            // 
+            // btnReiniciar
+            // 
+            btnReiniciar.Location = new Point(29, 172);
+            btnReiniciar.Name = "btnReiniciar";
+            btnReiniciar.Size = new Size(96, 29);
+            btnReiniciar.TabIndex = 9;
+            btnReiniciar.Text = "tipear user";
+            btnReiniciar.UseVisualStyleBackColor = true;
+            btnReiniciar.Click += btnReiniciar_Click;
             // 
             // frmLogin
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.NavajoWhite;
-            ClientSize = new Size(508, 256);
+            ClientSize = new Size(501, 220);
+            Controls.Add(btnReiniciar);
             Controls.Add(label1);
             Controls.Add(listBox1);
             Controls.Add(txtMail);
@@ -150,5 +162,6 @@
         private TextBox txtMail;
         private ListBox listBox1;
         private Label label1;
+        private Button btnReiniciar;
     }
 }

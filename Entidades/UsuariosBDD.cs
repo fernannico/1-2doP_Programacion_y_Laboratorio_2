@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using usuarios;
+using System.Data.Common;
 
 namespace Entidades
 {
@@ -14,7 +15,7 @@ namespace Entidades
         static string connectionString;
         static SqlCommand command;
         static SqlConnection connection;
-        //static SqlDataReader dataReader;
+        static SqlDataReader dataReader;
 
         static UsuariosBDD()
         {
@@ -36,8 +37,6 @@ namespace Entidades
             {
                 connection.Open();
                 command.CommandText = "SELECT ID, MAIL, CONTRASENA FROM USUARIOS WHERE TIPO_USUARIO = 'Vendedor'";
-
-                SqlDataReader dataReader;
 
                 using (dataReader = command.ExecuteReader())
                 {
@@ -69,6 +68,35 @@ namespace Entidades
                 throw;
             }
             finally { connection.Close(); }
+        }
+
+        public static string TraerTipoUsuario(string mail, string contrasena)
+        {
+            string tipoUsuario = null;
+
+            try
+            {
+                command.Parameters.Clear();
+                connection.Open();
+                command.CommandText = $"SELECT TIPO_USUARIO FROM USUARIOS WHERE MAIL = @mail AND CONTRASENA = @contrasena";
+                command.Parameters.AddWithValue("@mail", mail);
+                command.Parameters.AddWithValue("@contrasena", contrasena);
+
+                using (dataReader = command.ExecuteReader())
+                {
+                    while (dataReader.Read())
+                    {
+                        tipoUsuario = dataReader["TIPO_USUARIO"].ToString();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+
+            }finally { connection.Close(); }
+
+            return tipoUsuario;
         }
     }
 }

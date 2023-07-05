@@ -16,11 +16,6 @@ namespace Inicio
     {
         private Productos productoNuevo;
         private List<Productos> productosStockList;
-        //float precioPorKgNew;
-        //int kgStockNew;
-        //string descripcionNew;
-        //string corteNew;
-        //string tipoProductoNew;
 
         public frmProductoNuevo()
         {
@@ -52,7 +47,7 @@ namespace Inicio
                 }
 
             }
-            else { MessageBox.Show("No se completaron todos los datos para crear el producto, reintentar"); } 
+            else { MessageBox.Show("No se completaron todos los datos para crear el producto, reintentar"); }
         }
 
         private bool ValidarProductoNuevo()
@@ -99,7 +94,7 @@ namespace Inicio
                 banderaError = true;
                 sb.AppendLine("Precio");
             }
-            if(stock == 0)
+            if (stock == 0)
             {
                 banderaError = true;
                 sb.AppendLine("Stock");
@@ -113,9 +108,9 @@ namespace Inicio
             {
                 MessageBox.Show($"Datos invalidos: \n{sb}", "Error", MessageBoxButtons.OK);
                 return false;
-            } 
-            
-            return true;             
+            }
+
+            return true;
         }
         private void comboBoxTipoProd_SelectedIndexChanged(object sender, EventArgs e)
         {

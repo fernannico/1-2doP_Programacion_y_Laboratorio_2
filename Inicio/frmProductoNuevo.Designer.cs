@@ -131,7 +131,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.SaddleBrown;
-            ClientSize = new Size(517, 177);
+            ClientSize = new Size(517, 152);
             Controls.Add(label3);
             Controls.Add(comboBoxTipoProd);
             Controls.Add(btnCrearOk);
