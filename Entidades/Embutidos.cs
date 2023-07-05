@@ -25,7 +25,7 @@ namespace ProductosNs
             this.tipoEmbutido = tipoEmbutido;
         }
 
-        public override int Id { get { return id; } }
+        public override int Id { get { return id; } set { id = value ; } }
 
         /// <summary>
         /// para recibir y asignar el tipo de embutido

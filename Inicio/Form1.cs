@@ -10,11 +10,7 @@ namespace Inicio
     {
         private List<Usuario> usuarios = new List<Usuario>();
         private List<Productos> productosStockList = new List<Productos>();
-        //private List<Carne> carnesStockList = new List<Carne>();                      BORRAR AMBAS CLASES? o poner en la class de productosBdd que los lea
-        //private List<Embutido> embutidosStockList = new List<Embutido>();
         private List<Factura> listaFacturasHistorial = new List<Factura>();
-        //private VendedorBDD vendedor;
-        //BORRAR AMBAS CLASES cliente-vendedor? 
         private Usuario usuarioSeleccionado;
 
         public frmLogin()
@@ -103,6 +99,7 @@ namespace Inicio
             Vendedor vendedorSeleccionado = (Vendedor)usuarioSeleccionado;
             frmHeladera frmHeladera = new frmHeladera(vendedorSeleccionado, productosStockList, usuarios, listaFacturasHistorial);
             frmHeladera.ShowDialog();
+            productosStockList = ProductosBDD.Leer();
         }
 
         private void EntrarComoCliente()

@@ -50,6 +50,7 @@ namespace Inicio
             btcFacturasHistorial = new Button();
             btnSerializar = new Button();
             btnCrearProd = new Button();
+            btnDeserializarXml = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudModifStock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudModifPrecio).BeginInit();
@@ -260,7 +261,7 @@ namespace Inicio
             // btnSerializar
             // 
             btnSerializar.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point);
-            btnSerializar.Location = new Point(113, -1);
+            btnSerializar.Location = new Point(95, -1);
             btnSerializar.Name = "btnSerializar";
             btnSerializar.Size = new Size(136, 48);
             btnSerializar.TabIndex = 19;
@@ -279,12 +280,24 @@ namespace Inicio
             btnCrearProd.UseVisualStyleBackColor = true;
             btnCrearProd.Click += btnCrearProd_Click;
             // 
+            // btnDeserializarXml
+            // 
+            btnDeserializarXml.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point);
+            btnDeserializarXml.Location = new Point(237, -2);
+            btnDeserializarXml.Name = "btnDeserializarXml";
+            btnDeserializarXml.Size = new Size(140, 49);
+            btnDeserializarXml.TabIndex = 21;
+            btnDeserializarXml.Text = "Mostrar ultimo estado stock (xml)";
+            btnDeserializarXml.UseVisualStyleBackColor = true;
+            btnDeserializarXml.Click += btnDeserializarXml_Click;
+            // 
             // frmHeladera
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
             ClientSize = new Size(783, 447);
+            Controls.Add(btnDeserializarXml);
             Controls.Add(btnCrearProd);
             Controls.Add(btnSerializar);
             Controls.Add(btcFacturasHistorial);
@@ -331,5 +344,6 @@ namespace Inicio
         private Button btnEliminar;
         private Button btnSerializar;
         private Button btnCrearProd;
+        private Button btnDeserializarXml;
     }
 }

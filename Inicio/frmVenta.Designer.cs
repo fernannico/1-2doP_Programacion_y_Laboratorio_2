@@ -48,6 +48,7 @@
             listBoxHistorial = new ListBox();
             label6 = new Label();
             button1 = new Button();
+            btnDeserializarJson = new Button();
             ((System.ComponentModel.ISupportInitialize)nudKgs).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -248,13 +249,23 @@
             // button1
             // 
             button1.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
-            button1.Location = new Point(160, 379);
+            button1.Location = new Point(18, 379);
             button1.Name = "button1";
-            button1.Size = new Size(167, 29);
+            button1.Size = new Size(169, 29);
             button1.TabIndex = 19;
             button1.Text = "Guardar estado stock (J)";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click_1;
+            // 
+            // btnDeserializarJson
+            // 
+            btnDeserializarJson.Location = new Point(193, 379);
+            btnDeserializarJson.Name = "btnDeserializarJson";
+            btnDeserializarJson.Size = new Size(222, 29);
+            btnDeserializarJson.TabIndex = 20;
+            btnDeserializarJson.Text = "Mostrar ultimo estado stock (J)";
+            btnDeserializarJson.UseVisualStyleBackColor = true;
+            btnDeserializarJson.Click += btnDeserializarJson_Click;
             // 
             // frmVenta
             // 
@@ -262,6 +273,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LavenderBlush;
             ClientSize = new Size(1101, 417);
+            Controls.Add(btnDeserializarJson);
             Controls.Add(button1);
             Controls.Add(label6);
             Controls.Add(listBoxHistorial);
@@ -313,5 +325,6 @@
         private ListBox listBoxHistorial;
         private Label label6;
         private Button button1;
+        private Button btnDeserializarJson;
     }
 }

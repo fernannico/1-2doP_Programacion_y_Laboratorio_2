@@ -29,7 +29,7 @@ namespace ProductosNs
             this.corte = corte;
         }
 
-        public override int Id{ get { return id; } }
+        public override int Id{ get { return id; } set { id = value; } }
 
         /// <summary>
         /// para obtener o asignar el tipo de animal de la carne

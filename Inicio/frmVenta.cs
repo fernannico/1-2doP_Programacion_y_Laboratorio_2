@@ -320,5 +320,26 @@ namespace Inicio
                 throw;
             }
         }
+
+        private void btnDeserializarJson_Click(object sender, EventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            List<Carne> carnes = Serializacion.DeserializarDesdeJson<List<Carne>>("CarnesJson.json");
+            List<Embutido> embutidos = Serializacion.DeserializarDesdeJson<List<Embutido>>("EmbutidosJson.json");
+
+            foreach (Carne car in carnes)
+            {
+                sb.AppendLine($"ID: {car.Id} | DETALLE: {car.Animal} {car.Corte} | STOCK: {car.KgEnStock}kg | PRECIO: ${car.Precio}");
+            }
+            foreach (Embutido embutido in embutidos)
+            {
+                sb.AppendLine($"ID: {embutido.Id} | DETALLE: {embutido.TipoEmbutido} | STOCK: {embutido.KgEnStock}kg | PRECIO: ${embutido.Precio}");
+            }
+
+            MessageBox.Show($"{sb}");
+
+        }
+
     }
 }

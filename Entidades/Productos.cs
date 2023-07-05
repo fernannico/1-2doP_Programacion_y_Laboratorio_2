@@ -23,7 +23,7 @@ namespace ProductosNs
             this.kgEnStock = kgEnStock;
         }
 
-        public abstract int Id { get; }
+        public abstract int Id { get; set; }
         public abstract float Precio { get; set; }
         public abstract int KgEnStock { get; set; }
         public abstract string MostrarDetalle();
