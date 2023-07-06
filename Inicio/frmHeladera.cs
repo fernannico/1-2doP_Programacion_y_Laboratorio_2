@@ -169,40 +169,47 @@ namespace Inicio
                         StringBuilder sb = new StringBuilder();
 
                         nuevaDescripcion = txtModDescripcion.Text;
-                        if (productoSeleccionado is Carne && nuevaDescripcion != ((Carne)productoSeleccionado).Animal)
+                        if (nuevaDescripcion.EsSoloTexto())
                         {
-                            huboModificacion = EstadoModificacion.modificado;
-                            sb.AppendLine($"- Animal: de '{((Carne)productoSeleccionado).Animal}' a '{nuevaDescripcion}'");
-                            vendedorElegido.FijarAnimal((Carne)productoSeleccionado, txtModDescripcion.Text);
-                            dataGridView1.Rows[indiceFilaSeleccionada].Cells["Descripcion"].Value = nuevaDescripcion;
-
-                            try
+                            if (productoSeleccionado is Carne && nuevaDescripcion != ((Carne)productoSeleccionado).Animal)
                             {
-                                CarnesBDD.ModificarCarne((Carne)productoSeleccionado);
-                            }
-                            catch (ExcepcionesPropias ex)
-                            {
-                                MessageBox.Show(ex.Message);
-                            }
+                                huboModificacion = EstadoModificacion.modificado;
+                                sb.AppendLine($"- Animal: de '{((Carne)productoSeleccionado).Animal}' a '{nuevaDescripcion}'");
+                                vendedorElegido.FijarAnimal((Carne)productoSeleccionado, txtModDescripcion.Text);
+                                dataGridView1.Rows[indiceFilaSeleccionada].Cells["Descripcion"].Value = nuevaDescripcion;
 
+                                try
+                                {
+                                    CarnesBDD.ModificarCarne((Carne)productoSeleccionado);
+                                }
+                                catch (ExcepcionesPropias ex)
+                                {
+                                    MessageBox.Show(ex.Message);
+                                }
+
+                            }
+                            else if (productoSeleccionado is Embutido && nuevaDescripcion != ((Embutido)productoSeleccionado).TipoEmbutido)
+                            {
+                                huboModificacion = EstadoModificacion.modificado;
+                                sb.AppendLine($"- Nombre del embutido: de '{((Embutido)productoSeleccionado).TipoEmbutido}' a '{nuevaDescripcion}'"); vendedorElegido.FijarTipoEmbutido((Embutido)productoSeleccionado, txtModDescripcion.Text);
+                                dataGridView1.Rows[indiceFilaSeleccionada].Cells["Descripcion"].Value = nuevaDescripcion;
+                                try
+                                {
+                                    EmbutidosBDD.ModificarEmbutido((Embutido)productoSeleccionado);
+                                }
+                                catch (ExcepcionesPropias ex)
+                                {
+                                    MessageBox.Show(ex.Message);
+                                }
+                            }
                         }
-                        else if (productoSeleccionado is Embutido && nuevaDescripcion != ((Embutido)productoSeleccionado).TipoEmbutido)
+                        else
                         {
-                            huboModificacion = EstadoModificacion.modificado;
-                            sb.AppendLine($"- Nombre del embutido: de '{((Embutido)productoSeleccionado).TipoEmbutido}' a '{nuevaDescripcion}'"); vendedorElegido.FijarTipoEmbutido((Embutido)productoSeleccionado, txtModDescripcion.Text);
-                            dataGridView1.Rows[indiceFilaSeleccionada].Cells["Descripcion"].Value = nuevaDescripcion;
-                            try
-                            {
-                                EmbutidosBDD.ModificarEmbutido((Embutido)productoSeleccionado);
-                            }
-                            catch (ExcepcionesPropias ex)
-                            {
-                                MessageBox.Show(ex.Message);
-                            }
+                            MessageBox.Show("La nueva descripcion contiene numeros o simbolos", "error parametros", MessageBoxButtons.OK);
                         }
 
                         nuevoCorte = txtModifCorte.Text;
-                        if (productoSeleccionado is Carne)
+                        if (productoSeleccionado is Carne && nuevoCorte.EsSoloTexto())
                         {
                             corteOriginal = ((Carne)productoSeleccionado).Corte;
                             if (nuevoCorte != corteOriginal)
@@ -220,6 +227,10 @@ namespace Inicio
                                     MessageBox.Show(ex.Message);
                                 }
                             }
+                        }
+                        else
+                        {
+                            MessageBox.Show("El nuevo corte contiene numeros o simbolos", "error parametros", MessageBoxButtons.OK);
                         }
 
                         nuevoKgStock = (int)nudModifStock.Value;
@@ -428,7 +439,7 @@ namespace Inicio
             frmProductoNuevo.ShowDialog();
             try
             {
-                productosStockList = ProductosBDD.Leer();
+                productosStockList = ProductosBDD.Leer<Productos>();
 
             }
             catch (ExcepcionesPropias ex)

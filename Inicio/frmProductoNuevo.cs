@@ -40,13 +40,14 @@ namespace Inicio
                 try
                 {
                     ProductosBDD.CrearProducto(productoNuevo);
+                    MessageBox.Show("Producto creado", "Completado", MessageBoxButtons.OK);
                 }
                 catch (ExcepcionesPropias ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
             }
-            else { MessageBox.Show("No se completaron todos los datos para crear el producto, reintentar"); }
+            else { MessageBox.Show("No se completaron todos los datos para crear el producto, reintentar", "Error datos", MessageBoxButtons.OK); }
         }
 
         private bool ValidarProductoNuevo()
@@ -69,9 +70,16 @@ namespace Inicio
                     }
                     else
                     {
-                        productoNuevo = new Carne(precioPorKgNew, kgStockNew, descripcionNew, corteNew);
-                        productosStockList.Add(productoNuevo);
-                        validacion = true;
+                        if (corteNew.EsSoloTexto())
+                        {
+                            productoNuevo = new Carne(precioPorKgNew, kgStockNew, descripcionNew, corteNew);
+                            productosStockList.Add(productoNuevo);
+                            validacion = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("El corte contiene numeros o simbolos", "error parametros", MessageBoxButtons.OK);
+                        }
                     }
                 }
                 else if (comboBoxTipoProd.SelectedIndex == 1)
@@ -102,6 +110,10 @@ namespace Inicio
             {
                 banderaError = true;
                 sb.AppendLine("Descripcion");
+            }else if (!descripcion.EsSoloTexto())
+            {
+                banderaError = true;
+                sb.AppendLine("La descripcion contiene numeros o simbolos");
             }
             if (banderaError == true)
             {

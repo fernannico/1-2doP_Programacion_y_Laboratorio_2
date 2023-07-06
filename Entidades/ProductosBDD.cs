@@ -11,7 +11,7 @@ using System.Data.Common;
 
 namespace Entidades
 {
-    public static class ProductosBDD
+    public static class ProductosBDD 
     {
 
         static string connectionString;
@@ -31,9 +31,9 @@ namespace Entidades
             command.CommandType = CommandType.Text;
         }
 
-        public static List<Productos> Leer()
+        public static List<T> Leer<T>() where T : Productos 
         {
-            List<Productos> productos = new List<Productos>();
+            List<T> productos = new List<T>();
 
             try
             {
@@ -46,7 +46,7 @@ namespace Entidades
                 {
                     while (dataReader.Read())
                     {
-                        productos.Add(new Carne(Convert.ToInt32(dataReader["id"]),
+                        productos.Add((T)(Productos)new Carne(Convert.ToInt32(dataReader["id"]),
                                              (float)dataReader.GetDouble(dataReader.GetOrdinal("PRECIO_POR_KG")),
                                              Convert.ToInt32(dataReader["KG_EN_STOCK"]),
                                              dataReader["DESCRIPCION"].ToString(),
@@ -59,7 +59,7 @@ namespace Entidades
                 {
                     while (dataReader.Read())
                     {
-                        productos.Add(new Embutido(Convert.ToInt32(dataReader["ID"]),
+                        productos.Add((T)(Productos)new Embutido(Convert.ToInt32(dataReader["ID"]),
                                                                  (float)dataReader.GetDouble(dataReader.GetOrdinal("PRECIO_POR_KG")),
                                                                  Convert.ToInt32(dataReader["KG_EN_STOCK"]),
                                                                  dataReader["DESCRIPCION"].ToString()));

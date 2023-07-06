@@ -35,7 +35,7 @@ namespace Inicio
 
             try
             {
-                productosStockList = ProductosBDD.Leer();
+                productosStockList = ProductosBDD.Leer<Productos>();
             }
             catch (ExcepcionesPropias ex)
             {
@@ -63,31 +63,38 @@ namespace Inicio
 
             if (!string.IsNullOrEmpty(mail) && !string.IsNullOrEmpty(contrasena))
             {
-                try
+                if (mail.EsMail())
                 {
-                    tipoUsuario = UsuariosBDD.TraerTipoUsuario(mail, contrasena);
-
-                    if (tipoUsuario is not null)
+                    try
                     {
-                        if (tipoUsuario == "Vendedor")
+                        tipoUsuario = UsuariosBDD.TraerTipoUsuario(mail, contrasena);
+
+                        if (tipoUsuario is not null)
                         {
-                            usuarioSeleccionado = (Vendedor)usuarios.Find(u => u.MailPropiedad == mail && u.PwdPropiedad == contrasena);
-                            EntrarComoVendedor();
+                            if (tipoUsuario == "Vendedor")
+                            {
+                                usuarioSeleccionado = (Vendedor)usuarios.Find(u => u.MailPropiedad == mail && u.PwdPropiedad == contrasena);
+                                EntrarComoVendedor();
+                            }
+                            else if (tipoUsuario == "Cliente")
+                            {
+                                usuarioSeleccionado = usuarios.Find(u => u.MailPropiedad == mail && u.PwdPropiedad == contrasena);
+                                EntrarComoCliente();
+                            }
                         }
-                        else if (tipoUsuario == "Cliente")
+                        else
                         {
-                            usuarioSeleccionado = usuarios.Find(u => u.MailPropiedad == mail && u.PwdPropiedad == contrasena);
-                            EntrarComoCliente();
+                            MessageBox.Show("Corroborar usuario y contraseña", "Usuario invalido", MessageBoxButtons.OK);
                         }
                     }
-                    else
+                    catch (ExcepcionesPropias ex)
                     {
-                        MessageBox.Show("No existe el usuario", "Usuario invalido", MessageBoxButtons.OK);
+                        MessageBox.Show(ex.Message);
                     }
                 }
-                catch (ExcepcionesPropias ex)
+                else
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show("no ingresó un formato de mail valido", "Mail invalido", MessageBoxButtons.OK);
                 }
             }
             else
@@ -122,7 +129,7 @@ namespace Inicio
             frmHeladera.ShowDialog();
             try
             {
-                productosStockList = ProductosBDD.Leer();
+                productosStockList = ProductosBDD.Leer<Productos>();
             }
             catch (ExcepcionesPropias ex)
             {

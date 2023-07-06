@@ -121,7 +121,7 @@ namespace Inicio
             try
             {
                 string historialfacturas = ArchivarTexto.AbrirFacturaTexto("HistorialFacturas.txt");
-                MessageBox.Show(historialfacturas);
+                MessageBox.Show(historialfacturas, "HISTORIAL DE FACTURAS", MessageBoxButtons.OK);
             }
             catch (ExcepcionesPropias ex)
             {
