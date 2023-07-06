@@ -32,38 +32,6 @@ namespace Entidades
             command.CommandType = CommandType.Text;
         }
 
-        //public static List<Embutido> Leer()
-        //{
-        //    List<Embutido> embutidos = new List<Embutido>();
-
-        //    try
-        //    {
-        //        connection.Open();
-        //        command.CommandText = "SELECT ID, DESCRIPCION, KG_EN_STOCK, PRECIO_POR_KG FROM EMBUTIDOS";
-
-        //        SqlDataReader dataReader;
-
-        //        using (dataReader = command.ExecuteReader())
-        //        {
-        //            while (dataReader.Read())
-        //            {
-        //                embutidos.Add(new Embutido(Convert.ToInt32(dataReader["id"]),
-        //                                         (float)dataReader.GetDouble(dataReader.GetOrdinal("PRECIO_POR_KG")),
-        //                                         Convert.ToInt32(dataReader["KG_EN_STOCK"]),
-        //                                         dataReader["DESCRIPCION"].ToString()));
-        //            }
-        //        }
-
-        //        return embutidos;
-
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //    finally { connection.Close(); }
-        //}
-
         public static void ModificarEmbutido(Embutido embutido)
         {
             try

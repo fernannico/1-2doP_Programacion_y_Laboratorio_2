@@ -49,6 +49,7 @@
             label6 = new Label();
             button1 = new Button();
             btnDeserializarJson = new Button();
+            lblReloj = new Label();
             ((System.ComponentModel.ISupportInitialize)nudKgs).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -267,12 +268,23 @@
             btnDeserializarJson.UseVisualStyleBackColor = true;
             btnDeserializarJson.Click += btnDeserializarJson_Click;
             // 
+            // lblReloj
+            // 
+            lblReloj.AutoSize = true;
+            lblReloj.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            lblReloj.Location = new Point(879, 9);
+            lblReloj.Name = "lblReloj";
+            lblReloj.Size = new Size(70, 28);
+            lblReloj.TabIndex = 21;
+            lblReloj.Text = "label5";
+            // 
             // frmVenta
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LavenderBlush;
             ClientSize = new Size(1101, 417);
+            Controls.Add(lblReloj);
             Controls.Add(btnDeserializarJson);
             Controls.Add(button1);
             Controls.Add(label6);
@@ -326,5 +338,6 @@
         private Label label6;
         private Button button1;
         private Button btnDeserializarJson;
+        private Label lblReloj;
     }
 }

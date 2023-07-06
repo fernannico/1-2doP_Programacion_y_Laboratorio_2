@@ -68,24 +68,5 @@ namespace Entidades
             finally { connection.Close(); }
         }
 
-        //public static void Modificar(Cliente cliente)
-        //{
-        //    try
-        //    {
-        //        command.Parameters.Clear();
-        //        connection.Open();
-        //        command.CommandText = $"UPDATE Clientes SET DINERO = @DINERO WHERE Clientes.IDCLIENTE = {cliente.ID}";
-        //        command.Parameters.AddWithValue("@DINERO", cliente.GastoMaximoPropiedad);
-        //        command.ExecuteNonQuery();
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //    finally
-        //    {
-        //        connection.Close();
-        //    }
-        //}
     }
 }

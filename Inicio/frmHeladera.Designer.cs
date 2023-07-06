@@ -51,6 +51,7 @@ namespace Inicio
             btnSerializar = new Button();
             btnCrearProd = new Button();
             btnDeserializarXml = new Button();
+            lblGrados = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudModifStock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudModifPrecio).BeginInit();
@@ -61,7 +62,7 @@ namespace Inicio
             // 
             lblHeladera.AutoSize = true;
             lblHeladera.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
-            lblHeladera.Location = new Point(12, 19);
+            lblHeladera.Location = new Point(8, 50);
             lblHeladera.Name = "lblHeladera";
             lblHeladera.Size = new Size(74, 28);
             lblHeladera.TabIndex = 0;
@@ -87,12 +88,12 @@ namespace Inicio
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dataGridView1.BackgroundColor = SystemColors.Desktop;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(12, 58);
+            dataGridView1.Location = new Point(8, 89);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 29;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(465, 352);
+            dataGridView1.Size = new Size(490, 352);
             dataGridView1.TabIndex = 3;
             dataGridView1.CellClick += dataGridView1_CellClick;
             // 
@@ -100,7 +101,7 @@ namespace Inicio
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
-            label1.Location = new Point(528, -1);
+            label1.Location = new Point(544, 37);
             label1.Name = "label1";
             label1.Size = new Size(196, 28);
             label1.TabIndex = 4;
@@ -187,7 +188,7 @@ namespace Inicio
             groupBox1.Controls.Add(lblModifPrecio);
             groupBox1.Controls.Add(nudModifStock);
             groupBox1.Controls.Add(nudModifPrecio);
-            groupBox1.Location = new Point(502, 30);
+            groupBox1.Location = new Point(518, 68);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(265, 366);
             groupBox1.TabIndex = 13;
@@ -220,7 +221,7 @@ namespace Inicio
             // 
             btnVender.Enabled = false;
             btnVender.ForeColor = Color.FromArgb(0, 64, 0);
-            btnVender.Location = new Point(325, 416);
+            btnVender.Location = new Point(321, 447);
             btnVender.Name = "btnVender";
             btnVender.Size = new Size(152, 29);
             btnVender.TabIndex = 15;
@@ -232,7 +233,7 @@ namespace Inicio
             // 
             comboBoxClientes.BackColor = Color.Aquamarine;
             comboBoxClientes.FormattingEnabled = true;
-            comboBoxClientes.Location = new Point(113, 416);
+            comboBoxClientes.Location = new Point(109, 447);
             comboBoxClientes.Name = "comboBoxClientes";
             comboBoxClientes.Size = new Size(206, 28);
             comboBoxClientes.TabIndex = 16;
@@ -241,7 +242,7 @@ namespace Inicio
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(12, 420);
+            label2.Location = new Point(8, 451);
             label2.Name = "label2";
             label2.Size = new Size(95, 20);
             label2.TabIndex = 17;
@@ -250,7 +251,7 @@ namespace Inicio
             // btcFacturasHistorial
             // 
             btcFacturasHistorial.Enabled = false;
-            btcFacturasHistorial.Location = new Point(520, 405);
+            btcFacturasHistorial.Location = new Point(536, 443);
             btcFacturasHistorial.Name = "btcFacturasHistorial";
             btcFacturasHistorial.Size = new Size(230, 29);
             btcFacturasHistorial.TabIndex = 18;
@@ -261,7 +262,7 @@ namespace Inicio
             // btnSerializar
             // 
             btnSerializar.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point);
-            btnSerializar.Location = new Point(95, -1);
+            btnSerializar.Location = new Point(91, 30);
             btnSerializar.Name = "btnSerializar";
             btnSerializar.Size = new Size(136, 48);
             btnSerializar.TabIndex = 19;
@@ -272,7 +273,7 @@ namespace Inicio
             // btnCrearProd
             // 
             btnCrearProd.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnCrearProd.Location = new Point(383, -1);
+            btnCrearProd.Location = new Point(379, 30);
             btnCrearProd.Name = "btnCrearProd";
             btnCrearProd.Size = new Size(94, 48);
             btnCrearProd.TabIndex = 20;
@@ -283,7 +284,7 @@ namespace Inicio
             // btnDeserializarXml
             // 
             btnDeserializarXml.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point);
-            btnDeserializarXml.Location = new Point(237, -2);
+            btnDeserializarXml.Location = new Point(233, 29);
             btnDeserializarXml.Name = "btnDeserializarXml";
             btnDeserializarXml.Size = new Size(140, 49);
             btnDeserializarXml.TabIndex = 21;
@@ -291,12 +292,23 @@ namespace Inicio
             btnDeserializarXml.UseVisualStyleBackColor = true;
             btnDeserializarXml.Click += btnDeserializarXml_Click;
             // 
+            // lblGrados
+            // 
+            lblGrados.AutoSize = true;
+            lblGrados.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            lblGrados.Location = new Point(544, -4);
+            lblGrados.Name = "lblGrados";
+            lblGrados.Size = new Size(70, 28);
+            lblGrados.TabIndex = 22;
+            lblGrados.Text = "label3";
+            // 
             // frmHeladera
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
-            ClientSize = new Size(783, 447);
+            ClientSize = new Size(823, 485);
+            Controls.Add(lblGrados);
             Controls.Add(btnDeserializarXml);
             Controls.Add(btnCrearProd);
             Controls.Add(btnSerializar);
@@ -345,5 +357,6 @@ namespace Inicio
         private Button btnSerializar;
         private Button btnCrearProd;
         private Button btnDeserializarXml;
+        private Label lblGrados;
     }
 }

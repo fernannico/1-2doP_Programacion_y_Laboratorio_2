@@ -87,7 +87,27 @@ namespace Inicio
             dataTable.Columns.Add("Productos", typeof(Productos));
             dataTable.Columns.Add("Cantidad (kg's)", typeof(decimal));
             dataTable.Columns.Add("Costo individual", typeof(decimal));
+
+            Reloj reloj = new Reloj();
+            reloj.SegundoCambiado += AsignarHora;
+            reloj.Iniciar();
         }
+
+        public void AsignarHora(Reloj reloj)
+        {
+            if (lblReloj.InvokeRequired)
+            {
+                Action<Reloj> delegado = AsignarHora;
+
+                lblReloj.Invoke(delegado, reloj);
+            }
+            else
+            {
+                lblReloj.Text = $"Hora: {reloj.ToString()}";
+            }
+        }
+
+
         private void listBoxProductos_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxVendedores.SelectedIndex is >= 0 && listBoxProductos.SelectedItem is not null && nudKgs.Value > 0)

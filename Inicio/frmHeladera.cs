@@ -74,6 +74,24 @@ namespace Inicio
                 btcFacturasHistorial.Enabled = true;
             }
 
+            lblGrados.Text = "T° heladera: -13°C";
+            Grados generadorNumeros = new Grados();
+            generadorNumeros.NumeroGenerado += MostrarNumeroGenerado;
+            generadorNumeros.Iniciar();
+
+        }
+
+        public void MostrarNumeroGenerado(int numero)
+        {
+            if (lblGrados.InvokeRequired)
+            {
+                Action<int> delegado = MostrarNumeroGenerado;
+                lblGrados.Invoke(delegado, numero);
+            }
+            else
+            {
+                lblGrados.Text = $"T° heladera: {numero}°C";
+            }
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -455,19 +473,19 @@ namespace Inicio
             StringBuilder sb = new StringBuilder();
             try
             {
-                List<Carne> carnes =  Serializacion.DeserializarDesdeXml<List<Carne>>("Carnes.xml");
-                List<Embutido> embutidos =  Serializacion.DeserializarDesdeXml<List<Embutido>>("Embutidos.xml");
-            
+                List<Carne> carnes = Serializacion.DeserializarDesdeXml<List<Carne>>("Carnes.xml");
+                List<Embutido> embutidos = Serializacion.DeserializarDesdeXml<List<Embutido>>("Embutidos.xml");
+
                 foreach (Carne car in carnes)
                 {
                     sb.AppendLine($"ID: {car.Id} | DETALLE: {car.Animal} {car.Corte} | STOCK: {car.KgEnStock}kg | PRECIO: ${car.Precio}");
                 }
-                foreach(Embutido embutido in embutidos)
+                foreach (Embutido embutido in embutidos)
                 {
                     sb.AppendLine($"ID: {embutido.Id} | DETALLE: {embutido.TipoEmbutido} | STOCK: {embutido.KgEnStock}kg | PRECIO: ${embutido.Precio}");
                 }
 
-                MessageBox.Show($"{sb}","Anterior Stock guardado", MessageBoxButtons.OK);
+                MessageBox.Show($"{sb}", "Anterior Stock guardado", MessageBoxButtons.OK);
             }
             catch (ExcepcionesPropias ex)
             {

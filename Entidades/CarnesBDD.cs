@@ -30,39 +30,6 @@ namespace Entidades
             command.CommandType = CommandType.Text;
         }
 
-        //public static List<Carne> Leer()
-        //{
-        //    List<Carne> carnes = new List<Carne>();
-
-        //    try
-        //    {
-        //        connection.Open();
-        //        command.CommandText = "SELECT ID, DESCRIPCION, CORTE, KG_EN_STOCK, PRECIO_POR_KG FROM CARNES";
-
-        //        SqlDataReader dataReader /*= command.ExecuteReader()*/;
-
-        //        using (dataReader = command.ExecuteReader())
-        //        {
-        //            while (dataReader.Read())
-        //            {
-        //                carnes.Add(new Carne(Convert.ToInt32(dataReader["id"]),
-        //                                         (float)dataReader.GetDouble(dataReader.GetOrdinal("PRECIO_POR_KG")),
-        //                                         Convert.ToInt32(dataReader["KG_EN_STOCK"]),
-        //                                         dataReader["DESCRIPCION"].ToString(),
-        //                                         dataReader["CORTE"].ToString()));
-        //            }
-        //        }
-
-        //        return carnes;
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new ExcepcionesPropias("Error al leer la base de datos de carnes");
-        //    }
-        //    finally { connection.Close(); }
-        //}
-
         public static void ModificarCarne(Carne carne)
         {
             try
