@@ -46,11 +46,6 @@ namespace Inicio
 
             this.Text = "Bienvenido " + vendedorElegido.MailPropiedad;
 
-            //dataGridView1.DataSource = CarnesBDD.Leer();
-            //dataGridView1.DataSource = EmbutidosBDD.Leer();
-
-            //dataGridView1.DataSource = ProductosBDD.Leer();
-            //---------
             CargarDataGrid();
 
             dataGridView1.ClearSelection();
@@ -79,6 +74,7 @@ namespace Inicio
             generadorNumeros.NumeroGenerado += MostrarNumeroGenerado;
             generadorNumeros.Iniciar();
 
+            Task actualizarStockTask = ActualizarStockAsync();
         }
 
         public void MostrarNumeroGenerado(int numero)
@@ -91,6 +87,25 @@ namespace Inicio
             else
             {
                 lblGrados.Text = $"T° heladera: {numero}°C";
+            }
+        }
+        public async Task<bool> ActualizarStockAsync()
+        {
+            while (true)
+            {
+                foreach (Productos producto in productosStockList)
+                {
+                    if (producto.KgEnStock < 20)
+                    {
+                        producto.KgEnStock += 1;
+
+                        ProductosBDD.ModificarProducto(producto);
+                        CargarDataGrid();
+
+                    }
+                }
+
+                await Task.Delay(TimeSpan.FromSeconds(10));
             }
         }
 
@@ -442,6 +457,8 @@ namespace Inicio
             {
                 Serializacion.SerializarAXml(embutidos, "Embutidos.xml");
                 Serializacion.SerializarAXml(carnes, "Carnes.xml");
+                MessageBox.Show("Guardado el estado del stock", "Productos Guardados", MessageBoxButtons.OK);
+
             }
             catch (ExcepcionesPropias ex)
             {

@@ -339,7 +339,7 @@ namespace Inicio
                 }
                 Serializacion.SerializarAJson(carnes, "CarnesJson.json");
                 Serializacion.SerializarAJson(embutidos, "EmbutidosJson.json");
-
+                MessageBox.Show("Guardado el estado del stock", "Productos Guardados", MessageBoxButtons.OK);
             }
             catch (ExcepcionesPropias ex)
             {
