@@ -106,9 +106,9 @@ namespace Inicio
                         {
                             ArchivarTexto.GuardarFacturaTexto(factura.MostrarFactura(), "FacturasElegidas.txt");
                         }
-                        catch
+                        catch (ExcepcionesPropias ex)
                         {
-                            MessageBox.Show("Error al guardar la factura", "Factura A");
+                            MessageBox.Show(ex.Message);
                         }
                     }
                 }
@@ -122,13 +122,11 @@ namespace Inicio
             {
                 string historialfacturas = ArchivarTexto.AbrirFacturaTexto("HistorialFacturas.txt");
                 MessageBox.Show(historialfacturas);
-
             }
-            catch
+            catch (ExcepcionesPropias ex)
             {
-                MessageBox.Show("no se registran ventas");
+                MessageBox.Show(ex.Message);
             }
-
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Linq;
@@ -53,9 +54,14 @@ namespace Entidades
                 return vendedores;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                List<Exception> innerExceptions = new List<Exception>();
+                if (ex is SqlException || ex is InvalidOperationException || ex is SqlNullValueException || ex is DbException)
+                {
+                    innerExceptions.Add(ex);
+                }
+                throw new ExcepcionesPropias("Error al leer la base de datos de vendores", innerExceptions);
             }
             finally { connection.Close(); }
         }

@@ -176,15 +176,29 @@ namespace Inicio
                             vendedorElegido.FijarAnimal((Carne)productoSeleccionado, txtModDescripcion.Text);
                             dataGridView1.Rows[indiceFilaSeleccionada].Cells["Descripcion"].Value = nuevaDescripcion;
 
-                            CarnesBDD.ModificarCarne((Carne)productoSeleccionado);
+                            try
+                            {
+                                CarnesBDD.ModificarCarne((Carne)productoSeleccionado);
+                            }
+                            catch (ExcepcionesPropias ex)
+                            {
+                                MessageBox.Show(ex.Message);
+                            }
+
                         }
                         else if (productoSeleccionado is Embutido && nuevaDescripcion != ((Embutido)productoSeleccionado).TipoEmbutido)
                         {
                             huboModificacion = EstadoModificacion.modificado;
                             sb.AppendLine($"- Nombre del embutido: de '{((Embutido)productoSeleccionado).TipoEmbutido}' a '{nuevaDescripcion}'"); vendedorElegido.FijarTipoEmbutido((Embutido)productoSeleccionado, txtModDescripcion.Text);
                             dataGridView1.Rows[indiceFilaSeleccionada].Cells["Descripcion"].Value = nuevaDescripcion;
-
-                            EmbutidosBDD.ModificarEmbutido((Embutido)productoSeleccionado);
+                            try
+                            {
+                                EmbutidosBDD.ModificarEmbutido((Embutido)productoSeleccionado);
+                            }
+                            catch (ExcepcionesPropias ex)
+                            {
+                                MessageBox.Show(ex.Message);
+                            }
                         }
 
                         nuevoCorte = txtModifCorte.Text;
@@ -197,8 +211,14 @@ namespace Inicio
                                 sb.AppendLine($"- Corte: de '{corteOriginal}' a '{nuevoCorte}'");
                                 vendedorElegido.FijarCorteDeCarne((Carne)productoSeleccionado, nuevoCorte);
                                 dataGridView1.Rows[indiceFilaSeleccionada].Cells["Corte"].Value = nuevoCorte;
-
-                                CarnesBDD.ModificarCarne((Carne)productoSeleccionado);
+                                try
+                                {
+                                    CarnesBDD.ModificarCarne((Carne)productoSeleccionado);
+                                }
+                                catch (ExcepcionesPropias ex)
+                                {
+                                    MessageBox.Show(ex.Message);
+                                }
                             }
                         }
 
@@ -210,7 +230,14 @@ namespace Inicio
                             vendedorElegido.ReponerProductos(productoSeleccionado, (int)nudModifStock.Value);
                             dataGridView1.Rows[indiceFilaSeleccionada].Cells["kg en stock"].Value = productoSeleccionado.KgEnStock;
 
-                            ProductosBDD.ModificarProducto(productoSeleccionado);
+                            try
+                            {
+                                ProductosBDD.ModificarProducto(productoSeleccionado);
+                            }
+                            catch (ExcepcionesPropias ex)
+                            {
+                                MessageBox.Show(ex.Message);
+                            }
                         }
 
                         nuevoPrecio = (float)nudModifPrecio.Value;
@@ -221,7 +248,14 @@ namespace Inicio
                             vendedorElegido.FijarPrecioKg(productoSeleccionado, (float)nudModifPrecio.Value);
                             dataGridView1.Rows[indiceFilaSeleccionada].Cells["precio/Kg"].Value = nuevoPrecio;
 
-                            ProductosBDD.ModificarProducto(productoSeleccionado);
+                            try
+                            {
+                                ProductosBDD.ModificarProducto(productoSeleccionado);
+                            }
+                            catch (ExcepcionesPropias ex)
+                            {
+                                MessageBox.Show(ex.Message);
+                            }
                         }
 
                         if (huboModificacion == EstadoModificacion.modificado)
@@ -278,7 +312,14 @@ namespace Inicio
 
                 if (btnEliminar.Enabled == true)
                 {
-                    ProductosBDD.Eliminar(idSeleccionado);
+                    try
+                    {
+                        ProductosBDD.Eliminar(idSeleccionado);
+                    }
+                    catch (ExcepcionesPropias ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                     dataGridView1.Rows.RemoveAt(indiceFilaSeleccionada); // Eliminar la fila seleccionada del DataGridView
                     dataGridView1.ClearSelection();
 
@@ -373,9 +414,10 @@ namespace Inicio
                 Serializacion.SerializarAXml(embutidos, "Embutidos.xml");
                 Serializacion.SerializarAXml(carnes, "Carnes.xml");
             }
-            catch (Exception)
+            catch (ExcepcionesPropias ex)
             {
-                throw;
+                string mensajeError = "Error al serializar:\n" + ex.Message;
+                MessageBox.Show(mensajeError, "Error", MessageBoxButtons.OK);
             }
 
         }
@@ -384,8 +426,15 @@ namespace Inicio
         {
             frmProductoNuevo frmProductoNuevo = new frmProductoNuevo(productosStockList);
             frmProductoNuevo.ShowDialog();
+            try
+            {
+                productosStockList = ProductosBDD.Leer();
 
-            productosStockList = ProductosBDD.Leer();
+            }
+            catch (ExcepcionesPropias ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             CargarDataGrid();
         }
 
@@ -393,20 +442,26 @@ namespace Inicio
         {
             //string archivoXml = "Productos.xml";
             StringBuilder sb = new StringBuilder();
-
-            List<Carne> carnes =  Serializacion.DeserializarDesdeXml<List<Carne>>("Carnes.xml");
-            List<Embutido> embutidos =  Serializacion.DeserializarDesdeXml<List<Embutido>>("Embutidos.xml");
+            try
+            {
+                List<Carne> carnes =  Serializacion.DeserializarDesdeXml<List<Carne>>("Carnes.xml");
+                List<Embutido> embutidos =  Serializacion.DeserializarDesdeXml<List<Embutido>>("Embutidos.xml");
             
-            foreach (Carne car in carnes)
-            {
-                sb.AppendLine($"ID: {car.Id} | DETALLE: {car.Animal} {car.Corte} | STOCK: {car.KgEnStock}kg | PRECIO: ${car.Precio}");
-            }
-            foreach(Embutido embutido in embutidos)
-            {
-                sb.AppendLine($"ID: {embutido.Id} | DETALLE: {embutido.TipoEmbutido} | STOCK: {embutido.KgEnStock}kg | PRECIO: ${embutido.Precio}");
-            }
+                foreach (Carne car in carnes)
+                {
+                    sb.AppendLine($"ID: {car.Id} | DETALLE: {car.Animal} {car.Corte} | STOCK: {car.KgEnStock}kg | PRECIO: ${car.Precio}");
+                }
+                foreach(Embutido embutido in embutidos)
+                {
+                    sb.AppendLine($"ID: {embutido.Id} | DETALLE: {embutido.TipoEmbutido} | STOCK: {embutido.KgEnStock}kg | PRECIO: ${embutido.Precio}");
+                }
 
-            MessageBox.Show($"{sb}");
+                MessageBox.Show($"{sb}","Anterior Stock guardado", MessageBoxButtons.OK);
+            }
+            catch (ExcepcionesPropias ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

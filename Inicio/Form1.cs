@@ -20,13 +20,27 @@ namespace Inicio
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
-            usuarios = UsuariosBDD.Leer<Usuario>();
+            try
+            {
+                usuarios = UsuariosBDD.Leer<Usuario>();
+            }
+            catch (ExcepcionesPropias ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             foreach (Usuario usuario in usuarios)
             {
                 listBox1.Items.Add(usuario);
             }
 
-            productosStockList = ProductosBDD.Leer();
+            try
+            {
+                productosStockList = ProductosBDD.Leer();
+            }
+            catch (ExcepcionesPropias ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
 
@@ -49,24 +63,31 @@ namespace Inicio
 
             if (!string.IsNullOrEmpty(mail) && !string.IsNullOrEmpty(contrasena))
             {
-                tipoUsuario = UsuariosBDD.TraerTipoUsuario(mail, contrasena);
-
-                if (tipoUsuario is not null)
+                try
                 {
-                    if (tipoUsuario == "Vendedor")
+                    tipoUsuario = UsuariosBDD.TraerTipoUsuario(mail, contrasena);
+
+                    if (tipoUsuario is not null)
                     {
-                        usuarioSeleccionado = (Vendedor)usuarios.Find(u => u.MailPropiedad == mail && u.PwdPropiedad == contrasena);
-                        EntrarComoVendedor();
+                        if (tipoUsuario == "Vendedor")
+                        {
+                            usuarioSeleccionado = (Vendedor)usuarios.Find(u => u.MailPropiedad == mail && u.PwdPropiedad == contrasena);
+                            EntrarComoVendedor();
+                        }
+                        else if (tipoUsuario == "Cliente")
+                        {
+                            usuarioSeleccionado = usuarios.Find(u => u.MailPropiedad == mail && u.PwdPropiedad == contrasena);
+                            EntrarComoCliente();
+                        }
                     }
-                    else if (tipoUsuario == "Cliente")
+                    else
                     {
-                        usuarioSeleccionado = usuarios.Find(u => u.MailPropiedad == mail && u.PwdPropiedad == contrasena);
-                        EntrarComoCliente();
+                        MessageBox.Show("No existe el usuario", "Usuario invalido", MessageBoxButtons.OK);
                     }
                 }
-                else
+                catch (ExcepcionesPropias ex)
                 {
-                    MessageBox.Show("No existe el usuario", "Usuario invalido", MessageBoxButtons.OK);
+                    MessageBox.Show(ex.Message);
                 }
             }
             else
@@ -99,7 +120,14 @@ namespace Inicio
             Vendedor vendedorSeleccionado = (Vendedor)usuarioSeleccionado;
             frmHeladera frmHeladera = new frmHeladera(vendedorSeleccionado, productosStockList, usuarios, listaFacturasHistorial);
             frmHeladera.ShowDialog();
-            productosStockList = ProductosBDD.Leer();
+            try
+            {
+                productosStockList = ProductosBDD.Leer();
+            }
+            catch (ExcepcionesPropias ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void EntrarComoCliente()

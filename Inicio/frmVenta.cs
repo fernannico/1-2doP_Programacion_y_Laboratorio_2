@@ -251,8 +251,14 @@ namespace Inicio
                     listaFacturasHistorial.Add(factura);
 
                     MessageBox.Show(factura.MostrarFactura(), "Factura B");
-
-                    ArchivarTexto.GuardarFacturaTexto(factura.MostrarFactura(), "HistorialFacturas.txt");
+                    try
+                    {
+                        ArchivarTexto.GuardarFacturaTexto(factura.MostrarFactura(), "HistorialFacturas.txt");
+                    }
+                    catch (ExcepcionesPropias ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
 
                     while (dataGridView1.Rows.Count > 0)
                     {
@@ -315,31 +321,35 @@ namespace Inicio
                 Serializacion.SerializarAJson(embutidos, "EmbutidosJson.json");
 
             }
-            catch (Exception)
+            catch (ExcepcionesPropias ex)
             {
-                throw;
+                MessageBox.Show(ex.Message);
             }
         }
 
         private void btnDeserializarJson_Click(object sender, EventArgs e)
         {
             StringBuilder sb = new StringBuilder();
-
-            List<Carne> carnes = Serializacion.DeserializarDesdeJson<List<Carne>>("CarnesJson.json");
-            List<Embutido> embutidos = Serializacion.DeserializarDesdeJson<List<Embutido>>("EmbutidosJson.json");
-
-            foreach (Carne car in carnes)
+            try
             {
-                sb.AppendLine($"ID: {car.Id} | DETALLE: {car.Animal} {car.Corte} | STOCK: {car.KgEnStock}kg | PRECIO: ${car.Precio}");
+                List<Carne> carnes = Serializacion.DeserializarDesdeJson<List<Carne>>("CarnesJson.json");
+                List<Embutido> embutidos = Serializacion.DeserializarDesdeJson<List<Embutido>>("EmbutidosJson.json");
+
+                foreach (Carne car in carnes)
+                {
+                    sb.AppendLine($"ID: {car.Id} | DETALLE: {car.Animal} {car.Corte} | STOCK: {car.KgEnStock}kg | PRECIO: ${car.Precio}");
+                }
+                foreach (Embutido embutido in embutidos)
+                {
+                    sb.AppendLine($"ID: {embutido.Id} | DETALLE: {embutido.TipoEmbutido} | STOCK: {embutido.KgEnStock}kg | PRECIO: ${embutido.Precio}");
+                }
+
+                MessageBox.Show($"{sb}", "Anterior Stock guardado", MessageBoxButtons.OK);
             }
-            foreach (Embutido embutido in embutidos)
+            catch (ExcepcionesPropias ex)
             {
-                sb.AppendLine($"ID: {embutido.Id} | DETALLE: {embutido.TipoEmbutido} | STOCK: {embutido.KgEnStock}kg | PRECIO: ${embutido.Precio}");
+                MessageBox.Show(ex.Message);
             }
-
-            MessageBox.Show($"{sb}");
-
         }
-
     }
 }

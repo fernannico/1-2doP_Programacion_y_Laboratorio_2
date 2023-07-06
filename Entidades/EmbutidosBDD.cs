@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using usuarios;
 using ProductosNs;
+using System.Text.Json;
+using System.Data.SqlTypes;
+using System.Data.Common;
 
 namespace Entidades
 {
@@ -71,9 +74,14 @@ namespace Entidades
                 command.Parameters.AddWithValue("@DESCRIPCION", embutido.TipoEmbutido);
                 command.ExecuteNonQuery();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                List<Exception> innerExceptions = new List<Exception>();
+                if (ex is SqlException || ex is InvalidOperationException || ex is SqlNullValueException || ex is DbException)
+                {
+                    innerExceptions.Add(ex);
+                }
+                throw new ExcepcionesPropias("Error al modificar el producto", innerExceptions);
             }
             finally
             {

@@ -29,9 +29,16 @@ namespace Entidades
                     streamWriter.Write(factura);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                List<Exception> innerExceptions = new List<Exception>();
+
+                if (ex is DirectoryNotFoundException || ex is IOException ||
+                    ex is UnauthorizedAccessException || ex is PathTooLongException)
+                {
+                    innerExceptions.Add(ex);
+                }
+                throw new ExcepcionesPropias("Error al guardar la factura");
             }
             finally 
             {
@@ -53,9 +60,17 @@ namespace Entidades
                     factura = File.ReadAllText(nombreArchivo);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                List<Exception> innerExceptions = new List<Exception>();
+
+                if (ex is FileNotFoundException || ex is SecurityException ||
+                    ex is IOException || ex is UnauthorizedAccessException || ex is PathTooLongException)
+                {
+                    innerExceptions.Add(ex);
+                }
+
+                throw new ExcepcionesPropias("Error al abrir la factura");
             }
 
             return factura;

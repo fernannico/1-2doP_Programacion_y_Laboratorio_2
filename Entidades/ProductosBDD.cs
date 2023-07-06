@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlTypes;
+using System.Data.Common;
 
 namespace Entidades
 {
@@ -68,9 +69,14 @@ namespace Entidades
                 return productos;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                List<Exception> innerExceptions = new List<Exception>();
+                if (ex is SqlException || ex is InvalidOperationException || ex is SqlNullValueException || ex is DbException)
+                {
+                    innerExceptions.Add(ex);
+                }
+                throw new ExcepcionesPropias("Error al leer la base de datos de productos", innerExceptions);
             }
             finally { connection.Close(); }
         }
@@ -87,9 +93,14 @@ namespace Entidades
                 command.Parameters.AddWithValue("@PRECIO_POR_KG", producto.Precio);
                 command.ExecuteNonQuery();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                List<Exception> innerExceptions = new List<Exception>();
+                if (ex is SqlException || ex is InvalidOperationException || ex is SqlNullValueException || ex is DbException)
+                {
+                    innerExceptions.Add(ex);
+                }
+                throw new ExcepcionesPropias("Error al modificar el producto", innerExceptions);
             }
             finally
             {
@@ -107,9 +118,14 @@ namespace Entidades
                 command.Parameters.AddWithValue("@Id", Id);
                 command.ExecuteNonQuery();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;                
+                List<Exception> innerExceptions = new List<Exception>();
+                if (ex is SqlException || ex is InvalidOperationException || ex is SqlNullValueException || ex is DbException)
+                {
+                    innerExceptions.Add(ex);
+                }
+                throw new ExcepcionesPropias("Error al eliminar el producto", innerExceptions);
             }
             finally
             {
@@ -141,10 +157,16 @@ namespace Entidades
 
                 command.ExecuteNonQuery();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
-            }finally { connection.Close(); }
+                List<Exception> innerExceptions = new List<Exception>();
+                if (ex is SqlException || ex is InvalidOperationException || ex is SqlNullValueException || ex is DbException)
+                {
+                    innerExceptions.Add(ex);
+                }
+                throw new ExcepcionesPropias("Error al crear el producto", innerExceptions);
+            }
+            finally { connection.Close(); }
         }
 
     }

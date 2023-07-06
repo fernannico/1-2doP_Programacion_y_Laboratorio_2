@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using usuarios;
 using System.Data.Common;
+using System.Data.SqlTypes;
 
 namespace Entidades
 {
@@ -63,9 +64,14 @@ namespace Entidades
                 return usuarios;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                List<Exception> innerExceptions = new List<Exception>();
+                if (ex is SqlException || ex is InvalidOperationException || ex is SqlNullValueException || ex is DbException)
+                {
+                    innerExceptions.Add(ex);
+                }
+                throw new ExcepcionesPropias("Error al leer la base de datos de usuarios", innerExceptions);
             }
             finally { connection.Close(); }
         }
@@ -90,11 +96,16 @@ namespace Entidades
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
-
-            }finally { connection.Close(); }
+                List<Exception> innerExceptions = new List<Exception>();
+                if (ex is SqlException || ex is InvalidOperationException || ex is SqlNullValueException || ex is DbException)
+                {
+                    innerExceptions.Add(ex);
+                }
+                throw new ExcepcionesPropias("Error al leer la base de datos de usuarios", innerExceptions);
+            }
+            finally { connection.Close(); }
 
             return tipoUsuario;
         }

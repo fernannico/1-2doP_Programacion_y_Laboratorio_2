@@ -41,11 +41,10 @@ namespace Inicio
                 {
                     ProductosBDD.CrearProducto(productoNuevo);
                 }
-                catch
+                catch (ExcepcionesPropias ex)
                 {
-                    throw new InvalidOperationException("producto invalido");
+                    MessageBox.Show(ex.Message);
                 }
-
             }
             else { MessageBox.Show("No se completaron todos los datos para crear el producto, reintentar"); }
         }

@@ -7,6 +7,9 @@ using System.Xml.Serialization;
 using System.Text.Json;
 using ProductosNs;
 using System.Text.Encodings.Web;
+using System.Security;
+using System.IO;
+using System.Xml;
 
 namespace Entidades
 {
@@ -24,9 +27,15 @@ namespace Entidades
                     serializer.Serialize(streamWriter, objeto);
                 }
 
-            }catch (Exception)
+            }catch (Exception ex)
             {
-                throw;
+                List<Exception> innerExceptions = new List<Exception>();
+                if (ex is XmlException || ex is UnauthorizedAccessException || ex is DirectoryNotFoundException ||
+                    ex is PathTooLongException || ex is SecurityException || ex is IOException)
+                {
+                    innerExceptions.Add(ex);
+                }
+                throw new ExcepcionesPropias("Error al guardar el archivo", innerExceptions);
             }
         }
 
@@ -43,9 +52,15 @@ namespace Entidades
                     streamWriter.WriteLine(objetoJson);  
                 }
             }
-            catch(Exception )
+            catch (Exception ex)
             {
-                throw;
+                List<Exception> innerExceptions = new List<Exception>();
+                if (ex is JsonException || ex is UnauthorizedAccessException || ex is DirectoryNotFoundException ||
+                    ex is PathTooLongException || ex is SecurityException || ex is IOException)
+                {
+                    innerExceptions.Add(ex);
+                }
+                throw new ExcepcionesPropias("Error al guardar el archivo", innerExceptions);
             }
         }
 
@@ -60,19 +75,38 @@ namespace Entidades
                     return objeto;
                 }
             }
-            catch(Exception)
+            catch (Exception ex)
             {
-                throw;
+                List<Exception> innerExceptions = new List<Exception>();
+                if (ex is XmlException || ex is UnauthorizedAccessException || ex is DirectoryNotFoundException ||
+                    ex is FileNotFoundException || ex is IOException)
+                {
+                    innerExceptions.Add(ex);
+                }
+                throw new ExcepcionesPropias("Error al abrir el archivo", innerExceptions);
             }
         }
 
         public static T DeserializarDesdeJson<T>(string ruta) where T : class
         {
-            string objetoJson = File.ReadAllText(ruta);
+            try
+            {
+                string objetoJson = File.ReadAllText(ruta);
 
-            T objeto = JsonSerializer.Deserialize<T>(objetoJson);
+                T objeto = JsonSerializer.Deserialize<T>(objetoJson);
 
-            return objeto;
+                return objeto;
+            }
+            catch (Exception ex)
+            {
+                List<Exception> innerExceptions = new List<Exception>();
+                if (ex is JsonException || ex is UnauthorizedAccessException || ex is DirectoryNotFoundException ||
+                    ex is FileNotFoundException || ex is IOException)
+                {
+                    innerExceptions.Add(ex);
+                }
+                throw new ExcepcionesPropias("Error al abrir el archivo", innerExceptions);
+            }
         }
     }
 }
