@@ -16,7 +16,7 @@ namespace usuarios
             this.contrasena = contrasena;
         }
 
-        public int getId() { return id; }
+        public virtual int Id { get { return id; } }
 
         /// <summary>
         /// para retornar el mail del usuario
