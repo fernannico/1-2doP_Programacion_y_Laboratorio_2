@@ -88,9 +88,10 @@ namespace Entidades
             {
                 command.Parameters.Clear();
                 connection.Open();
-                command.CommandText = $"UPDATE PRODUCTOS SET KG_EN_STOCK = @KG_EN_STOCK, PRECIO_POR_KG = @PRECIO_POR_KG WHERE PRODUCTOS.ID = {producto.Id}";
+                command.CommandText = $"UPDATE PRODUCTOS SET KG_EN_STOCK = @KG_EN_STOCK, PRECIO_POR_KG = @PRECIO_POR_KG WHERE PRODUCTOS.ID = @ID";
                 command.Parameters.AddWithValue("@KG_EN_STOCK", producto.KgEnStock);
                 command.Parameters.AddWithValue("@PRECIO_POR_KG", producto.Precio);
+                command.Parameters.AddWithValue("@ID", producto.Id); 
                 command.ExecuteNonQuery();
             }
             catch (Exception ex)

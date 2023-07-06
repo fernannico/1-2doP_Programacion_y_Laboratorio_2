@@ -261,7 +261,7 @@ namespace Inicio
                                 }
                             }
                         }
-                        else
+                        else if(productoSeleccionado is Carne)
                         {
                             MessageBox.Show("El nuevo corte contiene numeros o simbolos", "error parametros", MessageBoxButtons.OK);
                         }
