@@ -30,6 +30,8 @@
         {
             dataGridView1 = new DataGridView();
             btnDetalle = new Button();
+            btnSaveFact = new Button();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -56,11 +58,34 @@
             btnDetalle.ForeColor = SystemColors.ControlText;
             btnDetalle.Location = new Point(45, 364);
             btnDetalle.Name = "btnDetalle";
-            btnDetalle.Size = new Size(679, 55);
+            btnDetalle.Size = new Size(278, 55);
             btnDetalle.TabIndex = 1;
             btnDetalle.Text = "ver detalle de la factura";
             btnDetalle.UseVisualStyleBackColor = true;
             btnDetalle.Click += btnDetalle_Click;
+            // 
+            // btnSaveFact
+            // 
+            btnSaveFact.Enabled = false;
+            btnSaveFact.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            btnSaveFact.Location = new Point(339, 364);
+            btnSaveFact.Name = "btnSaveFact";
+            btnSaveFact.Size = new Size(151, 55);
+            btnSaveFact.TabIndex = 1;
+            btnSaveFact.Text = "Guardar factura";
+            btnSaveFact.UseVisualStyleBackColor = true;
+            btnSaveFact.Click += btnSaveFact_Click;
+            // 
+            // button1
+            // 
+            button1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            button1.Location = new Point(505, 364);
+            button1.Name = "button1";
+            button1.Size = new Size(219, 55);
+            button1.TabIndex = 2;
+            button1.Text = "Ver historial de facturas guardadas";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // frmHistorialFacturas
             // 
@@ -68,13 +93,15 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.DarkOliveGreen;
             ClientSize = new Size(747, 445);
+            Controls.Add(button1);
+            Controls.Add(btnSaveFact);
             Controls.Add(btnDetalle);
             Controls.Add(dataGridView1);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             MaximizeBox = false;
             Name = "frmHistorialFacturas";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Historial de facturas";
+            Text = "Historial de facturas actuales";
             Load += frmHistorialFacturas_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
@@ -84,5 +111,7 @@
 
         private DataGridView dataGridView1;
         private Button btnDetalle;
+        private Button btnSaveFact;
+        private Button button1;
     }
 }

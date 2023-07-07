@@ -1,6 +1,9 @@
+using Entidades;
 using Facturas;
 using ProductosNs;
 using usuarios;
+
+
 namespace Inicio
 {
     public partial class frmLogin : Form
@@ -8,6 +11,7 @@ namespace Inicio
         private List<Usuario> usuarios = new List<Usuario>();
         private List<Productos> productosStockList = new List<Productos>();
         private List<Factura> listaFacturasHistorial = new List<Factura>();
+        private Usuario usuarioSeleccionado;
 
         public frmLogin()
         {
@@ -16,72 +20,168 @@ namespace Inicio
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
-            usuarios.Add(new Vendedor("vendedor1@gmail.com", "123456"));
-            usuarios.Add(new Vendedor("vendedor2@gmail.com", "2583"));
-            usuarios.Add(new Vendedor("vendedor3@gmail.com", "1475asasa"));
-            usuarios.Add(new Cliente("cliente1@gmail.com", "36955", 100000));
-            usuarios.Add(new Cliente("cliente2@gmail.com", "789456", 50000));
-            usuarios.Add(new Cliente("cliente3@gmail.com", "1597543", 10000));
-            usuarios.Add(new Cliente("cliente4@gmail.com", "15975", 10000));
-
-
+            try
+            {
+                usuarios = UsuariosBDD.Leer<Usuario>();
+            }
+            catch (ExcepcionesPropias ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             foreach (Usuario usuario in usuarios)
             {
                 listBox1.Items.Add(usuario);
             }
 
-            productosStockList.Add(new Carne(1830f, 10, "res", "asado"));
-            productosStockList.Add(new Carne(1900f, 10, "res", "bife"));
-            productosStockList.Add(new Carne(2389f, 10, "res", "milanesa"));
-            productosStockList.Add(new Carne(2299f, 10, "res", "vacio"));
-            productosStockList.Add(new Carne(600f, 10, "pollo", "entero"));
-            productosStockList.Add(new Carne(960f, 10, "pollo", "1/4 trasero"));
-            productosStockList.Add(new Carne(1865f, 10, "pollo", "suprema"));
-            productosStockList.Add(new Embutido(1900f, 10, "chori"));
-            productosStockList.Add(new Embutido(1120f, 10, "morcilla"));
-            productosStockList.Add(new Embutido(500f, 10, "salchicha"));
-            productosStockList.Add(new Embutido(550f, 10, "salchicha parrillera"));
-            productosStockList.Add(new Embutido(1600f, 10, "longaniza"));
+            try
+            {
+                productosStockList = ProductosBDD.Leer<Productos>();
+            }
+            catch (ExcepcionesPropias ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
+            if(listBox1.SelectedIndex != -1)
+            {
+                IngresarDesdePrecargado();
+            }
+            else
+            {
+                IngresarDesdeTipeo();
+            }
+        }
+
+        private void IngresarDesdeTipeo() {
+            string mail = txtMail.Text;
+            string contrasena = txtContrasenia.Text;
+            string tipoUsuario;
+
+            if (!string.IsNullOrEmpty(mail) && !string.IsNullOrEmpty(contrasena))
+            {
+                if (mail.EsMail())
+                {
+                    try
+                    {
+                        tipoUsuario = UsuariosBDD.TraerTipoUsuario(mail, contrasena);
+
+                        if (tipoUsuario is not null)
+                        {
+                            if (tipoUsuario == "Vendedor")
+                            {
+                                usuarioSeleccionado = (Vendedor)usuarios.Find(u => u.MailPropiedad == mail && u.PwdPropiedad == contrasena);
+                                EntrarComoVendedor();
+                            }
+                            else if (tipoUsuario == "Cliente")
+                            {
+                                usuarioSeleccionado = usuarios.Find(u => u.MailPropiedad == mail && u.PwdPropiedad == contrasena);
+                                EntrarComoCliente();
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Corroborar usuario y contraseña", "Usuario invalido", MessageBoxButtons.OK);
+                        }
+                    }
+                    catch (ExcepcionesPropias ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("no ingresó un formato de mail valido", "Mail invalido", MessageBoxButtons.OK);
+                }
+            }
+            else
+            {
+                MessageBox.Show("faltan completar los campos para loguearse", "Usuario invalido", MessageBoxButtons.OK);
+            }
+        }
+
+        private void IngresarDesdePrecargado()
+        {
             if (listBox1.SelectedItem is not null)
             {
-                Usuario usuarioSeleccionado = (Usuario)listBox1.SelectedItem;
+                usuarioSeleccionado = (Usuario)listBox1.SelectedItem;
 
                 if (listBox1.SelectedItem is Cliente)
                 {
-                    decimal gastoMaximo;
-                    Cliente clienteSeleccionado = (Cliente)usuarioSeleccionado;
-
-                    frmMontoCliente frmMontoCliente = new frmMontoCliente();
-                    frmMontoCliente.ShowDialog();
-
-                    gastoMaximo = frmMontoCliente.nudMontoCiente.Value;
-                    if (gastoMaximo > 0)
-                    {
-                        clienteSeleccionado.GastoMaximoPropiedad = gastoMaximo;
-                        frmVenta frmVenta = new frmVenta(null, clienteSeleccionado, productosStockList, usuarios, listaFacturasHistorial);
-                        frmVenta.ShowDialog();
-                    }
+                    EntrarComoCliente();
                 }
 
                 if (listBox1.SelectedItem is Vendedor)
                 {
-                    Vendedor vendedorSeleccionado = (Vendedor)usuarioSeleccionado;
-                    frmHeladera frmHeladera = new frmHeladera(vendedorSeleccionado, productosStockList, usuarios, listaFacturasHistorial);
-                    frmHeladera.ShowDialog();
+                    EntrarComoVendedor();
                 }
 
             }
         }
 
+        private void EntrarComoVendedor()
+        {
+            Vendedor vendedorSeleccionado = (Vendedor)usuarioSeleccionado;
+            frmHeladera frmHeladera = new frmHeladera(vendedorSeleccionado, productosStockList, usuarios, listaFacturasHistorial);
+            frmHeladera.ShowDialog();
+            try
+            {
+                productosStockList = ProductosBDD.Leer<Productos>();
+            }
+            catch (ExcepcionesPropias ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void EntrarComoCliente()
+        {
+            decimal gastoMaximo;
+            Cliente clienteSeleccionado = (Cliente)usuarioSeleccionado;
+
+            frmMontoCliente frmMontoCliente = new frmMontoCliente();
+            frmMontoCliente.ShowDialog();
+
+            gastoMaximo = frmMontoCliente.nudMontoCiente.Value;
+            if (gastoMaximo > 0)
+            {
+                clienteSeleccionado.GastoMaximoPropiedad = gastoMaximo;
+                frmVenta frmVenta = new frmVenta(null, clienteSeleccionado, productosStockList, usuarios, listaFacturasHistorial);
+                frmVenta.ShowDialog();
+            }
+        }
+
+        /// <summary>
+        /// evento de cuando selecciono un usuario del listbox para que se autocomplete sus datos en los textbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Usuario usuarioSeleccionado = (Usuario)listBox1.SelectedItem;
-            txtMail.Text = usuarioSeleccionado.MailPropiedad;
-            txtContrasenia.Text = usuarioSeleccionado.PwdPropiedad;
+            if (listBox1.SelectedIndex != -1)
+            {
+                usuarioSeleccionado = (Usuario)listBox1.SelectedItem;
+                txtMail.Text = usuarioSeleccionado.MailPropiedad;
+                txtContrasenia.Text = usuarioSeleccionado.PwdPropiedad;
+
+                txtContrasenia.Enabled = false;
+                txtMail.Enabled = false;
+
+            }
+        }
+
+        private void btnReiniciar_Click(object sender, EventArgs e)
+        {
+            txtContrasenia.Enabled = true;
+            txtMail.Enabled = true;
+
+            txtMail.Text = null;
+            txtContrasenia.Text = null;
+
+            listBox1.SelectedIndex = -1;
         }
     }
 }

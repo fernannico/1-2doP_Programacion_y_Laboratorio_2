@@ -5,14 +5,18 @@ namespace usuarios
 {
     public abstract class Usuario
     {
+        protected int id;
         protected string mail;
         protected string contrasena;
 
-        protected Usuario(string mail, string contrasena)
+        protected Usuario(int id, string mail, string contrasena)
         {
+            this.id = id;
             this.mail = mail;
             this.contrasena = contrasena;
         }
+
+        public virtual int Id { get { return id; } }
 
         /// <summary>
         /// para retornar el mail del usuario

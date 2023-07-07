@@ -1,4 +1,5 @@
-﻿using Facturas;
+﻿using Entidades;
+using Facturas;
 using ProductosNs;
 using System;
 using System.Collections.Generic;
@@ -86,7 +87,27 @@ namespace Inicio
             dataTable.Columns.Add("Productos", typeof(Productos));
             dataTable.Columns.Add("Cantidad (kg's)", typeof(decimal));
             dataTable.Columns.Add("Costo individual", typeof(decimal));
+
+            Reloj reloj = new Reloj();
+            reloj.SegundoCambiado += AsignarHora;
+            reloj.Iniciar();
         }
+
+        public void AsignarHora(Reloj reloj)
+        {
+            if (lblReloj.InvokeRequired)
+            {
+                Action<Reloj> delegado = AsignarHora;
+
+                lblReloj.Invoke(delegado, reloj);
+            }
+            else
+            {
+                lblReloj.Text = $"Hora: {reloj.ToString()}";
+            }
+        }
+
+
         private void listBoxProductos_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxVendedores.SelectedIndex is >= 0 && listBoxProductos.SelectedItem is not null && nudKgs.Value > 0)
@@ -97,8 +118,8 @@ namespace Inicio
         private void button1_Click(object sender, EventArgs e)
         {
             decimal cantidadProducto = nudKgs.Value;
-            decimal precioPorKg = (decimal)((Productos)(listBoxProductos.SelectedItem)).PrecioPropiedad;
-            int stockDisponible = (int)((Productos)(listBoxProductos.SelectedItem)).KgEnStockPropiedad;
+            decimal precioPorKg = (decimal)((Productos)(listBoxProductos.SelectedItem)).Precio;
+            int stockDisponible = (int)((Productos)(listBoxProductos.SelectedItem)).KgEnStock;
             decimal totalIndividual = cantidadProducto * precioPorKg;
             Productos productoSeleccionado = (Productos)listBoxProductos.SelectedItem;
 
@@ -110,7 +131,7 @@ namespace Inicio
                 {
                     if (cantidadProducto <= stockDisponible)
                     {
-                        productoSeleccionado.KgEnStockPropiedad -= (int)cantidadProducto;
+                        productoSeleccionado.KgEnStock -= (int)cantidadProducto;
                         DataTable dataTable = (DataTable)dataGridView1.DataSource;
                         DataRow newRow = dataTable.NewRow();
                         newRow[0] = listBoxProductos.SelectedItem;
@@ -134,7 +155,7 @@ namespace Inicio
             int rowIndex = e.RowIndex;
             DataGridViewRow row = dataGridView1.Rows[rowIndex];
 
-            decimal costoPorKg = (decimal)((Productos)row.Cells[0].Value).PrecioPropiedad;
+            decimal costoPorKg = (decimal)((Productos)row.Cells[0].Value).Precio;
             decimal kgsComprados = Convert.ToDecimal(row.Cells[1].Value);
 
             costoTotal = costoPorKg * kgsComprados;
@@ -161,7 +182,7 @@ namespace Inicio
                 }
                 productoEliminado = (Productos)dataGridView1.SelectedRows[0].Cells[0].Value;
                 kgStockRecuperados = Convert.ToDecimal(dataGridView1.SelectedRows[0].Cells[1].Value);
-                productoEliminado.KgEnStockPropiedad = (int)((decimal)productoEliminado.KgEnStockPropiedad + kgStockRecuperados);
+                productoEliminado.KgEnStock = (int)((decimal)productoEliminado.KgEnStock + kgStockRecuperados);
 
                 dataGridView1.Rows.Remove(dataGridView1.SelectedRows[0]);
                 CalcularCostoTotal();
@@ -236,11 +257,11 @@ namespace Inicio
                         StringBuilder sb = new StringBuilder();
                         if (producto is Carne)
                         {
-                            sb.AppendLine($"{((Carne)producto).CortePropiedad} de {((Carne)producto).AnimalPropiedad} - ${montoIndividual}");
+                            sb.AppendLine($"{((Carne)producto).Corte} de {((Carne)producto).Animal} - ${montoIndividual}");
                         }
                         else if (producto is Embutido)
                         {
-                            sb.AppendLine($"{((Embutido)producto).TipoEmbutidoPropiedad} - ${montoIndividual}");
+                            sb.AppendLine($"{((Embutido)producto).TipoEmbutido} - ${montoIndividual}");
                         }
                         listBoxHistorial.Items.Add(sb.ToString());
                     }
@@ -250,6 +271,14 @@ namespace Inicio
                     listaFacturasHistorial.Add(factura);
 
                     MessageBox.Show(factura.MostrarFactura(), "Factura B");
+                    try
+                    {
+                        ArchivarTexto.GuardarFacturaTexto(factura.MostrarFactura(), "HistorialFacturas.txt");
+                    }
+                    catch (ExcepcionesPropias ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
 
                     while (dataGridView1.Rows.Count > 0)
                     {
@@ -271,7 +300,7 @@ namespace Inicio
             {
                 if (item is Carne)
                 {
-                    corte = ((Carne)item).CortePropiedad;
+                    corte = ((Carne)item).Corte;
                     if (producto == corte)
                     {
                         index = listBoxProductos.Items.IndexOf(item);
@@ -280,7 +309,7 @@ namespace Inicio
                 }
                 if (item is Embutido)
                 {
-                    tipoEmbutido = ((Embutido)item).TipoEmbutidoPropiedad;
+                    tipoEmbutido = ((Embutido)item).TipoEmbutido;
                     if (producto == tipoEmbutido)
                     {
                         index = listBoxProductos.Items.IndexOf(item);
@@ -289,6 +318,58 @@ namespace Inicio
                 }
             }
             listBoxProductos.SelectedIndex = index;
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            List<Carne> carnes = new List<Carne>();
+            List<Embutido> embutidos = new List<Embutido>();
+            try
+            {
+                foreach (object item in productosStockList)
+                {
+                    if (item is Carne)
+                    {
+                        carnes.Add((Carne)item);
+                    }
+                    else if (item is Embutido)
+                    {
+                        embutidos.Add((Embutido)item);
+                    }
+                }
+                Serializacion.SerializarAJson(carnes, "CarnesJson.json");
+                Serializacion.SerializarAJson(embutidos, "EmbutidosJson.json");
+                MessageBox.Show("Guardado el estado del stock", "Productos Guardados", MessageBoxButtons.OK);
+            }
+            catch (ExcepcionesPropias ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnDeserializarJson_Click(object sender, EventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+            try
+            {
+                List<Carne> carnes = Serializacion.DeserializarDesdeJson<List<Carne>>("CarnesJson.json");
+                List<Embutido> embutidos = Serializacion.DeserializarDesdeJson<List<Embutido>>("EmbutidosJson.json");
+
+                foreach (Carne car in carnes)
+                {
+                    sb.AppendLine($"ID: {car.Id} | DETALLE: {car.Animal} {car.Corte} | STOCK: {car.KgEnStock}kg | PRECIO: ${car.Precio}");
+                }
+                foreach (Embutido embutido in embutidos)
+                {
+                    sb.AppendLine($"ID: {embutido.Id} | DETALLE: {embutido.TipoEmbutido} | STOCK: {embutido.KgEnStock}kg | PRECIO: ${embutido.Precio}");
+                }
+
+                MessageBox.Show($"{sb}", "Anterior Stock guardado", MessageBoxButtons.OK);
+            }
+            catch (ExcepcionesPropias ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

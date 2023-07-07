@@ -9,11 +9,11 @@ namespace usuarios
     public class Cliente : Usuario
     {
         private decimal dinero;
-        public Cliente(string mail, string contrasena) : base(mail, contrasena)
+        public Cliente(int id, string mail, string contrasena) : base(id, mail, contrasena)
         {
 
         }
-        public Cliente(string mail, string contrasena, decimal dinero) : base(mail, contrasena)
+        public Cliente(int id, string mail, string contrasena, decimal dinero) : base(id, mail, contrasena)
         {
             this.dinero = dinero;
         }

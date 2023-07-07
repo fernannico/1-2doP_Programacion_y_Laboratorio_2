@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using usuarios;
+using Entidades;
 
 namespace Inicio
 {
@@ -78,9 +79,53 @@ namespace Inicio
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex >= 0 && dataGridView1.RowCount > 1)
             {
                 btnDetalle.Enabled = true;
+                btnSaveFact.Enabled = true;
+            }
+        }
+
+        private void btnSaveFact_Click(object sender, EventArgs e)
+        {
+
+            if (btnDetalle.Enabled)
+            {
+                if (dataGridView1.CurrentRow != null)
+                {
+                    DataGridViewCell cell = dataGridView1.CurrentRow.Cells[2];
+                    Factura factura = (Factura)cell.Value;
+
+                    if (dataGridView1.SelectedRows.Count == 0)
+                    {
+                        dataGridView1.Rows[0].Selected = true;
+                    }
+                    if (factura is Factura && factura is not null)
+                    {
+                        try
+                        {
+                            ArchivarTexto.GuardarFacturaTexto(factura.MostrarFactura(), "FacturasElegidas.txt");
+                        }
+                        catch (ExcepcionesPropias ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                    }
+                }
+            }
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string historialfacturas = ArchivarTexto.AbrirFacturaTexto("HistorialFacturas.txt");
+                MessageBox.Show(historialfacturas, "HISTORIAL DE FACTURAS", MessageBoxButtons.OK);
+            }
+            catch (ExcepcionesPropias ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }
