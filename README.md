@@ -1,11 +1,8 @@
 # SolutionPP
 
 ● Clases y métodos estáticos
-
 ● POO
-
 ● Sobrecarga
-
 ● Windows forms
 ● Colecciones
 ● Enumerados
